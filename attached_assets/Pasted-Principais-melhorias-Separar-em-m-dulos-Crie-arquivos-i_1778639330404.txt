@@ -1,0 +1,38 @@
+Principais melhorias:
+
+Separar em módulos
+Crie arquivos independentes para:
+utils/coords.ts, utils/riskAnalysis.ts, utils/clustering.ts, components/MapLayers.tsx, components/LayerPanel.tsx, components/CampoMarkers.tsx, components/PdfExportDialog.tsx.
+Corrigir tipagem de empsGeo
+empsGeo ainda parece ter tipo Empreendimento[], mas em alguns trechos o código usa e.lat e e.lng, que não existem na interface original. Isso pode quebrar o TypeScript no clusterAnalysis e em análises espaciais. A solução é criar um tipo derivado:
+type EmpreendimentoGeo = Empreendimento & {
+  lat: number;
+  lng: number;
+};
+Revisar parseCampoCoords
+A função aceita graus decimais e UTM, mas a inferência const [E, N] = a < b ? [a, b] : [b, a] pode gerar erro quando os campos vêm invertidos ou quando a zona UTM está incorreta. O fallback fixo para zona 24 também é perigoso, especialmente se houver empreendimentos em zonas 22, 23 ou 25.
+
+Melhoria recomendada: exigir zonaUtm quando os valores forem UTM e exibir aviso quando ausente, em vez de assumir zona 24.
+
+Substituir conversão UTM manual por biblioteca
+A função utmToWgs84 é extensa e sensível a erro numérico. Use proj4, com EPSG correto, por exemplo SIRGAS 2000 / UTM zone 23S ou 24S. Isso reduz risco cartográfico.
+Evitar HTML direto em popups e marcadores
+O script monta HTML com template string em makeMarkerIcon e nos popups. Isso aumenta risco de injeção caso valores como nome, logoUrl ou atributos GeoJSON venham do banco sem sanitização.
+
+Melhoria: sanitizar strings ou criar popups com elementos React/Leaflet controlados.
+
+Remover estados não utilizados ou inconsistentes
+layerHeatmap existe, mas há comentário dizendo que o heatmap foi removido. Isso cria confusão funcional. Se os pontos agora são renderizados individualmente, renomeie para layerCampoMarkers ou remova o estado antigo.
+Revisar filtro temporal
+No tipo CampoRegistro, o campo é dataColeta, mas no filtro aparece r.data. Isso provavelmente impede o filtro temporal de funcionar corretamente. Ajuste para:
+const rawDate = r.dataColeta;
+Melhorar análise de risco
+O riskAnalysis combina licença, tipo de empreendimento e pressão de biodiversidade em um score fixo. A ideia é boa, mas os pesos são arbitrários. O ideal é documentar pesos, permitir configuração e separar risco legal, risco ambiental e risco operacional.
+Revisar K-Means
+O K-Means usa inicialização aleatória com Math.random(), então os clusters podem mudar a cada renderização. Isso é ruim para dashboard executivo. Use seed fixa ou clustering determinístico. Além disso, o cálculo usa graus lat/lng como distância euclidiana, o que não é ideal. Para escala nacional, use Haversine ou reprojete os pontos antes do agrupamento.
+Melhorar performance
+Vários useEffect removem e recriam camadas inteiras do Leaflet. Para muitos pontos ou GeoJSON grandes, isso pode ficar lento. Use atualização incremental, clustering real com leaflet.markercluster ou renderização Canvas/WebGL.
+Padronizar nomes
+Há mistura de português, inglês e abreviações: layerZonas, layerMarkers, heatmapData, campoRaw, mbAlerts. Escolha um padrão. Para seu sistema, eu manteria português técnico: camadasVisiveis, registrosCampo, empreendimentosGeorreferenciados.
+Prioridade de correção
+A ordem recomendada é: corrigir dataColeta no filtro temporal, criar tipo EmpreendimentoGeo, remover ou renomear layerHeatmap, substituir conversão UTM por proj4, modularizar o componente e tornar o K-Means determinístico.

@@ -1,0 +1,3600 @@
+API MapBiomas Alerta
+Introduction
+Welcome
+Documentação
+Sandbox
+Graphql
+Clientes Desktop e bibliotecas
+Como migrar para a V2?
+Operations
+Queries
+Mutations
+Types
+APIVersion
+Action
+ActionOfBatch
+ActionResult
+ActionsBatch
+ActionsBatchStatus
+Activity
+Alert
+AlertActivation
+AlertCAR
+AlertData
+AlertDataCollection
+AlertGeometry
+AlertGeometryRuralPropertySimplifiedPoint
+AlertGeometrySimplifiedPoint
+AlertNotification
+AlertRange
+AlertRankingByBiome
+AlertRankingByCity
+AlertRankingByState
+AlertRuralProperty
+AlertSortField
+AlertStatus
+BaseDate
+BaseDateTime
+BaseJSON
+Boolean
+BoundingBox
+BoundingBoxInput
+ClassLabel
+CollectionMetadata
+CrossedLegalReserve
+CrossedPermanentProtectedArea
+DateTypes
+DeforestationAuthorization
+DeforestationTypes
+Domain
+EmbargoedArea
+Float
+ID
+Image
+ImageLabel
+Institution
+Int
+LastAlertPublication
+LatLng
+LegalReserve
+Login
+MessageStatus
+MvPublishedAlert
+MyMap
+MyMapTerritory
+PermanentProtectedArea
+PointInformation
+PrivacyNotice
+PrivacyNoticeEnum
+PublishedImage
+QueryStatisticByDate
+QueryStatisticByYear
+QuerySummary
+RAlertGeometryRuralProperty
+RelatoryAlert
+RelatoryColumn
+RelatoryFormatTypes
+RelatoryMetadatum
+RelatorySource
+RelatoryTypenameTypes
+RiverSource
+RuralProperty
+RuralPropertyAlert
+RuralPropertySummary
+SortDirection
+SourceTypes
+String
+SupportCase
+SupportCaseCollection
+SupportCaseFile
+SupportCaseFileTypes
+SupportCaseMessage
+SupportCaseStatus
+SupportCaseTypes
+TermOfUse
+TermOfUseEnum
+Territory
+TerritoryCategory
+TerritoryOption
+User
+WarningLabel
+API MapBiomas Alerta
+O Mapbiomas Alerta disponibiliza uma interface de consulta à plataforma, fazendo uso da linguagem de consulta GraphQL. Por meio dessa interface, é possível comunicar-se com a Plataforma dos alertas, requisitando alertas, laudos e realizando consultas com filtros ou por territórios de interesse.
+
+Para utilizar a API na sua aplicação, aponte para o endpoint: https://plataforma.alerta.mapbiomas.org/api/v2/graphql
+
+FAQ
+
+Como baixar todos os alertas no formato de planilha (CSV) ou Shapefile?
+
+Para baixar todos os alertas consulte a documentação da alertReport.
+
+Como consultar a lista de alertas com base nos filtros da plataforma?
+
+Para realizar uma consulta com recortes temporais ou espaciais, consulte a documentação da query alerts.
+
+Como consultar um alerta e/ou as informações do laudo?
+
+Todas as informações contidas no laudo do alerta ou no detalhe do alerta você poderá recuperar a apartir da documentação da query alert.
+
+Preciso de uma conta para consultar a API?
+
+Sim, o seu mesmo login da plataforma. A sua conta MapBiomas Alerta é válida (após verificação de email automático) para a criação de um Beare Token e utilização do mesmo nos métodos de consulta da API. Caso você precise criar uma conta visite nossa página https://plataforma.alerta.mapbiomas.org/sign-up para criá-la ou utilize o método SignIn, com a sua conta atual, para obter o seu Beare Token. Atualmente, o acesso não possui acesso por conta de serviço.
+
+Contact
+Suporte MapBiomas
+
+suporte.alerta@mapbiomas.org
+
+https://plataforma.alerta.mapbiomas.org/api
+
+Terms of Service
+https://plataforma.alerta.mapbiomas.org/api/docs/index.html#query-currentlyInTermOfUse
+
+API Endpoints
+https://plataforma.alerta.mapbiomas.org/api/v2/graphql
+Headers
+# Seu token da API, obtido através da mutation SignIn.
+Deve ser incluído na chamada de queries protegidas.
+Authorization: Bearer <YOUR_TOKEN_HERE>
+Version
+2
+
+Documentação
+Conheça a documentação da API MapBiomas Alerta através das consultas (queries) e os tipos de dados listados no menu na lateral esquerda da sua tela. Você encontrará nesta documentação todas as requisições possíveis à nossa API. Utilize nossa sandbox para experimentar consultas à API pelo próprio site.
+
+Sandbox
+Viste nossa página dedicada a consultas à API sem que você precise instalar clientes desktop ou bibliotecas no seu computador para utilizar o GraphQL.
+
+https://plataforma.alerta.mapbiomas.org/api/v2/sandbox
+
+Graphql
+Você ainda não conhece a linguagem de consulta GraphQL? Aprenda tudo sobre ela na página
+
+https://graphql.org/
+
+Clientes Desktop e bibliotecas
+Hoje há uma série de ferramentas para realizar consultas a APIs em Graphql. Caso você seja leigo ou iniciante em programação, poderá usar clientes desktops como o Insomnia. Se você for um(a) programador(a) experiente, poderá encontrar bibliotecas disponíveis para diversas linguagens de programação.
+
+Como migrar para a V2?
+Atualmente, a plataforma do MapBiomas Alerta utiliza a versão V2 da API (https://plataforma.alerta.mapbiomas.org/api/v2/graphql) em todas as suas requisições e encorajamos que nossos parceiros e usuários realizem a migração de suas aplicações para a versão atual. A segunda geração da API foi criada a partir da interação com os usuários, tendo como foco o aumento de performance, estabilidade e entrega de novos cruzamentos com a base dos alertas.
+
+O primeiro passo é consultar a documentação da API V2 e realizar o mapeamento das queries que estão disponíveis na API V1 e que você utiliza. Todos os dados disponíveis na V1 também são entregues pela V2. Porém, os nomes das consultas, tipos de retorno e formato dos dados passaram por um grande refinamento com o objetivo de facilitar a leitura pelo usuário e a velocidade da entrega (até 10x mais rápida). Veja abaixo a mudança que ocorreu para algumas queries utilizadas na antiga API V1:
+
+query publishedAlerts
+
+Esta query retorna todos os alertas a partir de filtros. Na API V2, ela foi simplificada e a query se chama alerts. Como complemento, você poderá consultar a query alertSummary para ter as informações estatísticas que aparecem na plataforma.
+
+query publishedAlert
+
+Esta query retorna os principais dados do alerta. Na API V2, a query similar é a alert, que retorna além dos dados anteriores todas as informações que você obtinha com a query alertReport.
+
+query alertReport
+
+Na API V1, a query é responsável por trazer as informações do laudo. Agora na V2 ela se chama alert e conta com muito mais informações dos alertas, permitindo uma leitura simples de quais dados são retornados.
+
+A documentação da antiga API V1 continua disponível para consulta no link https://plataforma.alerta.mapbiomas.org/api/v1 e o endpoint de acesso é https://plataforma.alerta.mapbiomas.org/api/v1/graphql
+
+Atenção: A versão V1 está marcada como deprecated , atualmente ela não está recebendo novas queries e melhorias. Esta versão continuará ativa até 30/11/2023 e a partir desta data será removida do catálogo de serviços disponíveis aos parceiros.
+
+Queries
+actionsTypes
+Description
+Retorna a lista com os tipos de ações presentes na plataforma
+
+Response
+Returns [ActionResult!]
+
+Example
+Query
+query actionsTypes {
+  actionsTypes {
+    key
+    value
+  }
+}
+Response
+{
+  "data": {
+    "actionsTypes": [
+      {"key": "abc123", "value": 123}
+    ]
+  }
+}
+Queries
+alert
+Description
+A partir de um código de alerta você poderá realizar a busca por mais informações através da query alert(alertCode: $alertCode), nesta requisição você informar o código do alerta e a API retornará as principais informações. O resultado poderá ser customizado por você, para este exemplo a requisição retornará informações como os biomas, cidades, propriedades cruzadas, fontes e a geometria do alerta.
+
+Response
+Returns an AlertData
+
+Arguments
+Name	Description
+alertCode - Int!	alert alert_code
+carCode - String	alert car_id
+carId - Int	This argument is deprecated, use 'carCode' instead
+Example
+Query
+query alert(
+  $alertCode: Int!,
+  $carCode: String,
+  $carId: Int
+) {
+  alert(
+    alertCode: $alertCode,
+    carCode: $carCode,
+    carId: $carId
+  ) {
+    actions {
+      ...ActionFragment
+    }
+    actionsList
+    actionsTypeIds
+    alertCode
+    alertGeometry {
+      ...AlertGeometryFragment
+    }
+    alertGeometryId
+    alertImageBbox
+    areaHa
+    bbox
+    boundingBox {
+      ...BoundingBoxFragment
+    }
+    categories
+    classesLabels {
+      ...ClassLabelFragment
+    }
+    codes
+    coordenates {
+      ...LatLngFragment
+    }
+    crossedBiomes
+    crossedBiomesArea
+    crossedBiomesIds
+    crossedBiomesList
+    crossedBiosphereReserves
+    crossedBiosphereReservesArea
+    crossedBiosphereReservesIds
+    crossedCities
+    crossedCitiesArea
+    crossedCitiesIds
+    crossedCitiesList
+    crossedConservationUnits
+    crossedConservationUnitsArea
+    crossedConservationUnitsIds
+    crossedDeforestationAuthorizationsActivities
+    crossedDeforestationAuthorizationsArea
+    crossedDeforestationAuthorizationsAreasIds
+    crossedDeforestationAuthorizationsCategories
+    crossedDeforestationAuthorizationsList
+    crossedEmbargoesRuralPropertiesArea
+    crossedEmbargoesRuralPropertiesIds
+    crossedEmbargoesRuralPropertiesList
+    crossedEmbargoesRuralPropertiesTotal
+    crossedFederalProtectedAreaIntegralProtections
+    crossedFederalProtectedAreaIntegralProtectionsArea
+    crossedFederalProtectedAreaSustainableUses
+    crossedFederalProtectedAreaSustainableUsesArea
+    crossedForestManagementsActivities
+    crossedForestManagementsArea
+    crossedForestManagementsCategories
+    crossedForestManagementsList
+    crossedGeoparks
+    crossedGeoparksArea
+    crossedGeoparksIds
+    crossedIndigenousLands
+    crossedIndigenousLandsArea
+    crossedIndigenousLandsIds
+    crossedLegalReserveRuralPropertiesArea
+    crossedLegalReserveRuralPropertiesList
+    crossedLegalReserveRuralPropertiesTotal
+    crossedLegalReserves {
+      ...CrossedLegalReserveFragment
+    }
+    crossedLegalReservesArea
+    crossedLegalReservesList
+    crossedLegalReservesTotal
+    crossedMunicipalityProtectedAreaIntegralProtections
+    crossedMunicipalityProtectedAreaIntegralProtectionsArea
+    crossedMunicipalityProtectedAreaSustainableUses
+    crossedMunicipalityProtectedAreaSustainableUsesArea
+    crossedPermanentProtectedArea
+    crossedPermanentProtectedAreaList
+    crossedPermanentProtectedAreaTotal
+    crossedPermanentProtectedAreas {
+      ...CrossedPermanentProtectedAreaFragment
+    }
+    crossedPermanentProtectedRuralPropertiesArea
+    crossedPermanentProtectedRuralPropertiesList
+    crossedPermanentProtectedRuralPropertiesTotal
+    crossedQuilombos
+    crossedQuilombosArea
+    crossedQuilombosIds
+    crossedRiverSourcesArea
+    crossedRuralProperties {
+      ...AlertRuralPropertyFragment
+    }
+    crossedSettlements
+    crossedSettlementsArea
+    crossedSettlementsIds
+    crossedSettlementsRuralPropertiesArea
+    crossedSettlementsRuralPropertiesList
+    crossedSettlementsRuralPropertiesTotal
+    crossedSpecialTerritories
+    crossedSpecialTerritoriesArea
+    crossedSpecialTerritoriesIds
+    crossedSpecialTerritoryAmacroArea
+    crossedSpecialTerritoryAmazoniaLegalArea
+    crossedSpecialTerritoryLeiDaMataAtlanticaArea
+    crossedSpecialTerritoryMatopibaArea
+    crossedSpecialTerritorySemiaridoArea
+    crossedStateProtectedAreaIntegralProtections
+    crossedStateProtectedAreaIntegralProtectionsArea
+    crossedStateProtectedAreaSustainableUses
+    crossedStateProtectedAreaSustainableUsesArea
+    crossedStates
+    crossedStatesArea
+    crossedStatesIds
+    crossedStatesList
+    crossedTerritoriesIds
+    datum
+    deforestationClasses
+    deforestationSpeed
+    detectedAt
+    embargoedAreasIds
+    exclusionCategories
+    geometryWkt
+    id
+    imageAcquiredAfterAt
+    imageAcquiredAfterList
+    imageAcquiredBeboreList
+    imageAcquiredBeforeAt
+    imagesLabels {
+      ...ImageLabelFragment
+    }
+    publicationCycles
+    publicationCyclesList
+    publishedAt
+    publishedImages {
+      ...PublishedImageFragment
+    }
+    republished
+    ruralProperties {
+      ...RuralPropertyFragment
+    }
+    ruralPropertiesCodes
+    ruralPropertiesList
+    ruralPropertiesTotal
+    sources
+    statusAt
+    statusName
+    supportCaseAuthorizations {
+      ...SupportCaseFragment
+    }
+    supportCases {
+      ...SupportCaseFragment
+    }
+    supportCasesIds
+    warnings {
+      ...WarningLabelFragment
+    }
+  }
+}
+Variables
+{
+  "alertCode": 123,
+  "carCode": "xyz789",
+  "carId": 987
+}
+Response
+{
+  "data": {
+    "alert": {
+      "actions": [Action],
+      "actionsList": BaseJSON,
+      "actionsTypeIds": [123],
+      "alertCode": 987,
+      "alertGeometry": AlertGeometry,
+      "alertGeometryId": 123,
+      "alertImageBbox": "xyz789",
+      "areaHa": 123.45,
+      "bbox": "abc123",
+      "boundingBox": BoundingBox,
+      "categories": ["xyz789"],
+      "classesLabels": [ClassLabel],
+      "codes": [123],
+      "coordenates": LatLng,
+      "crossedBiomes": ["xyz789"],
+      "crossedBiomesArea": 123.45,
+      "crossedBiomesIds": [987],
+      "crossedBiomesList": BaseJSON,
+      "crossedBiosphereReserves": [
+        "abc123"
+      ],
+      "crossedBiosphereReservesArea": 123.45,
+      "crossedBiosphereReservesIds": [987],
+      "crossedCities": ["xyz789"],
+      "crossedCitiesArea": 123.45,
+      "crossedCitiesIds": [987],
+      "crossedCitiesList": BaseJSON,
+      "crossedConservationUnits": [
+        "xyz789"
+      ],
+      "crossedConservationUnitsArea": 123.45,
+      "crossedConservationUnitsIds": [123],
+      "crossedDeforestationAuthorizationsActivities": [
+        "xyz789"
+      ],
+      "crossedDeforestationAuthorizationsArea": 987.65,
+      "crossedDeforestationAuthorizationsAreasIds": [987],
+      "crossedDeforestationAuthorizationsCategories": [
+        "abc123"
+      ],
+      "crossedDeforestationAuthorizationsList": BaseJSON,
+      "crossedEmbargoesRuralPropertiesArea": 987.65,
+      "crossedEmbargoesRuralPropertiesIds": [123],
+      "crossedEmbargoesRuralPropertiesList": BaseJSON,
+      "crossedEmbargoesRuralPropertiesTotal": 123,
+      "crossedFederalProtectedAreaIntegralProtections": [
+        "abc123"
+      ],
+      "crossedFederalProtectedAreaIntegralProtectionsArea": 123.45,
+      "crossedFederalProtectedAreaSustainableUses": [
+        "abc123"
+      ],
+      "crossedFederalProtectedAreaSustainableUsesArea": 123.45,
+      "crossedForestManagementsActivities": [
+        "xyz789"
+      ],
+      "crossedForestManagementsArea": 123.45,
+      "crossedForestManagementsCategories": [
+        "xyz789"
+      ],
+      "crossedForestManagementsList": [
+        "xyz789"
+      ],
+      "crossedGeoparks": ["xyz789"],
+      "crossedGeoparksArea": 123.45,
+      "crossedGeoparksIds": [987],
+      "crossedIndigenousLands": ["xyz789"],
+      "crossedIndigenousLandsArea": 987.65,
+      "crossedIndigenousLandsIds": [987],
+      "crossedLegalReserveRuralPropertiesArea": 123.45,
+      "crossedLegalReserveRuralPropertiesList": BaseJSON,
+      "crossedLegalReserveRuralPropertiesTotal": 987,
+      "crossedLegalReserves": [CrossedLegalReserve],
+      "crossedLegalReservesArea": 123.45,
+      "crossedLegalReservesList": BaseJSON,
+      "crossedLegalReservesTotal": 123,
+      "crossedMunicipalityProtectedAreaIntegralProtections": [
+        "abc123"
+      ],
+      "crossedMunicipalityProtectedAreaIntegralProtectionsArea": 123.45,
+      "crossedMunicipalityProtectedAreaSustainableUses": [
+        "xyz789"
+      ],
+      "crossedMunicipalityProtectedAreaSustainableUsesArea": 123.45,
+      "crossedPermanentProtectedArea": 123.45,
+      "crossedPermanentProtectedAreaList": BaseJSON,
+      "crossedPermanentProtectedAreaTotal": 123,
+      "crossedPermanentProtectedAreas": [
+        CrossedPermanentProtectedArea
+      ],
+      "crossedPermanentProtectedRuralPropertiesArea": 987.65,
+      "crossedPermanentProtectedRuralPropertiesList": BaseJSON,
+      "crossedPermanentProtectedRuralPropertiesTotal": 987,
+      "crossedQuilombos": ["xyz789"],
+      "crossedQuilombosArea": 987.65,
+      "crossedQuilombosIds": [987],
+      "crossedRiverSourcesArea": 987.65,
+      "crossedRuralProperties": [AlertRuralProperty],
+      "crossedSettlements": ["xyz789"],
+      "crossedSettlementsArea": 123.45,
+      "crossedSettlementsIds": [123],
+      "crossedSettlementsRuralPropertiesArea": 987.65,
+      "crossedSettlementsRuralPropertiesList": BaseJSON,
+      "crossedSettlementsRuralPropertiesTotal": 123,
+      "crossedSpecialTerritories": [
+        "xyz789"
+      ],
+      "crossedSpecialTerritoriesArea": 123.45,
+      "crossedSpecialTerritoriesIds": [123],
+      "crossedSpecialTerritoryAmacroArea": 987.65,
+      "crossedSpecialTerritoryAmazoniaLegalArea": 123.45,
+      "crossedSpecialTerritoryLeiDaMataAtlanticaArea": 123.45,
+      "crossedSpecialTerritoryMatopibaArea": 987.65,
+      "crossedSpecialTerritorySemiaridoArea": 123.45,
+      "crossedStateProtectedAreaIntegralProtections": [
+        "abc123"
+      ],
+      "crossedStateProtectedAreaIntegralProtectionsArea": 123.45,
+      "crossedStateProtectedAreaSustainableUses": [
+        "xyz789"
+      ],
+      "crossedStateProtectedAreaSustainableUsesArea": 123.45,
+      "crossedStates": ["xyz789"],
+      "crossedStatesArea": 123.45,
+      "crossedStatesIds": [987],
+      "crossedStatesList": BaseJSON,
+      "crossedTerritoriesIds": [123],
+      "datum": "abc123",
+      "deforestationClasses": ["xyz789"],
+      "deforestationSpeed": "abc123",
+      "detectedAt": BaseDate,
+      "embargoedAreasIds": [123],
+      "exclusionCategories": ["xyz789"],
+      "geometryWkt": "abc123",
+      "id": 987,
+      "imageAcquiredAfterAt": BaseDate,
+      "imageAcquiredAfterList": BaseJSON,
+      "imageAcquiredBeboreList": BaseJSON,
+      "imageAcquiredBeforeAt": BaseDate,
+      "imagesLabels": [ImageLabel],
+      "publicationCycles": 123,
+      "publicationCyclesList": BaseJSON,
+      "publishedAt": BaseDate,
+      "publishedImages": [PublishedImage],
+      "republished": true,
+      "ruralProperties": [RuralProperty],
+      "ruralPropertiesCodes": ["xyz789"],
+      "ruralPropertiesList": BaseJSON,
+      "ruralPropertiesTotal": 123,
+      "sources": ["xyz789"],
+      "statusAt": BaseDate,
+      "statusName": "xyz789",
+      "supportCaseAuthorizations": [SupportCase],
+      "supportCases": [SupportCase],
+      "supportCasesIds": [987],
+      "warnings": WarningLabel
+    }
+  }
+}
+Queries
+alertDateRange
+Description
+Datas máxima e mínima de publicação dos alertas, sendo que as publicações de alertas são semanais
+
+Response
+Returns an AlertRange!
+
+Arguments
+Name	Description
+startDate - BaseDate	Minimum date for alerts. Default = "2019-01-01"
+Example
+Query
+query alertDateRange($startDate: BaseDate) {
+  alertDateRange(startDate: $startDate) {
+    maxDetectedAt
+    maxPublishedAt
+    minDetectedAt
+    minPublishedAt
+  }
+}
+Variables
+{"startDate": "2019-01-01"}
+Response
+{
+  "data": {
+    "alertDateRange": {
+      "maxDetectedAt": BaseDate,
+      "maxPublishedAt": BaseDate,
+      "minDetectedAt": BaseDate,
+      "minPublishedAt": BaseDate
+    }
+  }
+}
+Queries
+alerts
+Description
+A consulta dos alertas publicados na plataforma é realizada através da query alerts que tem como parâmetro filtros como: data de publicação e data de deteção, tamanho, área de busca, etc. O resultado será a lista paginada dos alertas.
+
+Response
+Returns an AlertDataCollection!
+
+Arguments
+Name	Description
+alertCodes - [ID!]	
+carCodes - [ID!]	
+page - Int	Default = 1
+limit - Int	Default = 100
+startDate - BaseDate	Minimum date for alerts. Default = "2019-01-01"
+endDate - BaseDate	Maximum date for alerts
+dateType - DateTypes	Default = DetectedAt
+startSize - Float	Smallest Area (ha). Default = 0.0
+endSize - Float	Largest Area (ha). Default = 999999.9
+territoryIds - [Int!]	Default = []
+territoryCategory - String	Default = null
+statusName - String	Default = "published"
+sources - [SourceTypes!]	Default = [All]
+intersectWithCar - Boolean	Default = null
+isInEmbargoedArea - Boolean	Default = null
+isInAuthorizedArea - Boolean	Default = null
+deforestationClasses - [DeforestationTypes!]	Default = [All]
+actionTypesIds - [Int!]	Default = []
+boundingBox - [Float!]	Default = []
+sortField - AlertSortField	Default = DETECTED_AT
+sortDirection - SortDirection	Default = DESC
+Example
+Query
+query alerts(
+  $alertCodes: [ID!],
+  $carCodes: [ID!],
+  $page: Int,
+  $limit: Int,
+  $startDate: BaseDate,
+  $endDate: BaseDate,
+  $dateType: DateTypes,
+  $startSize: Float,
+  $endSize: Float,
+  $territoryIds: [Int!],
+  $territoryCategory: String,
+  $statusName: String,
+  $sources: [SourceTypes!],
+  $intersectWithCar: Boolean,
+  $isInEmbargoedArea: Boolean,
+  $isInAuthorizedArea: Boolean,
+  $deforestationClasses: [DeforestationTypes!],
+  $actionTypesIds: [Int!],
+  $boundingBox: [Float!],
+  $sortField: AlertSortField,
+  $sortDirection: SortDirection
+) {
+  alerts(
+    alertCodes: $alertCodes,
+    carCodes: $carCodes,
+    page: $page,
+    limit: $limit,
+    startDate: $startDate,
+    endDate: $endDate,
+    dateType: $dateType,
+    startSize: $startSize,
+    endSize: $endSize,
+    territoryIds: $territoryIds,
+    territoryCategory: $territoryCategory,
+    statusName: $statusName,
+    sources: $sources,
+    intersectWithCar: $intersectWithCar,
+    isInEmbargoedArea: $isInEmbargoedArea,
+    isInAuthorizedArea: $isInAuthorizedArea,
+    deforestationClasses: $deforestationClasses,
+    actionTypesIds: $actionTypesIds,
+    boundingBox: $boundingBox,
+    sortField: $sortField,
+    sortDirection: $sortDirection
+  ) {
+    collection {
+      ...AlertDataFragment
+    }
+    metadata {
+      ...CollectionMetadataFragment
+    }
+    rankingByBiome {
+      ...AlertRankingByBiomeFragment
+    }
+    rankingByCity {
+      ...AlertRankingByCityFragment
+    }
+    rankingByState {
+      ...AlertRankingByStateFragment
+    }
+    summary {
+      ...QuerySummaryFragment
+    }
+  }
+}
+Variables
+{
+  "alertCodes": ["4"],
+  "carCodes": ["4"],
+  "page": 1,
+  "limit": 100,
+  "startDate": "2019-01-01",
+  "endDate": BaseDate,
+  "dateType": "DetectedAt",
+  "startSize": 0,
+  "endSize": 999999.9,
+  "territoryIds": [""],
+  "territoryCategory": null,
+  "statusName": "published",
+  "sources": ["All"],
+  "intersectWithCar": null,
+  "isInEmbargoedArea": null,
+  "isInAuthorizedArea": null,
+  "deforestationClasses": ["All"],
+  "actionTypesIds": [""],
+  "boundingBox": [""],
+  "sortField": "DETECTED_AT",
+  "sortDirection": "DESC"
+}
+Response
+{
+  "data": {
+    "alerts": {
+      "collection": [AlertData],
+      "metadata": CollectionMetadata,
+      "rankingByBiome": [AlertRankingByBiome],
+      "rankingByCity": [AlertRankingByCity],
+      "rankingByState": [AlertRankingByState],
+      "summary": QuerySummary
+    }
+  }
+}
+Queries
+areasOfInterest
+Description
+Os territórios de interesse são a forma como um usuário monitora uma determinada área de interesse para os atuais e futuros alertas. Para a consulta dos seus territórios de interesse utilize a query myMaps() a requisição retorná todos os territórios de interesses já criados por seu usuário.
+
+Response
+Returns [MyMap!]
+
+Example
+Query
+query areasOfInterest {
+  areasOfInterest {
+    alertNotifications {
+      ...AlertNotificationFragment
+    }
+    alertNotificationsCount
+    id
+    name
+    territories {
+      ...TerritoryFragment
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}
+Response
+{
+  "data": {
+    "areasOfInterest": [
+      {
+        "alertNotifications": [AlertNotification],
+        "alertNotificationsCount": 123,
+        "id": 123,
+        "name": "abc123",
+        "territories": [Territory],
+        "user": User
+      }
+    ]
+  }
+}
+Queries
+currentlyInPrivacyNotice
+Description
+Retorna a nota de privacidade em uso corrente na plataforma
+
+Response
+Returns a PrivacyNotice!
+
+Arguments
+Name	Description
+destination - PrivacyNoticeEnum	Destinos dos termos de uso
+Example
+Query
+query currentlyInPrivacyNotice($destination: PrivacyNoticeEnum) {
+  currentlyInPrivacyNotice(destination: $destination) {
+    destination
+    englishContent
+    id
+    portugueseContent
+    status
+    version
+  }
+}
+Variables
+{"destination": "Main"}
+Response
+{
+  "data": {
+    "currentlyInPrivacyNotice": {
+      "destination": "Main",
+      "englishContent": "abc123",
+      "id": 123,
+      "portugueseContent": "abc123",
+      "status": 987,
+      "version": 987
+    }
+  }
+}
+Queries
+currentlyInTermOfUse
+Description
+Retorna os termos de uso correntes da plataforma
+
+Response
+Returns a TermOfUse!
+
+Arguments
+Name	Description
+destination - TermOfUseEnum	Destinos dos termos de uso
+Example
+Query
+query currentlyInTermOfUse($destination: TermOfUseEnum) {
+  currentlyInTermOfUse(destination: $destination) {
+    destination
+    englishContent
+    id
+    portugueseContent
+    status
+    version
+  }
+}
+Variables
+{"destination": "Main"}
+Response
+{
+  "data": {
+    "currentlyInTermOfUse": {
+      "destination": "Main",
+      "englishContent": "abc123",
+      "id": 123,
+      "portugueseContent": "xyz789",
+      "status": 987,
+      "version": 123
+    }
+  }
+}
+Queries
+institutionsCsvExport
+Response
+Returns a String
+
+Example
+Query
+query institutionsCsvExport {
+  institutionsCsvExport
+}
+Response
+{
+  "data": {
+    "institutionsCsvExport": "abc123"
+  }
+}
+Queries
+lastAlertPublication
+Description
+Retorna a última data em que alertas foram publicados na plataforma e a quantidade de alertas que foram publicados
+
+Response
+Returns a LastAlertPublication!
+
+Example
+Query
+query lastAlertPublication {
+  lastAlertPublication {
+    publishedAt
+    total
+  }
+}
+Response
+{
+  "data": {
+    "lastAlertPublication": {
+      "publishedAt": BaseDateTime,
+      "total": 123
+    }
+  }
+}
+Queries
+pointInformation
+Description
+Retorna as informações de territórios que cruzam o ponto buscado
+
+Response
+Returns a PointInformation!
+
+Arguments
+Name	Description
+boundingBox - BoundingBoxInput	area bounding box
+Example
+Query
+query pointInformation($boundingBox: BoundingBoxInput) {
+  pointInformation(boundingBox: $boundingBox) {
+    alerts {
+      ...MvPublishedAlertFragment
+    }
+    boundingBox
+    ruralProperties {
+      ...RuralPropertyFragment
+    }
+    territories {
+      ...TerritoryFragment
+    }
+  }
+}
+Variables
+{"boundingBox": BoundingBoxInput}
+Response
+{
+  "data": {
+    "pointInformation": {
+      "alerts": [MvPublishedAlert],
+      "boundingBox": [123.45],
+      "ruralProperties": [RuralProperty],
+      "territories": [Territory]
+    }
+  }
+}
+Queries
+relatoryAlert
+Description
+Você precisará realizar o download de todos os alertas no formato desejado (csv/shapefile) e também o tipo de conteúdo do arquivo (alertas ou alertas com cruzamento com Imóvel Rural)
+
+Response
+Returns a RelatoryAlert
+
+Arguments
+Name	Description
+format - RelatoryTypenameTypes	format of relatory. Default = Csv
+typename - RelatoryFormatTypes	type of relatory. Default = Alerts
+Example
+Query
+query relatoryAlert(
+  $format: RelatoryTypenameTypes,
+  $typename: RelatoryFormatTypes
+) {
+  relatoryAlert(
+    format: $format,
+    typename: $typename
+  ) {
+    fileUrl
+    format
+    lastUpdate
+    md5
+    relatoryMetadatum {
+      ...RelatoryMetadatumFragment
+    }
+    templateVersion
+    typename
+  }
+}
+Variables
+{"format": "Csv", "typename": "Alerts"}
+Response
+{
+  "data": {
+    "relatoryAlert": {
+      "fileUrl": "xyz789",
+      "format": "xyz789",
+      "lastUpdate": BaseDate,
+      "md5": "xyz789",
+      "relatoryMetadatum": RelatoryMetadatum,
+      "templateVersion": 123,
+      "typename": "xyz789"
+    }
+  }
+}
+Queries
+ruralProperty
+Description
+Realize a busca de alertas a partir de um imóvel rural (CAR/SIGEF/SNCI) através da query ruralProperty(carCode: $carCode) . A requisição requer um Imóvel Rural cruzados com alertas na nossa base de dados e retorna a lista com todos os alertas vinculados a este imóvel específico específico
+
+Response
+Returns a RuralPropertySummary
+
+Arguments
+Name	Description
+carCode - String!	
+Example
+Query
+query ruralProperty($carCode: String!) {
+  ruralProperty(carCode: $carCode) {
+    alerts {
+      ...RuralPropertyAlertFragment
+    }
+    areaHa
+    boundingBox
+    carType
+    carUpdatedAt
+    insertedAt
+    propertyCode
+    state
+    stateAcronym
+    version
+  }
+}
+Variables
+{"carCode": "xyz789"}
+Response
+{
+  "data": {
+    "ruralProperty": {
+      "alerts": [RuralPropertyAlert],
+      "areaHa": 123.45,
+      "boundingBox": [987.65],
+      "carType": "xyz789",
+      "carUpdatedAt": BaseDate,
+      "insertedAt": BaseDateTime,
+      "propertyCode": "xyz789",
+      "state": "xyz789",
+      "stateAcronym": "xyz789",
+      "version": 987
+    }
+  }
+}
+Queries
+supportCases
+Description
+Retorna os casos de suporte do usuário que está fazendo a requisição
+
+Response
+Returns a SupportCaseCollection!
+
+Arguments
+Name	Description
+page - Int	Default = 0
+limit - Int	Default = 50
+userOrDescriptionCont - String	
+supportCaseTypeEq - String	
+lastStatusEq - Int	
+Example
+Query
+query supportCases(
+  $page: Int,
+  $limit: Int,
+  $userOrDescriptionCont: String,
+  $supportCaseTypeEq: String,
+  $lastStatusEq: Int
+) {
+  supportCases(
+    page: $page,
+    limit: $limit,
+    userOrDescriptionCont: $userOrDescriptionCont,
+    supportCaseTypeEq: $supportCaseTypeEq,
+    lastStatusEq: $lastStatusEq
+  ) {
+    collection {
+      ...SupportCaseFragment
+    }
+    metadata {
+      ...CollectionMetadataFragment
+    }
+  }
+}
+Variables
+{
+  "page": 0,
+  "limit": 50,
+  "userOrDescriptionCont": "abc123",
+  "supportCaseTypeEq": "abc123",
+  "lastStatusEq": 123
+}
+Response
+{
+  "data": {
+    "supportCases": {
+      "collection": [SupportCase],
+      "metadata": CollectionMetadata
+    }
+  }
+}
+Queries
+territoryOptions
+Description
+Você poderá consultar todos os territórios da plataforma através da query territory_options(category: $category). A requisição tem como parâmetro o tipo de território (biomas, municípios, áreas de conservação, etc) e retornará todos os territórios que você poderá utilizar para realizar busca de alertas.
+
+Response
+Returns [TerritoryCategory!]!
+
+Example
+Query
+query territoryOptions {
+  territoryOptions {
+    category
+    categoryName
+    territories {
+      ...TerritoryOptionFragment
+    }
+  }
+}
+Response
+{
+  "data": {
+    "territoryOptions": [
+      {
+        "category": "abc123",
+        "categoryName": "xyz789",
+        "territories": [TerritoryOption]
+      }
+    ]
+  }
+}
+Queries
+usersAndInstitutionsXlsxExport
+Response
+Returns a String
+
+Example
+Query
+query usersAndInstitutionsXlsxExport {
+  usersAndInstitutionsXlsxExport
+}
+Response
+{
+  "data": {
+    "usersAndInstitutionsXlsxExport": "abc123"
+  }
+}
+Queries
+usersCsvExport
+Response
+Returns a String
+
+Example
+Query
+query usersCsvExport {
+  usersCsvExport
+}
+Response
+{"data": {"usersCsvExport": "xyz789"}}
+Queries
+version
+Description
+Retorna a versão da API
+
+Response
+Returns an APIVersion!
+
+Example
+Query
+query version {
+  version {
+    buildDate
+    buildHash
+    rubyVersion
+    version
+  }
+}
+Response
+{
+  "data": {
+    "version": {
+      "buildDate": "xyz789",
+      "buildHash": "abc123",
+      "rubyVersion": "abc123",
+      "version": "abc123"
+    }
+  }
+}
+Mutations
+signIn
+Description
+A autenticação na plataforma Mapbiomas Alerta é feita através da mutation signIn e necessária para todas as demais requisições a API. A requisição retorna um token (Bearer Token) de API que serve para que o sistema identifique a sua conta e concede permissões para que o sistema se comunique com a plataforma em nome da sua conta. Para realizar o signIn, em clientes desktop ou bibliotecas de linguagem de programação, você deve utilizar suas credenciais de usuário substituindo as variáveis email e password pelas informações da sua conta. A cada signIn realizado os tokens anteriores deixarão de ser válidos. Para utilizer nossa API é necessário que sua conta esteja confirmada pelo link encaminhado ao seu email no momento da criação da conta.
+
+Response
+Returns a Login!
+
+Arguments
+Name	Description
+email - String!	
+password - String!	
+Example
+Query
+mutation signIn(
+  $email: String!,
+  $password: String!
+) {
+  signIn(
+    email: $email,
+    password: $password
+  ) {
+    token
+  }
+}
+Variables
+{
+  "email": "abc123",
+  "password": "xyz789"
+}
+Response
+{"data": {"signIn": {"token": "xyz789"}}}
+Mutations
+signOut
+Response
+Returns a MessageStatus!
+
+Arguments
+Name	Description
+sessionToken - String!	
+signOutOfAllDevices - Boolean	
+Example
+Query
+mutation signOut(
+  $sessionToken: String!,
+  $signOutOfAllDevices: Boolean
+) {
+  signOut(
+    sessionToken: $sessionToken,
+    signOutOfAllDevices: $signOutOfAllDevices
+  ) {
+    message
+    status
+  }
+}
+Variables
+{
+  "sessionToken": "abc123",
+  "signOutOfAllDevices": false
+}
+Response
+{
+  "data": {
+    "signOut": {
+      "message": "xyz789",
+      "status": true
+    }
+  }
+}
+Types
+APIVersion
+Fields
+Field Name	Description
+buildDate - String!	
+buildHash - String!	
+rubyVersion - String!	
+version - String!	
+Example
+{
+  "buildDate": "xyz789",
+  "buildHash": "abc123",
+  "rubyVersion": "abc123",
+  "version": "xyz789"
+}
+Types
+Action
+Description
+Mapbiomas Alerta Action
+
+Fields
+Field Name	Description
+actionDate - BaseDate	
+actionType - String	
+activities - [Activity!]	
+alertCode - String	
+alertGeometry - AlertGeometry	
+alertGeometryId - Int	
+createdAt - BaseDateTime	
+description - String	
+id - Int!	
+institutionName - String	
+link - String	
+process - String	
+ruralProperty - RuralProperty	
+ruralPropertyId - Int	
+ruralPropertyVersion - Int	
+updatedAt - BaseDateTime	
+user - User	
+userId - Int	
+Example
+{
+  "actionDate": BaseDate,
+  "actionType": "abc123",
+  "activities": [Activity],
+  "alertCode": "abc123",
+  "alertGeometry": AlertGeometry,
+  "alertGeometryId": 987,
+  "createdAt": BaseDateTime,
+  "description": "abc123",
+  "id": 987,
+  "institutionName": "xyz789",
+  "link": "abc123",
+  "process": "xyz789",
+  "ruralProperty": RuralProperty,
+  "ruralPropertyId": 123,
+  "ruralPropertyVersion": 987,
+  "updatedAt": BaseDateTime,
+  "user": User,
+  "userId": 987
+}
+Types
+ActionOfBatch
+Description
+Mapbiomas Alerta Batch of Actions
+
+Fields
+Field Name	Description
+action - Action	
+actionBatch - [ActionsBatch!]	
+actionId - Int	
+fileData - BaseJSON	
+id - ID!	
+line - Int	
+status - ActionsBatchStatus	
+Example
+{
+  "action": Action,
+  "actionBatch": [ActionsBatch],
+  "actionId": 987,
+  "fileData": BaseJSON,
+  "id": 4,
+  "line": 123,
+  "status": "Waiting"
+}
+Types
+ActionResult
+Description
+Alert Action result informations
+
+Fields
+Field Name	Description
+key - String	
+value - Int	
+Example
+{"key": "abc123", "value": 987}
+Types
+ActionsBatch
+Description
+Mapbiomas Alerta Batch of Actions
+
+Fields
+Field Name	Description
+actionOfBatches - [ActionOfBatch!]	
+createdAt - BaseDateTime	
+generatedActionsCount - Int	
+id - ID!	
+observations - String	
+processedLinesCount - Int	
+status - ActionsBatchStatus	
+user - User	
+xlsxUploaded - String	
+xlsxUploadedFilename - String	
+xlsxUploadedUrl - String	
+Example
+{
+  "actionOfBatches": [ActionOfBatch],
+  "createdAt": BaseDateTime,
+  "generatedActionsCount": 123,
+  "id": 4,
+  "observations": "abc123",
+  "processedLinesCount": 987,
+  "status": "Waiting",
+  "user": User,
+  "xlsxUploaded": "xyz789",
+  "xlsxUploadedFilename": "abc123",
+  "xlsxUploadedUrl": "xyz789"
+}
+Types
+ActionsBatchStatus
+Description
+Mapbiomas ActionsBatchStatus
+
+Values
+Enum Value	Description
+Waiting
+
+Em progresso
+InProgress
+
+Em progresso
+Finished
+
+Finalizado
+Error
+
+Erro no documento
+RemovingActions
+
+Removendo ações
+ActionsRemoved
+
+Ações removidas
+ErrorRemovingActions
+
+Erro ao remover ações
+Example
+"Waiting"
+Types
+Activity
+Description
+Mapbiomas Alerta Activity
+
+Fields
+Field Name	Description
+action - Action!	
+date - BaseDate	
+description - String!	
+id - Int!	
+user - User	
+Example
+{
+  "action": Action,
+  "date": BaseDate,
+  "description": "xyz789",
+  "id": 987,
+  "user": User
+}
+Types
+Alert
+Description
+Mapbiomas Alerta Alert
+
+Fields
+Field Name	Description
+afterImage - PublishedImage	
+alertCode - String!	
+alertStatus - [AlertStatus!]	
+areaHa - Float!	
+beforeImage - PublishedImage	
+boundingBox - [Float!]!	
+classesLabels - BaseJSON	
+code - String!	
+coordinates - LatLng!	
+detectedAt - BaseDate!	
+imagesLabels - BaseJSON	
+lastAlertStatus - AlertStatus	
+publishedAt - BaseDate!	
+publishedImages - [PublishedImage!]	
+ruralProperties - [AlertCAR!]	
+sources - [String!]	
+warnings - BaseJSON	
+Example
+{
+  "afterImage": PublishedImage,
+  "alertCode": "abc123",
+  "alertStatus": [AlertStatus],
+  "areaHa": 987.65,
+  "beforeImage": PublishedImage,
+  "boundingBox": [123.45],
+  "classesLabels": BaseJSON,
+  "code": "xyz789",
+  "coordinates": LatLng,
+  "detectedAt": BaseDate,
+  "imagesLabels": BaseJSON,
+  "lastAlertStatus": AlertStatus,
+  "publishedAt": BaseDate,
+  "publishedImages": [PublishedImage],
+  "ruralProperties": [AlertCAR],
+  "sources": ["abc123"],
+  "warnings": BaseJSON
+}
+Types
+AlertActivation
+Description
+Mapbiomas Alerta AlertActivation
+
+Fields
+Field Name	Description
+activatedAt - BaseDateTime!	
+alertStatus - AlertStatus!	
+alertStatusId - Int!	
+areaHa - Float!	
+fromToolkit - Boolean!	
+id - Int!	
+images - [Image!]!	
+insertedAt - BaseDateTime!	
+oldId - Int!	
+userEmail - String!	
+userName - String!	
+Example
+{
+  "activatedAt": BaseDateTime,
+  "alertStatus": AlertStatus,
+  "alertStatusId": 987,
+  "areaHa": 123.45,
+  "fromToolkit": true,
+  "id": 123,
+  "images": [Image],
+  "insertedAt": BaseDateTime,
+  "oldId": 123,
+  "userEmail": "abc123",
+  "userName": "xyz789"
+}
+Types
+AlertCAR
+Fields
+Field Name	Description
+area - Float!	
+code - String!	
+id - Int!	
+intersectionArea - Float!	
+type - String!	
+Example
+{
+  "area": 987.65,
+  "code": "abc123",
+  "id": 123,
+  "intersectionArea": 123.45,
+  "type": "abc123"
+}
+Types
+AlertData
+Description
+Mapbiomas Data of an Alerta
+
+Fields
+Field Name	Description
+actions - [Action!]	
+actionsList - BaseJSON	
+actionsTypeIds - [Int!]	
+alertCode - Int	
+alertGeometry - AlertGeometry	
+alertGeometryId - Int	
+alertImageBbox - String	
+areaHa - Float	
+bbox - String	
+boundingBox - BoundingBox	
+categories - [String!]	
+classesLabels - [ClassLabel!]	
+codes - [Int!]	
+coordenates - LatLng	
+crossedBiomes - [String!]	
+crossedBiomesArea - Float	
+crossedBiomesIds - [Int!]	
+crossedBiomesList - BaseJSON	
+crossedBiosphereReserves - [String!]	
+crossedBiosphereReservesArea - Float	
+crossedBiosphereReservesIds - [Int!]	
+crossedCities - [String!]	
+crossedCitiesArea - Float	
+crossedCitiesIds - [Int!]	
+crossedCitiesList - BaseJSON	
+crossedConservationUnits - [String!]	
+crossedConservationUnitsArea - Float	
+crossedConservationUnitsIds - [Int!]	
+crossedDeforestationAuthorizationsActivities - [String!]	
+crossedDeforestationAuthorizationsArea - Float	
+crossedDeforestationAuthorizationsAreasIds - [Int!]	
+crossedDeforestationAuthorizationsCategories - [String!]	
+crossedDeforestationAuthorizationsList - BaseJSON	
+crossedEmbargoesRuralPropertiesArea - Float	
+crossedEmbargoesRuralPropertiesIds - [Int!]	
+crossedEmbargoesRuralPropertiesList - BaseJSON	
+crossedEmbargoesRuralPropertiesTotal - Int	
+crossedFederalProtectedAreaIntegralProtections - [String!]	
+crossedFederalProtectedAreaIntegralProtectionsArea - Float	
+crossedFederalProtectedAreaSustainableUses - [String!]	
+crossedFederalProtectedAreaSustainableUsesArea - Float	
+crossedForestManagementsActivities - [String!]	
+crossedForestManagementsArea - Float	
+crossedForestManagementsCategories - [String!]	
+crossedForestManagementsList - [String!]	
+crossedGeoparks - [String!]	
+crossedGeoparksArea - Float	
+crossedGeoparksIds - [Int!]	
+crossedIndigenousLands - [String!]	
+crossedIndigenousLandsArea - Float	
+crossedIndigenousLandsIds - [Int!]	
+crossedLegalReserveRuralPropertiesArea - Float	
+crossedLegalReserveRuralPropertiesList - BaseJSON	
+crossedLegalReserveRuralPropertiesTotal - Int	
+crossedLegalReserves - [CrossedLegalReserve!]	
+Arguments
+carId - Int
+crossedLegalReservesArea - Float	
+crossedLegalReservesList - BaseJSON	
+crossedLegalReservesTotal - Int	
+crossedMunicipalityProtectedAreaIntegralProtections - [String!]	
+crossedMunicipalityProtectedAreaIntegralProtectionsArea - Float	
+crossedMunicipalityProtectedAreaSustainableUses - [String!]	
+crossedMunicipalityProtectedAreaSustainableUsesArea - Float	
+crossedPermanentProtectedArea - Float	
+crossedPermanentProtectedAreaList - BaseJSON	
+crossedPermanentProtectedAreaTotal - Int	
+crossedPermanentProtectedAreas - [CrossedPermanentProtectedArea!]	
+Arguments
+carId - Int
+crossedPermanentProtectedRuralPropertiesArea - Float	
+crossedPermanentProtectedRuralPropertiesList - BaseJSON	
+crossedPermanentProtectedRuralPropertiesTotal - Int	
+crossedQuilombos - [String!]	
+crossedQuilombosArea - Float	
+crossedQuilombosIds - [Int!]	
+crossedRiverSourcesArea - Float	
+crossedRuralProperties - [AlertRuralProperty!]	
+Arguments
+carCode - String
+carId - Int
+This argument is deprecated, use 'carCode' instead
+
+crossedSettlements - [String!]	
+crossedSettlementsArea - Float	
+crossedSettlementsIds - [Int!]	
+crossedSettlementsRuralPropertiesArea - Float	
+crossedSettlementsRuralPropertiesList - BaseJSON	
+crossedSettlementsRuralPropertiesTotal - Int	
+crossedSpecialTerritories - [String!]	
+crossedSpecialTerritoriesArea - Float	
+crossedSpecialTerritoriesIds - [Int!]	
+crossedSpecialTerritoryAmacroArea - Float	
+crossedSpecialTerritoryAmazoniaLegalArea - Float	
+crossedSpecialTerritoryLeiDaMataAtlanticaArea - Float	
+crossedSpecialTerritoryMatopibaArea - Float	
+crossedSpecialTerritorySemiaridoArea - Float	
+crossedStateProtectedAreaIntegralProtections - [String!]	
+crossedStateProtectedAreaIntegralProtectionsArea - Float	
+crossedStateProtectedAreaSustainableUses - [String!]	
+crossedStateProtectedAreaSustainableUsesArea - Float	
+crossedStates - [String!]	
+crossedStatesArea - Float	
+crossedStatesIds - [Int!]	
+crossedStatesList - BaseJSON	
+crossedTerritoriesIds - [Int!]	
+datum - String	
+deforestationClasses - [String!]	
+deforestationSpeed - String	
+detectedAt - BaseDate	
+embargoedAreasIds - [Int!]	
+exclusionCategories - [String!]	
+geometryWkt - String	
+id - Int!	
+imageAcquiredAfterAt - BaseDate	
+imageAcquiredAfterList - BaseJSON	
+imageAcquiredBeboreList - BaseJSON	
+imageAcquiredBeforeAt - BaseDate	
+imagesLabels - [ImageLabel!]	
+publicationCycles - Int	
+publicationCyclesList - BaseJSON	
+publishedAt - BaseDate	
+publishedImages - [PublishedImage!]	
+Arguments
+carCode - String
+carId - Int
+This argument is deprecated, use 'carCode' instead
+
+republished - Boolean	
+ruralProperties - [RuralProperty!]	
+Arguments
+carCode - String
+carId - Int
+This argument is deprecated, use 'carCode' instead
+
+ruralPropertiesCodes - [String!]	
+ruralPropertiesList - BaseJSON	
+ruralPropertiesTotal - Int	
+sources - [String!]	
+statusAt - BaseDate	
+statusName - String	
+supportCaseAuthorizations - [SupportCase!]	
+Arguments
+carCode - String
+carId - Int
+This argument is deprecated, use 'carCode' instead
+
+supportCaseType - SupportCaseTypes
+supportCases - [SupportCase!]	
+Arguments
+carCode - String
+carId - Int
+This argument is deprecated, use 'carCode' instead
+
+supportCasesIds - [Int!]	
+warnings - WarningLabel	
+Example
+{
+  "actions": [Action],
+  "actionsList": BaseJSON,
+  "actionsTypeIds": [123],
+  "alertCode": 987,
+  "alertGeometry": AlertGeometry,
+  "alertGeometryId": 987,
+  "alertImageBbox": "abc123",
+  "areaHa": 123.45,
+  "bbox": "abc123",
+  "boundingBox": BoundingBox,
+  "categories": ["abc123"],
+  "classesLabels": [ClassLabel],
+  "codes": [123],
+  "coordenates": LatLng,
+  "crossedBiomes": ["xyz789"],
+  "crossedBiomesArea": 123.45,
+  "crossedBiomesIds": [987],
+  "crossedBiomesList": BaseJSON,
+  "crossedBiosphereReserves": ["abc123"],
+  "crossedBiosphereReservesArea": 123.45,
+  "crossedBiosphereReservesIds": [987],
+  "crossedCities": ["xyz789"],
+  "crossedCitiesArea": 987.65,
+  "crossedCitiesIds": [123],
+  "crossedCitiesList": BaseJSON,
+  "crossedConservationUnits": ["xyz789"],
+  "crossedConservationUnitsArea": 123.45,
+  "crossedConservationUnitsIds": [987],
+  "crossedDeforestationAuthorizationsActivities": [
+    "abc123"
+  ],
+  "crossedDeforestationAuthorizationsArea": 987.65,
+  "crossedDeforestationAuthorizationsAreasIds": [123],
+  "crossedDeforestationAuthorizationsCategories": [
+    "abc123"
+  ],
+  "crossedDeforestationAuthorizationsList": BaseJSON,
+  "crossedEmbargoesRuralPropertiesArea": 123.45,
+  "crossedEmbargoesRuralPropertiesIds": [987],
+  "crossedEmbargoesRuralPropertiesList": BaseJSON,
+  "crossedEmbargoesRuralPropertiesTotal": 987,
+  "crossedFederalProtectedAreaIntegralProtections": [
+    "xyz789"
+  ],
+  "crossedFederalProtectedAreaIntegralProtectionsArea": 987.65,
+  "crossedFederalProtectedAreaSustainableUses": [
+    "abc123"
+  ],
+  "crossedFederalProtectedAreaSustainableUsesArea": 123.45,
+  "crossedForestManagementsActivities": [
+    "abc123"
+  ],
+  "crossedForestManagementsArea": 123.45,
+  "crossedForestManagementsCategories": [
+    "abc123"
+  ],
+  "crossedForestManagementsList": [
+    "xyz789"
+  ],
+  "crossedGeoparks": ["xyz789"],
+  "crossedGeoparksArea": 123.45,
+  "crossedGeoparksIds": [987],
+  "crossedIndigenousLands": ["abc123"],
+  "crossedIndigenousLandsArea": 123.45,
+  "crossedIndigenousLandsIds": [123],
+  "crossedLegalReserveRuralPropertiesArea": 987.65,
+  "crossedLegalReserveRuralPropertiesList": BaseJSON,
+  "crossedLegalReserveRuralPropertiesTotal": 987,
+  "crossedLegalReserves": [CrossedLegalReserve],
+  "crossedLegalReservesArea": 123.45,
+  "crossedLegalReservesList": BaseJSON,
+  "crossedLegalReservesTotal": 987,
+  "crossedMunicipalityProtectedAreaIntegralProtections": [
+    "abc123"
+  ],
+  "crossedMunicipalityProtectedAreaIntegralProtectionsArea": 987.65,
+  "crossedMunicipalityProtectedAreaSustainableUses": [
+    "abc123"
+  ],
+  "crossedMunicipalityProtectedAreaSustainableUsesArea": 123.45,
+  "crossedPermanentProtectedArea": 123.45,
+  "crossedPermanentProtectedAreaList": BaseJSON,
+  "crossedPermanentProtectedAreaTotal": 123,
+  "crossedPermanentProtectedAreas": [
+    CrossedPermanentProtectedArea
+  ],
+  "crossedPermanentProtectedRuralPropertiesArea": 123.45,
+  "crossedPermanentProtectedRuralPropertiesList": BaseJSON,
+  "crossedPermanentProtectedRuralPropertiesTotal": 123,
+  "crossedQuilombos": ["xyz789"],
+  "crossedQuilombosArea": 987.65,
+  "crossedQuilombosIds": [123],
+  "crossedRiverSourcesArea": 987.65,
+  "crossedRuralProperties": [AlertRuralProperty],
+  "crossedSettlements": ["abc123"],
+  "crossedSettlementsArea": 987.65,
+  "crossedSettlementsIds": [987],
+  "crossedSettlementsRuralPropertiesArea": 123.45,
+  "crossedSettlementsRuralPropertiesList": BaseJSON,
+  "crossedSettlementsRuralPropertiesTotal": 987,
+  "crossedSpecialTerritories": ["abc123"],
+  "crossedSpecialTerritoriesArea": 123.45,
+  "crossedSpecialTerritoriesIds": [123],
+  "crossedSpecialTerritoryAmacroArea": 987.65,
+  "crossedSpecialTerritoryAmazoniaLegalArea": 123.45,
+  "crossedSpecialTerritoryLeiDaMataAtlanticaArea": 123.45,
+  "crossedSpecialTerritoryMatopibaArea": 123.45,
+  "crossedSpecialTerritorySemiaridoArea": 123.45,
+  "crossedStateProtectedAreaIntegralProtections": [
+    "xyz789"
+  ],
+  "crossedStateProtectedAreaIntegralProtectionsArea": 987.65,
+  "crossedStateProtectedAreaSustainableUses": [
+    "abc123"
+  ],
+  "crossedStateProtectedAreaSustainableUsesArea": 987.65,
+  "crossedStates": ["abc123"],
+  "crossedStatesArea": 123.45,
+  "crossedStatesIds": [987],
+  "crossedStatesList": BaseJSON,
+  "crossedTerritoriesIds": [123],
+  "datum": "xyz789",
+  "deforestationClasses": ["abc123"],
+  "deforestationSpeed": "abc123",
+  "detectedAt": BaseDate,
+  "embargoedAreasIds": [987],
+  "exclusionCategories": ["abc123"],
+  "geometryWkt": "abc123",
+  "id": 987,
+  "imageAcquiredAfterAt": BaseDate,
+  "imageAcquiredAfterList": BaseJSON,
+  "imageAcquiredBeboreList": BaseJSON,
+  "imageAcquiredBeforeAt": BaseDate,
+  "imagesLabels": [ImageLabel],
+  "publicationCycles": 123,
+  "publicationCyclesList": BaseJSON,
+  "publishedAt": BaseDate,
+  "publishedImages": [PublishedImage],
+  "republished": true,
+  "ruralProperties": [RuralProperty],
+  "ruralPropertiesCodes": ["xyz789"],
+  "ruralPropertiesList": BaseJSON,
+  "ruralPropertiesTotal": 987,
+  "sources": ["xyz789"],
+  "statusAt": BaseDate,
+  "statusName": "xyz789",
+  "supportCaseAuthorizations": [SupportCase],
+  "supportCases": [SupportCase],
+  "supportCasesIds": [987],
+  "warnings": WarningLabel
+}
+Types
+AlertDataCollection
+Description
+Alert query result
+
+Fields
+Field Name	Description
+collection - [AlertData!]!	
+metadata - CollectionMetadata!	
+rankingByBiome - [AlertRankingByBiome!]	
+rankingByCity - [AlertRankingByCity!]	
+rankingByState - [AlertRankingByState!]	
+summary - QuerySummary	
+Example
+{
+  "collection": [AlertData],
+  "metadata": CollectionMetadata,
+  "rankingByBiome": [AlertRankingByBiome],
+  "rankingByCity": [AlertRankingByCity],
+  "rankingByState": [AlertRankingByState],
+  "summary": QuerySummary
+}
+Types
+AlertGeometry
+Description
+Mapbiomas Alerta AlertGeometry
+
+Fields
+Field Name	Description
+afterDeforestationSimplifiedImage - String	
+alertCodeOld - Int	
+alertGeometriesRuralPropertiesSimplifiedPoints - [AlertGeometryRuralPropertySimplifiedPoint!]	
+alertGeometriesSimplifiedPoints - [AlertGeometrySimplifiedPoint!]	
+alertImageBbox - BoundingBox	
+alertStatus - [AlertStatus!]	
+areaHa - Float	
+authorizedAreas - [DeforestationAuthorization!]	
+authorizedAreasArea - Float	
+bbox - BaseJSON	
+changes - BaseJSON	
+code - ID!	
+conservationUnits - [Territory!]	
+conservationUnitsArea - Float	
+deforestationAuthorizations - [DeforestationAuthorization!]	
+forestManagements - [DeforestationAuthorization!]	
+forestManagementsArea - Float	
+imageGridMeasurements - [BaseJSON!]	
+indigenousLands - [Territory!]	
+indigenousLandsArea - Float	
+layerImage - String	
+legalReserves - [LegalReserve!]	
+legalReservesArea - Float	
+permanentProtectedAreas - [PermanentProtectedArea!]	
+permanentProtectedAreasArea - Float	
+refined - Boolean	
+relatedAlert - AlertData	
+riverSources - [RiverSource!]	
+riverSourcesArea - Float	
+ruralProperties - [RuralProperty!]	
+ruralPropertySimplifiedPoints - [AlertGeometryRuralPropertySimplifiedPoint!]	
+settlements - [Territory!]	
+settlementsArea - Float	
+simplifiedPoints - [AlertGeometrySimplifiedPoint!]	
+territories - [Territory!]	
+Example
+{
+  "afterDeforestationSimplifiedImage": "abc123",
+  "alertCodeOld": 123,
+  "alertGeometriesRuralPropertiesSimplifiedPoints": [
+    AlertGeometryRuralPropertySimplifiedPoint
+  ],
+  "alertGeometriesSimplifiedPoints": [
+    AlertGeometrySimplifiedPoint
+  ],
+  "alertImageBbox": BoundingBox,
+  "alertStatus": [AlertStatus],
+  "areaHa": 123.45,
+  "authorizedAreas": [DeforestationAuthorization],
+  "authorizedAreasArea": 987.65,
+  "bbox": BaseJSON,
+  "changes": BaseJSON,
+  "code": "4",
+  "conservationUnits": [Territory],
+  "conservationUnitsArea": 987.65,
+  "deforestationAuthorizations": [
+    DeforestationAuthorization
+  ],
+  "forestManagements": [DeforestationAuthorization],
+  "forestManagementsArea": 123.45,
+  "imageGridMeasurements": [BaseJSON],
+  "indigenousLands": [Territory],
+  "indigenousLandsArea": 987.65,
+  "layerImage": "xyz789",
+  "legalReserves": [LegalReserve],
+  "legalReservesArea": 987.65,
+  "permanentProtectedAreas": [PermanentProtectedArea],
+  "permanentProtectedAreasArea": 123.45,
+  "refined": false,
+  "relatedAlert": AlertData,
+  "riverSources": [RiverSource],
+  "riverSourcesArea": 987.65,
+  "ruralProperties": [RuralProperty],
+  "ruralPropertySimplifiedPoints": [
+    AlertGeometryRuralPropertySimplifiedPoint
+  ],
+  "settlements": [Territory],
+  "settlementsArea": 123.45,
+  "simplifiedPoints": [AlertGeometrySimplifiedPoint],
+  "territories": [Territory]
+}
+Types
+AlertGeometryRuralPropertySimplifiedPoint
+Description
+Mapbiomas Alerta AlertGeometryRuralPropertySimplifiedPoint
+
+Fields
+Field Name	Description
+alertGeometry - AlertGeometry	
+id - Int!	
+number - Int	
+ruralProperty - RuralProperty	
+ruralPropertyId - Int	
+xCoord - String	
+yCoord - String	
+Example
+{
+  "alertGeometry": AlertGeometry,
+  "id": 123,
+  "number": 987,
+  "ruralProperty": RuralProperty,
+  "ruralPropertyId": 987,
+  "xCoord": "xyz789",
+  "yCoord": "abc123"
+}
+Types
+AlertGeometrySimplifiedPoint
+Description
+Mapbiomas Alerta AlertGeometrySimplifiedPoint
+
+Fields
+Field Name	Description
+alertGeometry - AlertGeometry	
+id - Int!	
+number - Int	
+xCoord - String	
+yCoord - String	
+Example
+{
+  "alertGeometry": AlertGeometry,
+  "id": 987,
+  "number": 123,
+  "xCoord": "abc123",
+  "yCoord": "abc123"
+}
+Types
+AlertNotification
+Description
+Alert Notification
+
+Fields
+Field Name	Description
+alert - Alert!	
+id - Int!	
+myMapTerritory - MyMapTerritory!	
+seen - Boolean	
+user - User	
+Example
+{
+  "alert": Alert,
+  "id": 987,
+  "myMapTerritory": MyMapTerritory,
+  "seen": true,
+  "user": User
+}
+Types
+AlertRange
+Description
+Alert Range informations
+
+Fields
+Field Name	Description
+maxDetectedAt - BaseDate	
+maxPublishedAt - BaseDate	
+minDetectedAt - BaseDate	
+minPublishedAt - BaseDate	
+Example
+{
+  "maxDetectedAt": BaseDate,
+  "maxPublishedAt": BaseDate,
+  "minDetectedAt": BaseDate,
+  "minPublishedAt": BaseDate
+}
+Types
+AlertRankingByBiome
+Description
+Alert query ranking by biome
+
+Fields
+Field Name	Description
+alertsTotal - Int!	
+area2018 - Float!	
+area2019 - Float!	
+area2020 - Float!	
+area2021 - Float!	
+area2022 - Float!	
+area2023 - Float!	
+areaTotal - Float!	
+biome - String!	
+Example
+{
+  "alertsTotal": 987,
+  "area2018": 123.45,
+  "area2019": 123.45,
+  "area2020": 123.45,
+  "area2021": 987.65,
+  "area2022": 123.45,
+  "area2023": 123.45,
+  "areaTotal": 987.65,
+  "biome": "xyz789"
+}
+Types
+AlertRankingByCity
+Description
+Alert query ranking by city
+
+Fields
+Field Name	Description
+alertsTotal - Int!	
+area2018 - Float!	
+area2019 - Float!	
+area2020 - Float!	
+area2021 - Float!	
+area2022 - Float!	
+area2023 - Float!	
+areaTotal - Float!	
+city - String!	
+Example
+{
+  "alertsTotal": 987,
+  "area2018": 987.65,
+  "area2019": 123.45,
+  "area2020": 987.65,
+  "area2021": 123.45,
+  "area2022": 987.65,
+  "area2023": 123.45,
+  "areaTotal": 987.65,
+  "city": "abc123"
+}
+Types
+AlertRankingByState
+Description
+Alert query ranking by state
+
+Fields
+Field Name	Description
+alertsTotal - Int!	
+area2018 - Float!	
+area2019 - Float!	
+area2020 - Float!	
+area2021 - Float!	
+area2022 - Float!	
+area2023 - Float!	
+areaTotal - Float!	
+state - String!	
+Example
+{
+  "alertsTotal": 987,
+  "area2018": 123.45,
+  "area2019": 123.45,
+  "area2020": 123.45,
+  "area2021": 987.65,
+  "area2022": 987.65,
+  "area2023": 123.45,
+  "areaTotal": 987.65,
+  "state": "xyz789"
+}
+Types
+AlertRuralProperty
+Description
+Mapbiomas Alerta RuralProperty
+
+Fields
+Field Name	Description
+afterDeforestationSimplifiedImage - String!	
+alertAreaInCar - Float	
+alertGeometryCode - String	
+alertInPropertyImage - String!	
+areaHa - Float	
+code - String	
+id - Int	
+insertedAt - BaseDateTime	
+layerImage - String!	
+propertyInStateImage - String!	
+type - String	
+updatedAt - BaseDate	
+version - Int	
+Example
+{
+  "afterDeforestationSimplifiedImage": "abc123",
+  "alertAreaInCar": 987.65,
+  "alertGeometryCode": "abc123",
+  "alertInPropertyImage": "abc123",
+  "areaHa": 987.65,
+  "code": "xyz789",
+  "id": 123,
+  "insertedAt": BaseDateTime,
+  "layerImage": "abc123",
+  "propertyInStateImage": "xyz789",
+  "type": "abc123",
+  "updatedAt": BaseDate,
+  "version": 123
+}
+Types
+AlertSortField
+Values
+Enum Value	Description
+ALERT_CODE
+
+Còdigo do Alerta
+AREA_HA
+
+Área do Alerta
+DETECTED_AT
+
+Data de Detecção
+STATE
+
+Estado onde o Alerta foi detectatdo
+CITY
+
+Cidade onde o Alerta foi detectado
+Example
+"ALERT_CODE"
+Types
+AlertStatus
+Description
+Mapbiomas Alerta AlertStatus
+
+Fields
+Field Name	Description
+alert - Alert	
+alertActivations - [AlertActivation!]	
+alertGeometry - AlertGeometry	
+cycle - Int	
+dashboardUserId - Int	
+id - Int!	
+images - [Image!]	
+insertedAt - BaseDateTime	
+progressId - Int	
+publishedAt - BaseDateTime	
+rejectedReasonId - Int	
+status - String	
+userId - Int	
+Example
+{
+  "alert": Alert,
+  "alertActivations": [AlertActivation],
+  "alertGeometry": AlertGeometry,
+  "cycle": 123,
+  "dashboardUserId": 123,
+  "id": 123,
+  "images": [Image],
+  "insertedAt": BaseDateTime,
+  "progressId": 123,
+  "publishedAt": BaseDateTime,
+  "rejectedReasonId": 987,
+  "status": "abc123",
+  "userId": 987
+}
+Types
+BaseDate
+Description
+Data no formato IS8601 (YYYY-MM-DD)
+
+Example
+BaseDate
+Types
+BaseDateTime
+Description
+Datatime no formato UTC IS8601 (yyyy-mm-ddThh:mm:ss)
+
+Example
+BaseDateTime
+Types
+BaseJSON
+Example
+BaseJSON
+Types
+Boolean
+Description
+Represents true or false values.
+
+Example
+true
+Types
+BoundingBox
+Fields
+Field Name	Description
+neLat - Float	North West latitude
+neLng - Float	North West longitude
+simplified - [Float!]	
+swLat - Float!	South West latitude
+swLng - Float!	South West longitude
+Example
+{
+  "neLat": 987.65,
+  "neLng": 987.65,
+  "simplified": [987.65],
+  "swLat": 987.65,
+  "swLng": 123.45
+}
+Types
+BoundingBoxInput
+Fields
+Input Field	Description
+swLat - Float!	South West latitude
+swLng - Float!	South West longitude
+neLat - Float!	North West latitude
+neLng - Float!	North West longitude
+Example
+{"swLat": 123.45, "swLng": 123.45, "neLat": 123.45, "neLng": 987.65}
+Types
+ClassLabel
+Fields
+Field Name	Description
+colors - [String!]!	
+colorsWithLabels - BaseJSON!	
+name - String!	
+Example
+{
+  "colors": ["abc123"],
+  "colorsWithLabels": BaseJSON,
+  "name": "xyz789"
+}
+Types
+CollectionMetadata
+Fields
+Field Name	Description
+currentPage - Int!	
+limitValue - Int!	
+totalCount - Int!	
+totalPages - Int!	
+Example
+{"currentPage": 123, "limitValue": 987, "totalCount": 123, "totalPages": 123}
+Types
+CrossedLegalReserve
+Fields
+Field Name	Description
+legalReserveId - Int	
+legalReserveVersion - Int	
+ruralPropertyId - Int	
+totalAreaHa - Float	
+Example
+{
+  "legalReserveId": 987,
+  "legalReserveVersion": 987,
+  "ruralPropertyId": 123,
+  "totalAreaHa": 987.65
+}
+Types
+CrossedPermanentProtectedArea
+Fields
+Field Name	Description
+permanentProtectedAreaId - Int	
+permanentProtectedAreaVersion - Int	
+ruralPropertyId - Int	
+totalAreaHa - Float	
+Example
+{
+  "permanentProtectedAreaId": 987,
+  "permanentProtectedAreaVersion": 123,
+  "ruralPropertyId": 123,
+  "totalAreaHa": 987.65
+}
+Types
+DateTypes
+Values
+Enum Value	Description
+DetectedAt
+
+Alert detected at
+PublishedAt
+
+Alert published at
+Example
+"DetectedAt"
+Types
+DeforestationAuthorization
+Fields
+Field Name	Description
+activity - String	
+areaHa - Float	
+category - String	
+endedAt - BaseDate	
+id - Int!	
+insertedAt - BaseDateTime	
+source - String	
+sourceId - String	
+startedAt - BaseDate	
+updatedAt - BaseDateTime	
+version - Int!	
+Example
+{
+  "activity": "abc123",
+  "areaHa": 123.45,
+  "category": "abc123",
+  "endedAt": BaseDate,
+  "id": 987,
+  "insertedAt": BaseDateTime,
+  "source": "xyz789",
+  "sourceId": "abc123",
+  "startedAt": BaseDate,
+  "updatedAt": BaseDateTime,
+  "version": 987
+}
+Types
+DeforestationTypes
+Values
+Enum Value	Description
+All
+
+Todos
+Agriculture
+
+Agricultura
+IllegalMining
+
+Mineração Ilegal
+Mining
+
+Mineração
+UrbanExpansion
+
+Expansão Urbana
+NaturalCause
+
+Eventos Climáticos Extremos
+Roads
+
+Estradas
+RenewableEnergyProject
+
+Empreendimento de Energia Renovável
+ReservoirOrDam
+
+Reservatório/Açude
+Others
+
+Outros
+Example
+"All"
+Types
+Domain
+Description
+Mapbiomas Alerta Domain
+
+Fields
+Field Name	Description
+id - Int	
+institutionId - Institution!	
+name - String!	
+Example
+{
+  "id": 123,
+  "institutionId": Institution,
+  "name": "abc123"
+}
+Types
+EmbargoedArea
+Description
+Mapbiomas Alerta EmbargoedArea
+
+Fields
+Field Name	Description
+areaHa - Float	
+code - ID!	
+description - String	
+insertedAt - BaseDateTime	
+legislation - String	
+processCode - String	
+source - String	
+sourceExpiredAt - BaseDate	
+sourceId - String	
+sourceRegisteredAt - BaseDate	
+updatedAt - BaseDateTime	
+version - Int	
+Example
+{
+  "areaHa": 987.65,
+  "code": "4",
+  "description": "xyz789",
+  "insertedAt": BaseDateTime,
+  "legislation": "xyz789",
+  "processCode": "abc123",
+  "source": "abc123",
+  "sourceExpiredAt": BaseDate,
+  "sourceId": "xyz789",
+  "sourceRegisteredAt": BaseDate,
+  "updatedAt": BaseDateTime,
+  "version": 123
+}
+Types
+Float
+Description
+Represents signed double-precision fractional values as specified by IEEE 754.
+
+Example
+123.45
+Types
+ID
+Description
+Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as "VXNlci0xMA==") or integer (such as 4) input value will be accepted as an ID.
+
+Example
+"4"
+Types
+Image
+Description
+Mapbiomas Alerta Image
+
+Fields
+Field Name	Description
+acquiredAt - BaseDateTime!	
+alertActivation - AlertActivation!	
+alertActivationId - Int!	
+constellation - String!	
+dbId - Int!	
+fromGee - Boolean!	
+gcsExists - Boolean!	
+gcsUrl - String!	
+geeExists - Boolean!	
+id - Int!	
+name - String!	
+product - String!	
+reference - String!	
+Example
+{
+  "acquiredAt": BaseDateTime,
+  "alertActivation": AlertActivation,
+  "alertActivationId": 987,
+  "constellation": "xyz789",
+  "dbId": 123,
+  "fromGee": false,
+  "gcsExists": false,
+  "gcsUrl": "xyz789",
+  "geeExists": true,
+  "id": 123,
+  "name": "xyz789",
+  "product": "abc123",
+  "reference": "xyz789"
+}
+Types
+ImageLabel
+Fields
+Field Name	Description
+name - String!	
+thumbnailUrl - String!	
+Example
+{
+  "name": "abc123",
+  "thumbnailUrl": "xyz789"
+}
+Types
+Institution
+Description
+Mapbiomas Alerta Institution
+
+Fields
+Field Name	Description
+abbreviation - String	
+domains - [Domain!]	
+id - Int!	
+logoContent - String	
+logoUrl - String	
+name - String	
+reportStructureSnapshot - BaseJSON	
+status - Int	
+users - [User!]	
+Example
+{
+  "abbreviation": "abc123",
+  "domains": [Domain],
+  "id": 987,
+  "logoContent": "xyz789",
+  "logoUrl": "abc123",
+  "name": "xyz789",
+  "reportStructureSnapshot": BaseJSON,
+  "status": 987,
+  "users": [User]
+}
+Types
+Int
+Description
+Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+
+Example
+123
+Types
+LastAlertPublication
+Description
+Mapbiomas Alerta Last Publication information
+
+Fields
+Field Name	Description
+publishedAt - BaseDateTime!	
+total - Int!	
+Example
+{"publishedAt": BaseDateTime, "total": 123}
+Types
+LatLng
+Fields
+Field Name	Description
+latitude - Float	
+longitude - Float	
+Example
+{"latitude": 123.45, "longitude": 123.45}
+Types
+LegalReserve
+Description
+Mapbiomas Alerta LegalReserve
+
+Fields
+Field Name	Description
+areaHa - Int	
+carCode - String	
+id - Int!	
+insertedAt - BaseDateTime	
+ruralProperty - [RuralProperty!]	
+ruralPropertyId - String	
+stateAcronym - String	
+updatedAt - BaseDateTime	
+version - Int	
+Example
+{
+  "areaHa": 987,
+  "carCode": "abc123",
+  "id": 987,
+  "insertedAt": BaseDateTime,
+  "ruralProperty": [RuralProperty],
+  "ruralPropertyId": "abc123",
+  "stateAcronym": "abc123",
+  "updatedAt": BaseDateTime,
+  "version": 123
+}
+Types
+Login
+Fields
+Field Name	Description
+token - String!	
+Example
+{"token": "xyz789"}
+Types
+MessageStatus
+Fields
+Field Name	Description
+message - String!	Message returned
+status - Boolean!	Boolean Status
+Example
+{"message": "xyz789", "status": true}
+Types
+MvPublishedAlert
+Description
+Mapbiomas Alerta MvPublishedAlert
+
+Fields
+Field Name	Description
+actions - [Action!]	
+actionsTypeIds - [Int!]	
+alertCode - Int	
+alertGeometry - AlertGeometry	
+alertGeometryId - Int	
+areaHa - Float	
+bbox - String	
+biomes - [BaseJSON!]	
+carCodes - [String!]	
+categories - String	
+cities - [BaseJSON!]	
+classesLabels - BaseJSON	
+crossedConservationUnitsArea - Float	
+crossedDeforestationAuthorizationIds - [Int!]	
+crossedDeforestationAuthorizationsArea - Float	
+crossedEmbargoesRuralPropertiesArea - Float	
+crossedEmbargoesRuralPropertiesTotal - Int	
+crossedForestManagementsArea - Float	
+crossedIndigenousLands - [BaseJSON!]	
+crossedIndigenousLandsArea - Float	
+crossedLegalReserveRuralPropertiesList - BaseJSON	
+Arguments
+carId - Int
+crossedLegalReservesRuralPropertiesArea - Float	
+crossedPermanentProtectedAreaRuralPropertiesList - BaseJSON	
+Arguments
+carId - Int
+crossedPermanentProtectedRuralPropertiesArea - Float	
+crossedRuralProperties - [RAlertGeometryRuralProperty!]	
+Arguments
+carId - Int
+crossedSettlementArea - Int	
+crossedSettlements - [BaseJSON!]	
+crossedSettlementsRuralPropertiesList - BaseJSON	
+Arguments
+carId - Int
+datum - String	
+deforestationClasses - String	
+deforestationSpeed - Int	
+detectedAt - BaseDate	
+embargoedAreas - [EmbargoedArea!]	
+embargoedAreasIds - [Int!]	
+embargoesCount - Int	
+exclusionCategories - String	
+id - Int!	
+imageAcquiredAfterAt - BaseDate	
+imageAcquiredBeforeAt - BaseDate	
+imagesLabels - BaseJSON	
+publishedAt - BaseDate	
+publishedImages - [PublishedImage!]	
+Arguments
+carId - Int
+riverSourcesCount - Int	
+ruralProperties - [RuralProperty!]	
+Arguments
+carId - Int
+ruralPropertiesCarCodesOverLimit - String	
+ruralPropertiesCodes - String	
+ruralPropertiesInfoOverLimit - [BaseJSON!]	
+ruralPropertiesJson - [BaseJSON!]	
+ruralPropertiesList - [BaseJSON!]	
+ruralPropertiesTotal - Int	
+ruralPropertiesTotalOverLimit - Int	
+sources - [String!]	
+states - [BaseJSON!]	
+status - String	
+statusAt - BaseDate	
+statusName - String	
+supportCases - [SupportCase!]	
+Arguments
+carId - Int
+carCode - Int
+territories - [Territory!]	
+territoriesIds - [Int!]	
+warnings - BaseJSON	
+Example
+{
+  "actions": [Action],
+  "actionsTypeIds": [123],
+  "alertCode": 123,
+  "alertGeometry": AlertGeometry,
+  "alertGeometryId": 987,
+  "areaHa": 123.45,
+  "bbox": "abc123",
+  "biomes": [BaseJSON],
+  "carCodes": ["abc123"],
+  "categories": "xyz789",
+  "cities": [BaseJSON],
+  "classesLabels": BaseJSON,
+  "crossedConservationUnitsArea": 123.45,
+  "crossedDeforestationAuthorizationIds": [123],
+  "crossedDeforestationAuthorizationsArea": 987.65,
+  "crossedEmbargoesRuralPropertiesArea": 123.45,
+  "crossedEmbargoesRuralPropertiesTotal": 987,
+  "crossedForestManagementsArea": 987.65,
+  "crossedIndigenousLands": [BaseJSON],
+  "crossedIndigenousLandsArea": 123.45,
+  "crossedLegalReserveRuralPropertiesList": BaseJSON,
+  "crossedLegalReservesRuralPropertiesArea": 987.65,
+  "crossedPermanentProtectedAreaRuralPropertiesList": BaseJSON,
+  "crossedPermanentProtectedRuralPropertiesArea": 123.45,
+  "crossedRuralProperties": [RAlertGeometryRuralProperty],
+  "crossedSettlementArea": 987,
+  "crossedSettlements": [BaseJSON],
+  "crossedSettlementsRuralPropertiesList": BaseJSON,
+  "datum": "xyz789",
+  "deforestationClasses": "xyz789",
+  "deforestationSpeed": 123,
+  "detectedAt": BaseDate,
+  "embargoedAreas": [EmbargoedArea],
+  "embargoedAreasIds": [987],
+  "embargoesCount": 987,
+  "exclusionCategories": "xyz789",
+  "id": 987,
+  "imageAcquiredAfterAt": BaseDate,
+  "imageAcquiredBeforeAt": BaseDate,
+  "imagesLabels": BaseJSON,
+  "publishedAt": BaseDate,
+  "publishedImages": [PublishedImage],
+  "riverSourcesCount": 123,
+  "ruralProperties": [RuralProperty],
+  "ruralPropertiesCarCodesOverLimit": "xyz789",
+  "ruralPropertiesCodes": "xyz789",
+  "ruralPropertiesInfoOverLimit": [BaseJSON],
+  "ruralPropertiesJson": [BaseJSON],
+  "ruralPropertiesList": [BaseJSON],
+  "ruralPropertiesTotal": 123,
+  "ruralPropertiesTotalOverLimit": 987,
+  "sources": ["xyz789"],
+  "states": [BaseJSON],
+  "status": "abc123",
+  "statusAt": BaseDate,
+  "statusName": "xyz789",
+  "supportCases": [SupportCase],
+  "territories": [Territory],
+  "territoriesIds": [987],
+  "warnings": BaseJSON
+}
+Types
+MyMap
+Description
+Mapbiomas Alerta MyMap
+
+Fields
+Field Name	Description
+alertNotifications - [AlertNotification!]	
+alertNotificationsCount - Int	
+id - Int!	
+name - String	
+territories - [Territory!]	
+user - User	
+Example
+{
+  "alertNotifications": [AlertNotification],
+  "alertNotificationsCount": 123,
+  "id": 123,
+  "name": "xyz789",
+  "territories": [Territory],
+  "user": User
+}
+Types
+MyMapTerritory
+Description
+Mapbiomas Alerta MyMapTerritory
+
+Fields
+Field Name	Description
+id - Int!	
+myMap - MyMap	
+territory - Territory	
+Example
+{
+  "id": 123,
+  "myMap": MyMap,
+  "territory": Territory
+}
+Types
+PermanentProtectedArea
+Description
+Mapbiomas Alerta PermanentProtectedArea
+
+Fields
+Field Name	Description
+areaHa - Float	
+carCode - String	
+id - Int!	
+insertedAt - BaseDateTime	
+ruralProperty - [RuralProperty!]	
+ruralPropertyId - String	
+stateAcronym - String	
+updatedAt - BaseDateTime	
+version - Int	
+Example
+{
+  "areaHa": 987.65,
+  "carCode": "abc123",
+  "id": 987,
+  "insertedAt": BaseDateTime,
+  "ruralProperty": [RuralProperty],
+  "ruralPropertyId": "xyz789",
+  "stateAcronym": "abc123",
+  "updatedAt": BaseDateTime,
+  "version": 123
+}
+Types
+PointInformation
+Fields
+Field Name	Description
+alerts - [MvPublishedAlert!]!	Alerts
+boundingBox - [Float!]	Bounding Box
+ruralProperties - [RuralProperty!]!	RuralProperties
+territories - [Territory!]!	Territories
+Example
+{
+  "alerts": [MvPublishedAlert],
+  "boundingBox": [123.45],
+  "ruralProperties": [RuralProperty],
+  "territories": [Territory]
+}
+Types
+PrivacyNotice
+Description
+Mapbiomas PrivacyNotice
+
+Fields
+Field Name	Description
+destination - PrivacyNoticeEnum!	
+englishContent - String	
+id - Int!	
+portugueseContent - String	
+status - Int	
+version - Int	
+Example
+{
+  "destination": "Main",
+  "englishContent": "xyz789",
+  "id": 123,
+  "portugueseContent": "abc123",
+  "status": 123,
+  "version": 123
+}
+Types
+PrivacyNoticeEnum
+Values
+Enum Value	Description
+Main
+
+Principal
+AuthorizationRequest
+
+Requisição de Autorização
+Example
+"Main"
+Types
+PublishedImage
+Description
+Mapbiomas Alerta PublishedImage
+
+Fields
+Field Name	Description
+acquiredAt - BaseDateTime	
+alert - Alert!	
+constellation - String	
+fid - Int!	
+location - String	
+reference - String	
+satellite - String	
+url - String	
+Example
+{
+  "acquiredAt": BaseDateTime,
+  "alert": Alert,
+  "constellation": "abc123",
+  "fid": 123,
+  "location": "abc123",
+  "reference": "abc123",
+  "satellite": "xyz789",
+  "url": "xyz789"
+}
+Types
+QueryStatisticByDate
+Description
+Alert query statistics by date
+
+Fields
+Field Name	Description
+date - BaseDate!	
+value - Float!	
+Example
+{"date": BaseDate, "value": 123.45}
+Types
+QueryStatisticByYear
+Description
+Alert query statistics by year
+
+Fields
+Field Name	Description
+value - Float!	
+year - Int!	
+Example
+{"value": 987.65, "year": 123}
+Types
+QuerySummary
+Description
+Alert query summary informations
+
+Fields
+Field Name	Description
+actionsCount - Int!	
+alertsByMonth - [QueryStatisticByDate!]!	
+alertsByYear - [QueryStatisticByYear!]!	
+area - Float!	
+authorizedAreasCount - Int!	
+averageDeforestationSpeed - Float!	
+biggestAlert - AlertData	
+biggestAlertArea - Float	
+biggestDeforestationSpeed - Float	
+biggestDeforestationSpeedAlert - AlertData	
+boundingBox - BoundingBox	
+conservationUnitsCount - Int!	
+deforestationAreaByMonth - [QueryStatisticByDate!]!	
+deforestationAreaByYear - [QueryStatisticByYear!]!	
+embargoesCount - Int!	
+forestManagementsCount - Int!	
+indigenousLandCount - Int!	
+legalReservesCount - Int!	
+lowestAlert - AlertData	
+lowestAlertArea - Float	
+lowestDeforestationSpeed - Float	
+lowestDeforestationSpeedAlert - AlertData	
+permanentProtectedAreasCount - Int!	
+riverSourcesCount - Int!	
+ruralPropertiesCount - Int!	
+settlementsCount - Int!	
+total - Int!	
+Example
+{
+  "actionsCount": 987,
+  "alertsByMonth": [QueryStatisticByDate],
+  "alertsByYear": [QueryStatisticByYear],
+  "area": 987.65,
+  "authorizedAreasCount": 987,
+  "averageDeforestationSpeed": 123.45,
+  "biggestAlert": AlertData,
+  "biggestAlertArea": 987.65,
+  "biggestDeforestationSpeed": 123.45,
+  "biggestDeforestationSpeedAlert": AlertData,
+  "boundingBox": BoundingBox,
+  "conservationUnitsCount": 987,
+  "deforestationAreaByMonth": [QueryStatisticByDate],
+  "deforestationAreaByYear": [QueryStatisticByYear],
+  "embargoesCount": 123,
+  "forestManagementsCount": 123,
+  "indigenousLandCount": 123,
+  "legalReservesCount": 123,
+  "lowestAlert": AlertData,
+  "lowestAlertArea": 987.65,
+  "lowestDeforestationSpeed": 987.65,
+  "lowestDeforestationSpeedAlert": AlertData,
+  "permanentProtectedAreasCount": 123,
+  "riverSourcesCount": 987,
+  "ruralPropertiesCount": 987,
+  "settlementsCount": 123,
+  "total": 123
+}
+Types
+RAlertGeometryRuralProperty
+Description
+Mapbiomas Alerta RAlertGeometryRuralProperty
+
+Fields
+Field Name	Description
+afterDeforestationSimplifiedImage - String	
+alertAreaInCar - Float	
+alertGeometry - AlertGeometry!	
+alertGeometryId - Int!	
+alertInPropertyImage - String!	
+layerImage - String	
+propertyInStateImage - String!	
+ruralPropertyId - Int!	
+ruralPropertyVersion - Int!	
+Example
+{
+  "afterDeforestationSimplifiedImage": "abc123",
+  "alertAreaInCar": 123.45,
+  "alertGeometry": AlertGeometry,
+  "alertGeometryId": 987,
+  "alertInPropertyImage": "xyz789",
+  "layerImage": "abc123",
+  "propertyInStateImage": "abc123",
+  "ruralPropertyId": 987,
+  "ruralPropertyVersion": 123
+}
+Types
+RelatoryAlert
+Description
+Alert Reltatory
+
+Fields
+Field Name	Description
+fileUrl - String!	
+format - String!	
+lastUpdate - BaseDate	
+md5 - String!	
+relatoryMetadatum - RelatoryMetadatum	
+templateVersion - Int!	
+typename - String!	
+Example
+{
+  "fileUrl": "xyz789",
+  "format": "abc123",
+  "lastUpdate": BaseDate,
+  "md5": "abc123",
+  "relatoryMetadatum": RelatoryMetadatum,
+  "templateVersion": 987,
+  "typename": "abc123"
+}
+Types
+RelatoryColumn
+Description
+Alert Relatory Column
+
+Fields
+Field Name	Description
+description - String	
+name - String	
+typename - String	
+Example
+{
+  "description": "abc123",
+  "name": "xyz789",
+  "typename": "abc123"
+}
+Types
+RelatoryFormatTypes
+Values
+Enum Value	Description
+Alerts
+
+Somente Alertas
+AlertsCars
+
+Alertas e Cars
+Example
+"Alerts"
+Types
+RelatoryMetadatum
+Description
+Alert Relatory Metadatum
+
+Fields
+Field Name	Description
+relatoryColumns - [RelatoryColumn!]	
+relatorySources - [RelatorySource!]	
+Example
+{
+  "relatoryColumns": [RelatoryColumn],
+  "relatorySources": [RelatorySource]
+}
+Types
+RelatorySource
+Description
+Alert Relatory Source
+
+Fields
+Field Name	Description
+description - String	
+lastUpdate - BaseDate	
+name - String	
+Example
+{
+  "description": "xyz789",
+  "lastUpdate": BaseDate,
+  "name": "abc123"
+}
+Types
+RelatoryTypenameTypes
+Values
+Enum Value	Description
+Csv
+
+Arquivo CSV
+Shape
+
+Arquivo Shapefile
+Example
+"Csv"
+Types
+RiverSource
+Description
+Mapbiomas Alerta RiverSource
+
+Fields
+Field Name	Description
+carCode - String	
+id - Int!	
+insertedAt - BaseDateTime	
+ruralProperty - [RuralProperty!]	
+ruralPropertyId - Int	
+stateAcronym - String	
+updatedAt - BaseDateTime	
+version - Int	
+Example
+{
+  "carCode": "abc123",
+  "id": 123,
+  "insertedAt": BaseDateTime,
+  "ruralProperty": [RuralProperty],
+  "ruralPropertyId": 123,
+  "stateAcronym": "xyz789",
+  "updatedAt": BaseDateTime,
+  "version": 123
+}
+Types
+RuralProperty
+Description
+Mapbiomas Alerta RuralProperty
+
+Fields
+Field Name	Description
+alertGeometries - [AlertGeometry!]	
+areaHa - Float	
+carCode - String	
+carModule - Float	
+carType - String	
+embargoedAreas - [EmbargoedArea!]	
+embargoedAreasCount - Int	
+insertedAt - BaseDateTime	
+rAlertGeometriesRuralProperties - [RAlertGeometryRuralProperty!]	
+relatedAlerts - [AlertData!]	
+stateAcronym - String	
+version - Int	
+Example
+{
+  "alertGeometries": [AlertGeometry],
+  "areaHa": 987.65,
+  "carCode": "abc123",
+  "carModule": 987.65,
+  "carType": "abc123",
+  "embargoedAreas": [EmbargoedArea],
+  "embargoedAreasCount": 123,
+  "insertedAt": BaseDateTime,
+  "rAlertGeometriesRuralProperties": [
+    RAlertGeometryRuralProperty
+  ],
+  "relatedAlerts": [AlertData],
+  "stateAcronym": "abc123",
+  "version": 123
+}
+Types
+RuralPropertyAlert
+Description
+Mapbiomas Alerta from Rural Property
+
+Fields
+Field Name	Description
+afterImage - PublishedImage	
+alertCode - String!	
+areaHa - Float!	
+beforeImage - PublishedImage	
+boundingBox - [Float!]!	
+coordinates - LatLng!	
+detectedAt - BaseDate!	
+publishedAt - BaseDate!	
+publishedImages - [PublishedImage!]	
+sources - [String!]	
+Example
+{
+  "afterImage": PublishedImage,
+  "alertCode": "xyz789",
+  "areaHa": 987.65,
+  "beforeImage": PublishedImage,
+  "boundingBox": [987.65],
+  "coordinates": LatLng,
+  "detectedAt": BaseDate,
+  "publishedAt": BaseDate,
+  "publishedImages": [PublishedImage],
+  "sources": ["xyz789"]
+}
+Types
+RuralPropertySummary
+Description
+Mapbiomas Alerta RuralProperty
+
+Fields
+Field Name	Description
+alerts - [RuralPropertyAlert!]	
+areaHa - Float	
+boundingBox - [Float!]	
+carType - String	
+carUpdatedAt - BaseDate	
+insertedAt - BaseDateTime	
+propertyCode - String	
+state - String	
+stateAcronym - String	
+version - Int	
+Example
+{
+  "alerts": [RuralPropertyAlert],
+  "areaHa": 123.45,
+  "boundingBox": [123.45],
+  "carType": "xyz789",
+  "carUpdatedAt": BaseDate,
+  "insertedAt": BaseDateTime,
+  "propertyCode": "xyz789",
+  "state": "abc123",
+  "stateAcronym": "xyz789",
+  "version": 123
+}
+Types
+SortDirection
+Values
+Enum Value	Description
+ASC
+
+Crescente
+DESC
+
+Decrescente
+Example
+"ASC"
+Types
+SourceTypes
+Values
+Enum Value	Description
+All
+
+Todas as fontes
+DeterbAmazonia
+
+Sistema de Detecção de Desmatamento em Tempo Real - Amazônia
+DeterCerrado
+
+Sistema de Detecção de Desmatamento em Tempo Real - Cerrado
+Glad
+
+Global Land Analysis & Discovery
+InemaBa
+
+Instituto do Meio Ambiente e Recursos Hídricos do Estado da Bahia
+IefMg
+
+Instituto Estadual de Florestas de Minas Gerais
+ProdesCerrado
+
+Programa de Monitoramento da Floresta Amazônica Brasileira por Satélite - Cerrado
+ProdesAmazonia
+
+Programa de Monitoramento da Floresta Amazônica Brasileira por Satélite - Amazônia
+Sad
+
+Sistema de Alerta de Desmatamento
+SadCaatinga
+
+Sistema de Alerta de Desmatamento Caatinga
+SadMataAtlantica
+
+Sistema de Alerta de Desmatamento Mata Atlântica
+SadPantanal
+
+Sistema de Alerta de Desmatamento Pantanal
+SadPampa
+
+Sistema de Alerta de Desmatamento Pampa
+SadCerrado
+
+Sistema de Alerta de Desmatamento Cerrado
+SipamSar
+
+Sistema Integrado de Alerta de Desmatamento - Radar de Abertura Sintética
+SiradX
+
+Radar de Desmatamento – Xingu (Sirad X)
+SosInpe
+
+Fundação SOS Mata Atlântica
+Example
+"All"
+Types
+String
+Description
+Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.
+
+Example
+"abc123"
+Types
+SupportCase
+Description
+Mapbiomas SupportCase
+
+Fields
+Field Name	Description
+accessIp - String	
+alertCode - String	
+authorizedAreaHa - Float	
+authorizingAgency - String	
+carCode - String	
+carId - String	
+code - ID!	
+createdAt - String!	
+description - String	
+documentIssueDate - BaseDate	
+expirationDate - BaseDate	
+lat - String	
+lng - String	
+mvPublishedAlert - MvPublishedAlert	
+processNumber - String	
+propertyAreaHa - Float	
+propertyName - String	
+propertyOwnersName - String	
+subject - String	
+supportCaseFiles - [SupportCaseFile!]	
+supportCaseFilesCount - Int!	
+supportCaseMessages - [SupportCaseMessage!]	
+supportCaseStatus - [SupportCaseStatus!]	
+supportCaseStatusCount - Int!	
+supportCaseType - String	
+termsOfUseId - String	
+userEmail - String	
+userName - String	
+Example
+{
+  "accessIp": "abc123",
+  "alertCode": "abc123",
+  "authorizedAreaHa": 987.65,
+  "authorizingAgency": "abc123",
+  "carCode": "xyz789",
+  "carId": "xyz789",
+  "code": 4,
+  "createdAt": "abc123",
+  "description": "xyz789",
+  "documentIssueDate": BaseDate,
+  "expirationDate": BaseDate,
+  "lat": "abc123",
+  "lng": "abc123",
+  "mvPublishedAlert": MvPublishedAlert,
+  "processNumber": "abc123",
+  "propertyAreaHa": 987.65,
+  "propertyName": "abc123",
+  "propertyOwnersName": "xyz789",
+  "subject": "abc123",
+  "supportCaseFiles": [SupportCaseFile],
+  "supportCaseFilesCount": 987,
+  "supportCaseMessages": [SupportCaseMessage],
+  "supportCaseStatus": [SupportCaseStatus],
+  "supportCaseStatusCount": 123,
+  "supportCaseType": "xyz789",
+  "termsOfUseId": "xyz789",
+  "userEmail": "xyz789",
+  "userName": "abc123"
+}
+Types
+SupportCaseCollection
+Fields
+Field Name	Description
+collection - [SupportCase!]!	
+metadata - CollectionMetadata!	
+Example
+{
+  "collection": [SupportCase],
+  "metadata": CollectionMetadata
+}
+Types
+SupportCaseFile
+Description
+Mapbiomas SupportCaseFile
+
+Fields
+Field Name	Description
+fileType - SupportCaseFileTypes!	
+fileUploadedUrl - String	
+id - Int!	
+name - String!	
+storageName - String!	
+supportCase - SupportCase!	
+supportCaseId - Int!	
+Example
+{
+  "fileType": "Shapefile",
+  "fileUploadedUrl": "xyz789",
+  "id": 123,
+  "name": "xyz789",
+  "storageName": "xyz789",
+  "supportCase": SupportCase,
+  "supportCaseId": 987
+}
+Types
+SupportCaseFileTypes
+Description
+Mapbiomas SupportCaseFileTypes
+
+Values
+Enum Value	Description
+Shapefile
+
+Translation missing: pt-BR.graphql.types.support_case_file_types_shape
+Authorization
+
+Translation missing: pt-BR.graphql.types.support_case_file_types_authorization
+Others
+
+Translation missing: pt-BR.graphql.types.support_case_file_types_others
+Example
+"Shapefile"
+Types
+SupportCaseMessage
+Description
+Mapbiomas SupportCaseMessage
+
+Fields
+Field Name	Description
+createdAt - BaseDateTime	
+id - Int!	
+message - String	
+supportCase - SupportCase	
+supportCaseId - Int	
+userId - Int	
+userName - String	
+workspaceUserId - Int	
+Example
+{
+  "createdAt": BaseDateTime,
+  "id": 987,
+  "message": "xyz789",
+  "supportCase": SupportCase,
+  "supportCaseId": 987,
+  "userId": 987,
+  "userName": "xyz789",
+  "workspaceUserId": 123
+}
+Types
+SupportCaseStatus
+Description
+Mapbiomas SupportCaseStatus
+
+Fields
+Field Name	Description
+createdAt - BaseDateTime	
+id - Int!	
+observation - String	
+supportCase - SupportCase	
+supportCaseId - Int	
+supportCaseStatus - String	
+workspaceUserId - Int	
+workspaceUserName - String	
+Example
+{
+  "createdAt": BaseDateTime,
+  "id": 123,
+  "observation": "xyz789",
+  "supportCase": SupportCase,
+  "supportCaseId": 123,
+  "supportCaseStatus": "xyz789",
+  "workspaceUserId": 987,
+  "workspaceUserName": "abc123"
+}
+Types
+SupportCaseTypes
+Description
+Mapbiomas SupportCaseTypes
+
+Values
+Enum Value	Description
+Others
+
+Translation missing: pt-BR.graphql.types.support_cases_types_others
+AlertReport
+
+Translation missing: pt-BR.graphql.types.support_cases_types_alert_report
+AuthorizationRequest
+
+Solicitação de Requerimento
+Example
+"Others"
+Types
+TermOfUse
+Description
+Mapbiomas TermOfUse
+
+Fields
+Field Name	Description
+destination - TermOfUseEnum!	
+englishContent - String	
+id - Int!	
+portugueseContent - String	
+status - Int	
+version - Int	
+Example
+{
+  "destination": "Main",
+  "englishContent": "abc123",
+  "id": 987,
+  "portugueseContent": "xyz789",
+  "status": 123,
+  "version": 123
+}
+Types
+TermOfUseEnum
+Values
+Enum Value	Description
+Main
+
+Principal
+AuthorizationRequest
+
+Requisição de Autorização
+Example
+"Main"
+Types
+Territory
+Description
+Mapbiomas Alerta Territory
+
+Fields
+Field Name	Description
+areaHa - Float!	
+boundingBox - [Float!]!	
+categoryName - String!	
+code - String!	
+id - Int!	
+name - String!	
+Example
+{
+  "areaHa": 987.65,
+  "boundingBox": [123.45],
+  "categoryName": "xyz789",
+  "code": "xyz789",
+  "id": 987,
+  "name": "abc123"
+}
+Types
+TerritoryCategory
+Description
+Mapbiomas Alerta Territory Category
+
+Fields
+Field Name	Description
+category - String!	
+categoryName - String!	
+territories - [TerritoryOption!]	
+Example
+{
+  "category": "xyz789",
+  "categoryName": "xyz789",
+  "territories": [TerritoryOption]
+}
+Types
+TerritoryOption
+Description
+Mapbiomas Alerta Territory Option
+
+Fields
+Field Name	Description
+code - Int!	
+name - String!	
+Example
+{"code": 123, "name": "abc123"}
+Types
+User
+Fields
+Field Name	Description
+actionsBatches - [ActionsBatch!]	
+avatarUrl - String	
+confirmedAt - BaseDateTime	
+createdAt - BaseDateTime	
+declaredInstitution - String	
+email - String	
+id - Int!	
+institution - Institution	
+institutionId - Int	
+lastLoginAt - BaseDateTime	
+lastTermOfUseVersionSigned - Int	
+lastUpdatedPasswordAt - BaseDateTime	
+name - String	
+profile - String	
+profileCode - Int	
+receiveNotifications - Boolean	
+status - String	
+termOfUseId - Int	
+territories - [TerritoryOption!]	
+updatedAt - BaseDateTime	
+Example
+{
+  "actionsBatches": [ActionsBatch],
+  "avatarUrl": "abc123",
+  "confirmedAt": BaseDateTime,
+  "createdAt": BaseDateTime,
+  "declaredInstitution": "abc123",
+  "email": "xyz789",
+  "id": 123,
+  "institution": Institution,
+  "institutionId": 123,
+  "lastLoginAt": BaseDateTime,
+  "lastTermOfUseVersionSigned": 987,
+  "lastUpdatedPasswordAt": BaseDateTime,
+  "name": "xyz789",
+  "profile": "abc123",
+  "profileCode": 987,
+  "receiveNotifications": false,
+  "status": "xyz789",
+  "termOfUseId": 987,
+  "territories": [TerritoryOption],
+  "updatedAt": BaseDateTime
+}
+Types
+WarningLabel
+Fields
+Field Name	Description
+en - String!	
+pt - String!	
+Example
+{
+  "en": "abc123",
+  "pt": "abc123"
+}
+Documentation by Anvil SpectaQL

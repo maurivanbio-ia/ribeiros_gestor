@@ -1,0 +1,95 @@
+Crie uma automação inteligente para a plataforma Ribeiro’s Gestor, com execução diária, capaz de acessar e analisar todos os e-mails recebidos nas contas institucionais e pessoais autorizadas, classificar automaticamente o conteúdo das mensagens e integrar essas informações ao banco de dados da plataforma.
+
+A automação deve ler os e-mails recebidos diariamente, incluindo remetente, destinatário, assunto, corpo da mensagem, data, anexos, links, histórico da conversa e metadados disponíveis. O sistema deve identificar se o e-mail representa uma demanda operacional, solicitação técnica, pendência documental, entrega realizada, aprovação, revisão, cobrança, notificação, comunicado institucional, documento de licenciamento, condicionante ambiental, relatório, proposta comercial, solicitação financeira, questão de RH, logística, frota, almoxarifado ou outro tipo de informação relevante.
+
+A classificação deve considerar, no mínimo, as seguintes categorias:
+
+1. Demanda nova.
+2. Demanda em andamento.
+3. Demanda concluída.
+4. Pendência técnica.
+5. Pendência administrativa.
+6. Pendência financeira.
+7. Solicitação de revisão.
+8. Solicitação de envio de documento.
+9. Aprovação ou aceite.
+10. Evidência de cumprimento.
+11. Condicionante ambiental.
+12. Programa ambiental.
+13. Relatório técnico.
+14. Licença, autorização ou ofício.
+15. Empreendimento.
+16. Cliente.
+17. Contrato.
+18. Responsável interno.
+19. Prazo.
+20. Prioridade.
+21. Status.
+22. Anexos e evidências.
+
+A automação deve cruzar automaticamente o conteúdo dos e-mails com os empreendimentos já cadastrados na plataforma Ribeiro’s Gestor. A identificação do empreendimento deve considerar nome oficial, siglas, apelidos, número de contrato, número de processo, cliente, município, programa ambiental, condicionante, trecho, unidade amostral, coordenador responsável e palavras-chave associadas.
+
+Quando houver correspondência com um empreendimento existente, o sistema deve vincular automaticamente o e-mail ao empreendimento correto. Quando houver incerteza, deve registrar o item como “vínculo pendente de validação” e apresentar sugestões de associação com nível de confiança percentual.
+
+O sistema deve gerar e atualizar um banco de dados completo contendo, no mínimo, os seguintes campos:
+
+. ID único do registro.
+. Data de recebimento do e-mail.
+. Conta de origem monitorada.
+. Remetente.
+. Organização do remetente.
+. Destinatários.
+. Assunto.
+. Resumo automático do conteúdo.
+. Categoria principal.
+. Subcategoria.
+. Empreendimento vinculado.
+. Cliente vinculado.
+. Contrato vinculado.
+. Programa ambiental relacionado.
+. Condicionante relacionada.
+. Número de processo, licença, autorização ou ofício, quando identificado.
+. Tipo de demanda.
+. Descrição da demanda.
+. Responsável interno sugerido.
+. Responsável externo, quando houver.
+. Prazo identificado.
+. Data de vencimento.
+. Status da demanda.
+. Prioridade.
+. Nível de risco.
+. Anexos identificados.
+. Link ou caminho dos anexos.
+. Evidência de cumprimento.
+. Histórico de atualizações.
+. Nível de confiança da classificação.
+. Necessidade de validação humana.
+. Data da última atualização.
+. Observações automáticas da IA.
+
+A automação deve criar automaticamente demandas no módulo de gestão de tarefas da plataforma sempre que identificar uma nova solicitação, pendência ou obrigação. Cada demanda deve ser vinculada ao empreendimento correspondente, com status inicial, responsável sugerido, prazo, prioridade e resumo técnico.
+
+Quando o e-mail indicar que uma demanda foi cumprida, enviada, aprovada ou finalizada, o sistema deve atualizar automaticamente o status da demanda correspondente para “Concluída”, “Aguardando validação”, “Enviada ao cliente” ou “Aprovada”, conforme o conteúdo identificado.
+
+A automação deve evitar duplicidade. Antes de criar uma nova demanda, o sistema deve verificar se já existe uma demanda semelhante associada ao mesmo empreendimento, cliente, assunto, prazo ou número de documento. Se houver possível duplicidade, deve sugerir atualização do registro existente em vez de criar novo item.
+
+A automação deve permitir consulta em painel interno, com filtros por empreendimento, cliente, responsável, status, prioridade, prazo, tipo de demanda, programa ambiental, condicionante, data de recebimento, remetente e nível de risco.
+
+O sistema deve gerar diariamente um relatório executivo com:
+
+. Quantidade de e-mails analisados.
+. Novas demandas identificadas.
+. Demandas atualizadas.
+. Demandas concluídas.
+. Demandas vencidas.
+. Demandas próximas do vencimento.
+. Demandas sem responsável.
+. Demandas sem vínculo com empreendimento.
+. E-mails que exigem validação humana.
+. Principais riscos operacionais identificados.
+
+O sistema deve manter rastreabilidade completa, preservando o e-mail original, anexos, data, remetente, classificação realizada pela IA, alterações feitas automaticamente e validações humanas posteriores.
+
+A automação deve seguir boas práticas de segurança da informação, incluindo autenticação segura, controle de acesso por perfil de usuário, registro de logs, proteção de dados sensíveis, armazenamento seguro de anexos e limitação de acesso conforme permissões internas da plataforma.
+
+A saída esperada é uma automação funcional, integrada ao banco de dados da Ribeiro’s Gestor, com rotinas diárias de leitura, classificação, vinculação, criação de demandas, atualização de status, geração de banco estruturado e painel de acompanhamento gerencial.

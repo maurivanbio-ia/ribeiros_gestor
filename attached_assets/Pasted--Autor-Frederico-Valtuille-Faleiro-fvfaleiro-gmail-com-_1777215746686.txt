@@ -1,0 +1,44 @@
+# Autor: Frederico Valtuille Faleiro (fvfaleiro@gmail.com)
+# Data: 05/12/2016
+# Script: Calcula a curva de acumulação de espécies para  riqueza, Jackknife 1, Bootstrap.
+
+## Requisito: 
+#   o pacote vegan deve estar instalado.
+#   Caso não esteja instalado, execute o comando: install.packages("vegan")
+
+## Dados de entrada: 
+#   nas linhas: unidades amostrais (pontos de coleta, campanhas, ponto_e_campanha, etc);
+#   nas colunas: espécies;
+#   a primeira coluna deve ser preenchida com os unidades amostrais (pontos de coleta, campanhas, etc), 
+#   enquanto cada uma das colunas subsequentes devem ser preenchidas com os valores de abundância de cada espécie (veja o exemplo abaixo);
+#   não deve haver nenhum espaço na planilha (entre nome de espécie, unidades amostrais, etc);
+#   não deve haver nenhuma célula vazia, as  células que não têm nenhum valor deve-se atribuir valores iguais a 0 (zero);
+#   a planilha do excel deve ser salva em formato "txt" (texto separado por tabulação) como no exemplo abaixo.
+
+## Exemplo do dado de entrada (ATENÇÃO: não deve existir os símbolos de jogo da velha antes da primeira coluna):
+# unidades amostrais (ponto_e_campanha)	sp1	sp2	sp3	sp4	sp5
+# P1	1	3	0	0	0
+# P2	2	4	1	1	0
+# P3	2	5	1	0	1
+
+## Resultado:
+#   matriz com as unidades amostrais e com a riqueza observada, jacknife 1 e bootstrap com os respectivos intervalos de confiança.
+
+## selecione tudo e aperte Ctrl + R
+
+library(vegan)
+
+arquivo.bd <- file.choose()
+diretorio <- dirname(arquivo.bd)
+arquivo.resu <- file.path(diretorio, "curva_de_acumulação.txt")
+bd <- read.table(arquivo.bd, header = T, sep = "\t", row.names = 1, dec = ",")
+
+# curva de acumulação de espécies
+acumulo.spp.st <- poolaccum(bd, permutations = 1000, minsize = 1)
+# salvar tabela com dados para usar no sigmaplot
+acum.sobs <- summary(acumulo.spp.st, display = "S")[[1]][, 2:4]
+acum.boot <-summary(acumulo.spp.st, display = "boot")[[1]][, 2:4]
+acum.jack1 <- summary(acumulo.spp.st, display = "jack1")[[1]][, 2:4]
+dat.acum <- data.frame(row.names(bd),acum.sobs, acum.boot, acum.jack1)
+colnames(dat.acum) <- c("Unidades_Amostrais", "Sobs", "Sobs_2.5%", "Sobs_97.5%", "Sboot", "Sboot_2.5%", "Sboot_97.5%", "Sjack1", "Sjack1_2.5%", "Sjack1_97.5%")
+write.table(dat.acum, file = arquivo.resu, row.names = FALSE, sep = "\t", dec = ",")

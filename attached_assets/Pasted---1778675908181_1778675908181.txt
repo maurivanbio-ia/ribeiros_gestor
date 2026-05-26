@@ -1,0 +1,162 @@
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+   ///////////////////////////
+      /////////////////////
+      
+0~z0e0oqdd1yn.js:72 Download the Apollo DevTools for a better development experience: https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm
+0~z0e0oqdd1yn.js:72 [LaunchDarkly] LaunchDarkly client initialized
+0~z0e0oqdd1yn.js:72 Cache data may be lost when replacing the currentUserSettings field of a Repl object.
+
+This could cause additional (usually avoidable) network requests to fetch data that were otherwise cached.
+
+To address this problem (which is not a bug in Apollo Client), either ensure all objects of type UserReplSettings have an ID or a custom merge function, or define a custom merge function for the Repl.currentUserSettings field, so InMemoryCache can safely merge these objects:
+
+  existing: {"__typename":"UserReplSettings","isBootstrapped":false,"agentSettings":null,"taskSettings":null}
+  incoming: {"__typename":"UserReplSettings","agentSettings":null,"taskSettings":null}
+
+For more information about these options, please refer to the documentation:
+
+  * Ensuring entity objects have IDs: https://go.apollo.dev/c/generating-unique-identifiers
+  * Defining custom merge functions: https://go.apollo.dev/c/merging-non-normalized-objects
+
+(anonymous) @ 0~z0e0oqdd1yn.js:72Understand this warning
+Ribeiros-Gestor:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+m.stripe.com/6:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVEDUnderstand this error
+14Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.Understand this error
+8Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+8Unrecognized feature: 'battery'.Understand this warning
+8Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+8Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+8Unrecognized feature: 'layout-animations'.Understand this warning
+8Unrecognized feature: 'legacy-image-formats'.Understand this warning
+8Unrecognized feature: 'navigation-override'.Understand this warning
+8Unrecognized feature: 'oversized-images'.Understand this warning
+8Unrecognized feature: 'publickey-credentials'.Understand this warning
+8Unrecognized feature: 'speaker-selection'.Understand this warning
+8Unrecognized feature: 'unoptimized-images'.Understand this warning
+8Unrecognized feature: 'unsized-media'.Understand this warning
+0i8wy8tbht2ow.js:2 Unrecognized feature: 'pointer-lock'.
+C @ 0i8wy8tbht2ow.js:2Understand this warning
+8Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+8Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+8Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('<URL>') does not match the recipient window's origin ('<URL>').Understand this warning
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@vite/client:802Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@vite/client:802Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@vite/client:802Understand this error
+client:802 WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+(anonymous) @ client:802Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ client:802Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ client:802Understand this error
+ WebSocket connection to 'wss://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/?token=cTGNFM4uSPBF' failed: 
+createConnection @ client:802Understand this error
+injected.js:37 [vite] failed to connect to websocket (Error: WebSocket closed without opened.). 
+(anonymous) @ injected.js:37Understand this error
+injected.js:37 [vite] Error: WebSocket closed without opened.
+    at WebSocket.<anonymous> (client:454:22)
+(anonymous) @ injected.js:37Understand this error
+client:454 Uncaught (in promise) Error: WebSocket closed without opened.
+    at WebSocket.<anonymous> (client:454:22)Understand this error
+injected.js:37 Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
+Check the render method of `Primitive.button.SlotClone`.
+    at Badge (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/ui/badge.tsx:35:18)
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-QYGBHP6W.js?v=9141f840:43:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-QYGBHP6W.js?v=9141f840:20:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-HCORXYVG.js?v=9141f840:43:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-QYGBHP6W.js?v=9141f840:43:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-QYGBHP6W.js?v=9141f840:20:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-HCORXYVG.js?v=9141f840:43:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-M5BEXICY.js?v=9141f840:1972:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-dropdown-menu.js?v=9141f840:147:13
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-dropdown-menu.js?v=9141f840:949:13
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at Popper (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-M5BEXICY.js?v=9141f840:1964:11)
+    at Menu (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-dropdown-menu.js?v=9141f840:101:11)
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at DropdownMenu (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-dropdown-menu.js?v=9141f840:914:5)
+    at div
+    at div
+    at _c9 (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/ui/card.tsx:114:12)
+    at div
+    at _c (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/ui/card.tsx:20:11)
+    at div
+    at div
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-HCORXYVG.js?v=9141f840:43:13
+    at Presence (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-XFTRG7WT.js?v=9141f840:24:11)
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=9141f840:178:13
+    at _c5 (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/ui/tabs.tsx:72:12)
+    at div
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-HCORXYVG.js?v=9141f840:43:13
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=9141f840:55:7
+    at div
+    at Projects (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/pages/projects.tsx:45:34)
+    at Route (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9141f840:206:16)
+    at Switch (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9141f840:262:17)
+    at Suspense
+    at ErrorBoundary (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/ErrorBoundary.tsx:7:5)
+    at PermissionGate (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/PermissionGate.tsx:27:34)
+    at main
+    at div
+    at Route (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9141f840:206:16)
+    at Switch (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9141f840:262:17)
+    at div
+    at Router (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/App.tsx?t=1778675543696&v=uXaVPopUkqree2kFX6puW:186:48)
+    at Provider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-U27FYV5Z.js?v=9141f840:38:15)
+    at TooltipProvider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=9141f840:66:5)
+    at PermissionProvider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/contexts/PermissionContext.tsx:35:38)
+    at UnidadeProvider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/contexts/UnidadeContext.tsx:21:35)
+    at ThemeProvider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/src/components/theme-provider.tsx:25:3)
+    at QueryClientProvider (https://d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=9141f840:3086:3)
+    at App
+(anonymous) @ injected.js:37Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/auth/user:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error
+d8cabbf4-07a5-448e-b15f-406d7c24b1b9-00-1tf63ykdvckhq.worf.replit.dev/api/financeiro/stats:1  Failed to load resource: the server responded with a status of 403 (Forbidden)Understand this error

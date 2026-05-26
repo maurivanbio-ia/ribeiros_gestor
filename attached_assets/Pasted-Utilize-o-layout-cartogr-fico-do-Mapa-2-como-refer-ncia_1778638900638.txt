@@ -1,0 +1,83 @@
+Utilize o layout cartográfico do “Mapa 2” como referência visual integral para reorganizar o “Mapa 1”, mantendo apenas os dados geográficos originais do Mapa 1. Não alterar camadas, feições, simbologia temática ou conteúdo espacial do mapa original. Ajustar exclusivamente a composição gráfica, hierarquia visual e organização dos elementos cartográficos.
+
+O novo layout deve seguir rigorosamente os seguintes padrões:
+
+• Estrutura geral em formato técnico-cartográfico profissional, semelhante a mapas de EIA/RIMA e estudos ambientais corporativos.
+• Fundo externo em cinza claro neutro.
+• Molduras finas e discretas em todos os quadros.
+• Organização modular em painéis separados.
+• Distribuição horizontal equilibrada entre mapa principal, legenda, mapa de localização e elementos institucionais.
+• Remover completamente o visual “dashboard”, “dark mode”, “painel GIS online” ou “interface web”.
+• Remover elementos futuristas, neon, caixas luminosas, indicadores numéricos, widgets, barras laterais e componentes típicos de sistema web.
+• Converter o layout para padrão de mapa técnico estático institucional.
+
+MAPA PRINCIPAL
+• O mapa principal deve ocupar aproximadamente 70% da largura útil da prancha.
+• Inserir moldura cartográfica simples.
+• Manter coordenadas UTM nas bordas.
+• Manter escala proporcional semelhante ao modelo de referência.
+• Preservar imagem de satélite/base cartográfica original.
+• Inserir sombreamento discreto do relevo, caso aplicável.
+• Priorizar legibilidade espacial e equilíbrio visual.
+
+PAINEL LATERAL DIREITO
+Criar um painel vertical semelhante ao Mapa 2 contendo:
+
+Mapa de localização
+• Inserir mapa de localização no topo direito.
+• Utilizar enquadramento semelhante ao modelo.
+• Mostrar estado/região/município.
+• Inserir destaque da área principal com retângulo vermelho.
+• Moldura simples e limpa.
+Legenda cartográfica
+• Inserir legenda centralizada abaixo do mapa de localização.
+• Fundo branco.
+• Hierarquia tipográfica clara.
+• Título “LEGENDA” em caixa alta e negrito.
+• Espaçamento consistente entre itens.
+• Símbolos alinhados horizontalmente.
+• Remover qualquer estética digital futurista.
+• Utilizar padrão técnico semelhante ao ArcGIS/QGIS profissional.
+Painel institucional
+• Inserir quadro institucional na parte inferior direita.
+• Fundo branco.
+• Inserir logotipos organizados horizontalmente.
+• Inserir responsável técnico e elaboração abaixo dos logos.
+• Alinhamento semelhante ao mapa modelo.
+
+PAINEL INFERIOR
+• Criar faixa inferior horizontal semelhante ao Mapa 2.
+• Dividir em três blocos proporcionais:
+
+Bloco da escala gráfica e norte
+• Inserir seta norte simples e elegante.
+• Inserir escala gráfica técnica.
+• Inserir projeção cartográfica e datum.
+Bloco do título
+• Centralizar o título do mapa.
+• Utilizar tipografia técnica robusta.
+• Nome do empreendimento em destaque abaixo do título principal.
+• Fundo branco.
+• Layout semelhante ao modelo de referência.
+Bloco das fontes
+• Inserir fontes cartográficas e bases de dados utilizadas.
+• Texto técnico pequeno e organizado.
+• Alinhamento centralizado semelhante ao modelo.
+
+TIPOGRAFIA
+• Utilizar tipografia técnica limpa semelhante a Arial, Calibri ou Source Sans.
+• Padronizar tamanhos.
+• Evitar brilho, sombras exageradas ou efeitos digitais.
+• Títulos em negrito.
+• Subtítulos discretos.
+
+CORES E ESTILO
+• Priorizar estética institucional e científica.
+• Tons neutros e profissionais.
+• Fundo branco nos painéis.
+• Molduras cinza ou pretas finas.
+• Evitar azul neon, ciano brilhante ou efeitos glow.
+• Manter aparência semelhante a mapas produzidos em ArcGIS Pro/QGIS para relatórios ambientais corporativos.
+
+OBJETIVO FINAL
+Transformar o Mapa 1 em uma prancha cartográfica técnica estática com o mesmo padrão visual, organização espacial e identidade gráfica do Mapa 2, preservando integralmente os dados e camadas originais do Mapa 1.

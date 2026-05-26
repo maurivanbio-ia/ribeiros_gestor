@@ -1,0 +1,287 @@
+1. Análises básicas de inventário
+
+Objetivo: descrever a composição geral da avifauna.
+
+Em Python:
+
+pandas
+numpy
+
+Análises:
+
+Número total de registros.
+Número total de espécies.
+Número de ordens.
+Número de famílias.
+Riqueza por unidade amostral.
+Riqueza por ambiente.
+Riqueza por método de registro.
+Riqueza por período, por exemplo manhã, tarde ou noite.
+Número de espécies exclusivas por ambiente.
+Lista de espécies raras, com apenas um ou poucos registros.
+2. Abundância e frequência das espécies
+
+Objetivo: identificar espécies dominantes, comuns e raras.
+
+Análises:
+
+Abundância absoluta por espécie.
+Abundância relativa por espécie.
+Frequência de ocorrência por unidade amostral.
+Ranking das espécies mais registradas.
+Curva rank-abundance.
+Proporção de registros por família.
+Proporção de registros por ordem.
+
+Bibliotecas:
+
+pandas
+matplotlib
+seaborn
+3. Curva de acumulação de espécies
+
+Objetivo: avaliar se o esforço amostral foi suficiente.
+
+Análises:
+
+Curva de acumulação por ordem das amostras.
+Curva de rarefação.
+Estimativa de riqueza esperada.
+Comparação entre riqueza observada e riqueza estimada.
+Avaliação visual de estabilização da curva.
+
+Bibliotecas:
+
+pandas
+numpy
+matplotlib
+scikit-bio
+4. Estimadores de riqueza
+
+Objetivo: estimar a riqueza real esperada da área.
+
+Análises:
+
+Chao1.
+Chao2.
+Jackknife 1.
+Jackknife 2.
+Bootstrap.
+Comparação entre riqueza observada e estimada.
+
+Essas análises ajudam a responder se a campanha capturou adequadamente a comunidade de aves.
+
+5. Diversidade alfa
+
+Objetivo: comparar diversidade local entre unidades, ambientes ou campanhas.
+
+Índices:
+
+Shannon.
+Simpson.
+Pielou.
+Margalef.
+Menhinick.
+
+Comparações possíveis:
+
+Diversidade por unidade amostral.
+Diversidade por ambiente.
+Diversidade por método.
+Diversidade por campanha, caso haja mais de uma.
+
+Bibliotecas:
+
+scipy
+skbio
+pandas
+6. Diversidade beta
+
+Objetivo: avaliar diferença na composição de espécies entre áreas.
+
+Métricas:
+
+Jaccard, para presença e ausência.
+Sørensen, para presença e ausência.
+Bray-Curtis, para abundância.
+Simpson beta.
+Turnover.
+Nestedness.
+
+Comparações:
+
+Entre unidades amostrais.
+Entre fitofisionomias.
+Entre ambientes.
+Entre métodos de amostragem.
+Entre campanhas.
+
+Bibliotecas:
+
+scipy.spatial.distance
+skbio
+pandas
+7. Ordenações multivariadas
+
+Objetivo: visualizar padrões de similaridade na comunidade.
+
+Análises recomendadas:
+
+NMDS com Bray-Curtis.
+PCoA com Jaccard ou Bray-Curtis.
+PCA, apenas se houver variáveis ambientais quantitativas.
+Cluster hierárquico das unidades amostrais.
+
+Bibliotecas:
+
+sklearn
+scikit-bio
+scipy
+matplotlib
+
+Produto esperado:
+
+Gráficos mostrando se as unidades se agrupam por ambiente, método, campanha ou tipo de habitat.
+
+8. PERMANOVA
+
+Objetivo: testar estatisticamente se a composição da avifauna difere entre grupos.
+
+Fatores possíveis:
+
+Ambiente.
+Unidade amostral.
+Fitofisionomia.
+Método de registro.
+Período.
+Campanha.
+
+Biblioteca:
+
+skbio.stats.distance.permanova
+
+Exemplo de pergunta:
+
+A composição de aves difere entre áreas abertas e áreas vegetadas?
+
+9. Análise de espécies indicadoras
+
+Objetivo: identificar espécies associadas a determinados ambientes.
+
+Análises:
+
+Espécies indicadoras por ambiente.
+Espécies indicadoras por unidade amostral.
+Espécies indicadoras por fitofisionomia.
+Espécies indicadoras de áreas mais conservadas.
+Espécies indicadoras de áreas antropizadas.
+
+Em Python, pode ser implementado manualmente com base no índice IndVal.
+
+10. Guildas tróficas
+
+Objetivo: avaliar a estrutura funcional da comunidade.
+
+Análises:
+
+Proporção de insetívoros.
+Proporção de frugívoros.
+Proporção de granívoros.
+Proporção de carnívoros.
+Proporção de onívoros.
+Comparação das guildas entre ambientes.
+Abundância relativa por guilda.
+
+Bibliotecas:
+
+pandas
+matplotlib
+seaborn
+scipy
+11. Sensibilidade ambiental
+
+Objetivo: avaliar qualidade ambiental com base nas espécies registradas.
+
+Análises:
+
+Número de espécies de baixa sensibilidade.
+Número de espécies de média sensibilidade.
+Número de espécies de alta sensibilidade.
+Proporção de espécies sensíveis por unidade amostral.
+Comparação da sensibilidade entre ambientes.
+Identificação de áreas com maior valor ecológico.
+12. Espécies ameaçadas, endêmicas e migratórias
+
+Objetivo: atender demandas técnicas de licenciamento.
+
+Análises:
+
+Lista de espécies ameaçadas pelo MMA.
+Lista de espécies ameaçadas pela IUCN.
+Espécies CITES.
+Espécies migratórias.
+Espécies endêmicas.
+Distribuição espacial dessas espécies.
+Frequência de ocorrência.
+Ambientes utilizados por espécies de interesse conservacionista.
+13. Modelos estatísticos
+
+Objetivo: testar quais variáveis explicam riqueza, abundância ou diversidade.
+
+Modelos possíveis:
+
+GLM Poisson para riqueza.
+GLM Binomial Negativo para abundância.
+GLM Gamma para índices contínuos positivos.
+GLMM, se houver repetição por unidade amostral ou campanha.
+Regressão logística para presença/ausência de espécies sensíveis.
+Random Forest para prever riqueza ou ocorrência.
+
+Bibliotecas:
+
+statsmodels
+scikit-learn
+scipy
+pandas
+
+Variáveis resposta possíveis:
+
+Riqueza.
+Abundância.
+Shannon.
+Simpson.
+Presença de espécie sensível.
+Presença de espécie ameaçada.
+
+Variáveis explicativas possíveis:
+
+Ambiente.
+Fitofisionomia.
+Unidade amostral.
+Método.
+Período.
+Esforço amostral.
+Distância percorrida.
+Duração da amostragem.
+14. Análises espaciais
+
+Objetivo: mapear padrões de ocorrência.
+
+Análises:
+
+Mapa dos registros.
+Mapa de riqueza por ponto.
+Mapa de abundância.
+Mapa de espécies ameaçadas.
+Mapa de espécies sensíveis.
+Kernel de densidade de registros.
+Hotspots de riqueza.
+Distância dos registros a áreas naturais ou áreas de intervenção.
+
+Bibliotecas:
+
+geopandas
+shapely
+folium
+contextily
+matplotlib

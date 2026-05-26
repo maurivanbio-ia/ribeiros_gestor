@@ -1,0 +1,943 @@
+# ============================================================
+# ANÁLISES MULTIVARIADAS E BIOMÉTRICAS DA ICTIOFAUNA
+# NMDS, PCA HELLINGER, PERMANOVA, LC/PESO, KRUSKAL-WALLIS E DUNN
+# ============================================================
+
+# Requisitos:
+# pip install pandas numpy matplotlib scipy scikit-learn scikit-bio openpyxl scikit-posthocs adjustText
+
+import os
+import warnings
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from scipy.spatial.distance import pdist, squareform
+from scipy.stats import kruskal
+from scipy.optimize import curve_fit
+from sklearn.decomposition import PCA
+from sklearn.manifold import MDS
+from sklearn.preprocessing import StandardScaler
+
+from skbio.stats.distance import DistanceMatrix
+from skbio.stats.distance import permanova
+
+warnings.filterwarnings("ignore")
+
+# ============================================================
+# 1. CONFIGURAÇÕES
+# ============================================================
+
+arquivo_entrada = "dados_ictiofauna.xlsx"
+aba_excel = "Planilha1"
+
+pasta_saida = "resultados_ictiofauna_multivariada"
+os.makedirs(pasta_saida, exist_ok=True)
+
+n_permutacoes = 999
+random_state = 123
+
+# Paleta solicitada
+AZUL_PETROLEO = (0/255, 153/255, 168/255)
+AZUL_MEDIO = (3/255, 142/255, 161/255)
+AZUL_PROFUNDO = (15/255, 64/255, 152/255)
+CINZA_CLARO = (173/255, 173/255, 173/255)
+
+paleta_base = [
+    AZUL_PETROLEO,
+    AZUL_MEDIO,
+    AZUL_PROFUNDO,
+    CINZA_CLARO
+]
+
+plt.rcParams.update({
+    "figure.dpi": 120,
+    "savefig.dpi": 300,
+    "font.size": 10,
+    "axes.titlesize": 11,
+    "axes.labelsize": 10,
+    "legend.fontsize": 8,
+    "axes.edgecolor": "0.25",
+    "axes.linewidth": 0.8,
+    "grid.color": "0.88",
+    "grid.linestyle": "-",
+    "grid.linewidth": 0.6,
+    "axes.facecolor": "white",
+    "figure.facecolor": "white"
+})
+
+# ============================================================
+# 2. FUNÇÕES AUXILIARES
+# ============================================================
+
+def padronizar_colunas(df):
+    df = df.copy()
+    df.columns = (
+        df.columns
+        .str.strip()
+        .str.lower()
+        .str.replace(" ", "_")
+        .str.replace("-", "_")
+        .str.replace("ç", "c")
+        .str.replace("ã", "a")
+        .str.replace("á", "a")
+        .str.replace("à", "a")
+        .str.replace("é", "e")
+        .str.replace("ê", "e")
+        .str.replace("í", "i")
+        .str.replace("ó", "o")
+        .str.replace("ô", "o")
+        .str.replace("ú", "u")
+    )
+    return df
+
+
+def transformar_hellinger(matriz):
+    matriz = matriz.astype(float)
+    soma_linhas = matriz.sum(axis=1)
+    proporcoes = matriz.div(soma_linhas, axis=0)
+    hellinger = np.sqrt(proporcoes)
+    return hellinger.fillna(0)
+
+
+def gerar_cores(grupos):
+    grupos_unicos = sorted(pd.Series(grupos).astype(str).unique())
+    cores = {}
+    for i, grupo in enumerate(grupos_unicos):
+        cores[grupo] = paleta_base[i % len(paleta_base)]
+    return cores
+
+
+def adicionar_elipse(ax, x, y, edgecolor, label=None, n_std=1.96):
+    """
+    Adiciona elipse aproximada de 95% com base na matriz de covariância.
+    Requer pelo menos 3 pontos por grupo.
+    """
+
+    from matplotlib.patches import Ellipse
+
+    x = np.asarray(x)
+    y = np.asarray(y)
+
+    if len(x) < 3:
+        return
+
+    cov = np.cov(x, y)
+
+    if np.linalg.det(cov) <= 0:
+        return
+
+    vals, vecs = np.linalg.eigh(cov)
+    ordem = vals.argsort()[::-1]
+    vals = vals[ordem]
+    vecs = vecs[:, ordem]
+
+    theta = np.degrees(np.arctan2(*vecs[:, 0][::-1]))
+
+    largura, altura = 2 * n_std * np.sqrt(vals)
+
+    elipse = Ellipse(
+        xy=(np.mean(x), np.mean(y)),
+        width=largura,
+        height=altura,
+        angle=theta,
+        edgecolor=edgecolor,
+        facecolor="none",
+        linewidth=1.2,
+        linestyle="-",
+        alpha=0.95,
+        label=label
+    )
+
+    ax.add_patch(elipse)
+
+
+def formatar_p(valor, casas=3):
+    if pd.isna(valor):
+        return "—"
+    if valor < 0.001:
+        return "<0,001"
+    return f"{valor:.{casas}f}".replace(".", ",")
+
+
+def modelo_peso_comprimento(lc, a, b):
+    return a * (lc ** b)
+
+
+# ============================================================
+# 3. LEITURA DOS DADOS
+# ============================================================
+
+if arquivo_entrada.endswith(".xlsx"):
+    dados = pd.read_excel(arquivo_entrada, sheet_name=aba_excel)
+elif arquivo_entrada.endswith(".csv"):
+    dados = pd.read_csv(arquivo_entrada)
+else:
+    raise ValueError("Use arquivo .xlsx ou .csv.")
+
+dados = padronizar_colunas(dados)
+
+colunas_minimas = ["ponto", "campanha", "especie", "abundancia"]
+
+for col in colunas_minimas:
+    if col not in dados.columns:
+        raise ValueError(f"A coluna obrigatória '{col}' não foi encontrada.")
+
+# Identificar coluna de comprimento
+if "lc_mm" in dados.columns:
+    coluna_comprimento = "lc_mm"
+elif "ct_mm" in dados.columns:
+    coluna_comprimento = "ct_mm"
+elif "comprimento_mm" in dados.columns:
+    coluna_comprimento = "comprimento_mm"
+else:
+    coluna_comprimento = None
+
+if "peso_g" in dados.columns:
+    coluna_peso = "peso_g"
+elif "peso" in dados.columns:
+    coluna_peso = "peso"
+else:
+    coluna_peso = None
+
+dados["abundancia"] = pd.to_numeric(dados["abundancia"], errors="coerce").fillna(0)
+dados = dados[dados["abundancia"] >= 0].copy()
+
+dados["ponto"] = dados["ponto"].astype(str).str.strip()
+dados["campanha"] = dados["campanha"].astype(str).str.strip()
+dados["especie"] = dados["especie"].astype(str).str.strip()
+
+dados["amostra"] = dados["ponto"] + "_campanha_" + dados["campanha"]
+
+# ============================================================
+# 4. MATRIZ COMUNIDADE
+# ============================================================
+
+matriz_comunidade = dados.pivot_table(
+    index="amostra",
+    columns="especie",
+    values="abundancia",
+    aggfunc="sum",
+    fill_value=0
+)
+
+matriz_comunidade = matriz_comunidade.loc[matriz_comunidade.sum(axis=1) > 0]
+matriz_comunidade = matriz_comunidade.loc[:, matriz_comunidade.sum(axis=0) > 0]
+
+metadados = (
+    dados[["amostra", "ponto", "campanha"]]
+    .drop_duplicates()
+    .set_index("amostra")
+    .loc[matriz_comunidade.index]
+)
+
+matriz_comunidade.to_excel(os.path.join(pasta_saida, "01_matriz_comunidade_amostras_x_especies.xlsx"))
+metadados.to_excel(os.path.join(pasta_saida, "02_metadados_amostras.xlsx"))
+
+print("Matriz comunidade criada.")
+print(f"Amostras: {matriz_comunidade.shape[0]}")
+print(f"Espécies: {matriz_comunidade.shape[1]}")
+
+# ============================================================
+# 5. PCA COM TRANSFORMAÇÃO DE HELLINGER
+# ============================================================
+
+matriz_hellinger = transformar_hellinger(matriz_comunidade)
+matriz_hellinger.to_excel(os.path.join(pasta_saida, "03_matriz_hellinger.xlsx"))
+
+pca_hell = PCA(n_components=2)
+scores_pca_hell = pca_hell.fit_transform(matriz_hellinger)
+
+pca_hell_df = pd.DataFrame(
+    scores_pca_hell,
+    index=matriz_hellinger.index,
+    columns=["PCA1", "PCA2"]
+).join(metadados)
+
+var_pca_hell = pca_hell.explained_variance_ratio_ * 100
+pca_hell_df.to_excel(os.path.join(pasta_saida, "04_coordenadas_PCA_Hellinger.xlsx"))
+
+# ============================================================
+# 6. NMDS COM BRAY-CURTIS
+# ============================================================
+
+dist_bray = pdist(matriz_comunidade.values, metric="braycurtis")
+dist_bray_matrix = squareform(dist_bray)
+
+dist_bray_df = pd.DataFrame(
+    dist_bray_matrix,
+    index=matriz_comunidade.index,
+    columns=matriz_comunidade.index
+)
+
+dist_bray_df.to_excel(os.path.join(pasta_saida, "05_matriz_bray_curtis.xlsx"))
+
+nmds = MDS(
+    n_components=2,
+    metric=False,
+    dissimilarity="precomputed",
+    n_init=80,
+    max_iter=5000,
+    eps=1e-12,
+    random_state=random_state,
+    normalized_stress="auto"
+)
+
+scores_nmds = nmds.fit_transform(dist_bray_matrix)
+
+nmds_df = pd.DataFrame(
+    scores_nmds,
+    index=matriz_comunidade.index,
+    columns=["NMDS1", "NMDS2"]
+).join(metadados)
+
+stress_nmds = float(nmds.stress_)
+nmds_df.to_excel(os.path.join(pasta_saida, "06_coordenadas_NMDS_BrayCurtis.xlsx"))
+
+# ============================================================
+# 7. PERMANOVA ENTRE PONTOS
+# ============================================================
+
+dm_bray = DistanceMatrix(
+    dist_bray_matrix,
+    ids=matriz_comunidade.index.astype(str)
+)
+
+grupo_pontos = metadados["ponto"].astype(str)
+
+permanova_resultado = permanova(
+    distance_matrix=dm_bray,
+    grouping=grupo_pontos,
+    permutations=n_permutacoes
+)
+
+pseudo_f = float(permanova_resultado["test statistic"])
+p_permanova = float(permanova_resultado["p-value"])
+
+# Cálculo manual de SS, MS e R² para tabela semelhante ao modelo apresentado
+D2 = dist_bray_matrix ** 2
+n = D2.shape[0]
+
+# Soma de quadrados total aproximada para matriz de distâncias
+ss_total = D2.sum() / n
+
+grupos = grupo_pontos.values
+grupos_unicos = np.unique(grupos)
+
+ss_dentro = 0
+
+for g in grupos_unicos:
+    idx = np.where(grupos == g)[0]
+    D2_g = D2[np.ix_(idx, idx)]
+    n_g = len(idx)
+    if n_g > 1:
+        ss_dentro += D2_g.sum() / n_g
+
+ss_entre = ss_total - ss_dentro
+
+gl_entre = len(grupos_unicos) - 1
+gl_dentro = n - len(grupos_unicos)
+gl_total = n - 1
+
+ms_entre = ss_entre / gl_entre if gl_entre > 0 else np.nan
+ms_dentro = ss_dentro / gl_dentro if gl_dentro > 0 else np.nan
+
+r2_entre = ss_entre / ss_total if ss_total > 0 else np.nan
+r2_dentro = ss_dentro / ss_total if ss_total > 0 else np.nan
+
+tabela_permanova = pd.DataFrame({
+    "Fonte de variação": ["Entre pontos", "Dentro dos pontos", "Total"],
+    "gl": [gl_entre, gl_dentro, gl_total],
+    "SS": [ss_entre, ss_dentro, ss_total],
+    "MS": [ms_entre, ms_dentro, np.nan],
+    "Pseudo-F": [pseudo_f, np.nan, np.nan],
+    "p (999 perm.)": [p_permanova, np.nan, np.nan],
+    "R²": [r2_entre, r2_dentro, 1.00]
+})
+
+tabela_permanova.to_excel(
+    os.path.join(pasta_saida, "07_tabela_PERMANOVA_pontos.xlsx"),
+    index=False
+)
+
+# Versão formatada para relatório
+tabela_permanova_formatada = tabela_permanova.copy()
+
+for col in ["SS", "MS", "Pseudo-F", "p (999 perm.)", "R²"]:
+    tabela_permanova_formatada[col] = tabela_permanova_formatada[col].apply(
+        lambda x: "—" if pd.isna(x) else f"{x:.4f}".replace(".", ",")
+    )
+
+tabela_permanova_formatada.to_excel(
+    os.path.join(pasta_saida, "08_tabela_PERMANOVA_formatada.xlsx"),
+    index=False
+)
+
+print("\nPERMANOVA")
+print(tabela_permanova_formatada)
+
+# ============================================================
+# 8. CENTRÓIDES DAS ESPÉCIES MAIS ABUNDANTES NO ESPAÇO NMDS
+# ============================================================
+
+abund_total_especies = matriz_comunidade.sum(axis=0).sort_values(ascending=False)
+top_especies = abund_total_especies.head(5).index.tolist()
+
+centroides_especies = []
+
+for especie in top_especies:
+    abund = matriz_comunidade[especie].values.astype(float)
+
+    if abund.sum() > 0:
+        centro_x = np.average(nmds_df["NMDS1"], weights=abund)
+        centro_y = np.average(nmds_df["NMDS2"], weights=abund)
+
+        centroides_especies.append({
+            "especie": especie,
+            "NMDS1": centro_x,
+            "NMDS2": centro_y,
+            "abundancia_total": abund.sum()
+        })
+
+centroides_especies_df = pd.DataFrame(centroides_especies)
+centroides_especies_df.to_excel(
+    os.path.join(pasta_saida, "09_centroides_5_especies_mais_abundantes_NMDS.xlsx"),
+    index=False
+)
+
+# ============================================================
+# 9. GRÁFICOS NMDS EM TRÊS PAINÉIS
+# ============================================================
+
+cores_pontos = gerar_cores(metadados["ponto"])
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+
+# Painel A. NMDS por pontos
+ax = axes[0]
+
+for ponto in sorted(nmds_df["ponto"].astype(str).unique()):
+    sub = nmds_df[nmds_df["ponto"].astype(str) == ponto]
+    ax.scatter(
+        sub["NMDS1"],
+        sub["NMDS2"],
+        s=48,
+        color=cores_pontos[ponto],
+        edgecolor="black",
+        linewidth=0.45,
+        alpha=0.9,
+        label=ponto
+    )
+
+ax.axhline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.axvline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.set_title("NMDS . Pontos")
+ax.set_xlabel("NMDS1")
+ax.set_ylabel("NMDS2")
+ax.grid(True)
+ax.text(0.01, 0.98, "(A)", transform=ax.transAxes, va="top", ha="left", fontweight="bold")
+
+# Painel B. NMDS com elipses
+ax = axes[1]
+
+for ponto in sorted(nmds_df["ponto"].astype(str).unique()):
+    sub = nmds_df[nmds_df["ponto"].astype(str) == ponto]
+    ax.scatter(
+        sub["NMDS1"],
+        sub["NMDS2"],
+        s=48,
+        color=cores_pontos[ponto],
+        edgecolor="black",
+        linewidth=0.45,
+        alpha=0.9,
+        label=ponto
+    )
+    adicionar_elipse(
+        ax,
+        sub["NMDS1"],
+        sub["NMDS2"],
+        edgecolor=cores_pontos[ponto],
+        n_std=1.96
+    )
+
+ax.axhline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.axvline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.set_title("NMDS . Réplicas com elipses 95%")
+ax.set_xlabel("NMDS1")
+ax.set_ylabel("NMDS2")
+ax.grid(True)
+ax.text(0.01, 0.98, "(B)", transform=ax.transAxes, va="top", ha="left", fontweight="bold")
+
+# Painel C. NMDS com centróides das espécies
+ax = axes[2]
+
+for ponto in sorted(nmds_df["ponto"].astype(str).unique()):
+    sub = nmds_df[nmds_df["ponto"].astype(str) == ponto]
+    ax.scatter(
+        sub["NMDS1"],
+        sub["NMDS2"],
+        s=42,
+        color=cores_pontos[ponto],
+        edgecolor="black",
+        linewidth=0.45,
+        alpha=0.65,
+        label=ponto
+    )
+
+if not centroides_especies_df.empty:
+    ax.scatter(
+        centroides_especies_df["NMDS1"],
+        centroides_especies_df["NMDS2"],
+        s=70,
+        color="black",
+        edgecolor="white",
+        linewidth=0.5,
+        alpha=0.95
+    )
+
+    for _, row in centroides_especies_df.iterrows():
+        ax.text(
+            row["NMDS1"],
+            row["NMDS2"],
+            str(row["especie"])[:18],
+            fontsize=7,
+            ha="left",
+            va="bottom"
+        )
+
+ax.axhline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.axvline(0, color="0.75", linewidth=0.8, linestyle=":")
+ax.set_title("NMDS . Centróides das 5 spp.")
+ax.set_xlabel("NMDS1")
+ax.set_ylabel("NMDS2")
+ax.grid(True)
+ax.text(0.01, 0.98, "(C)", transform=ax.transAxes, va="top", ha="left", fontweight="bold")
+
+handles, labels = axes[0].get_legend_handles_labels()
+fig.legend(
+    handles,
+    labels,
+    title="Ponto",
+    loc="lower center",
+    ncol=min(len(labels), 5),
+    frameon=False,
+    bbox_to_anchor=(0.5, -0.04)
+)
+
+fig.suptitle(f"Ordenação NMDS da ictiofauna . Bray-Curtis . Stress = {stress_nmds:.4f}", y=1.03)
+plt.tight_layout()
+
+fig.savefig(os.path.join(pasta_saida, "10_NMDS_tres_paineis.png"), bbox_inches="tight")
+fig.savefig(os.path.join(pasta_saida, "10_NMDS_tres_paineis.pdf"), bbox_inches="tight")
+plt.close(fig)
+
+# ============================================================
+# 10. GRÁFICO DA TABELA DE PERMANOVA
+# ============================================================
+
+fig, ax = plt.subplots(figsize=(10, 2.1))
+ax.axis("off")
+
+tabela_plot = tabela_permanova_formatada.copy()
+
+tabela = ax.table(
+    cellText=tabela_plot.values,
+    colLabels=tabela_plot.columns,
+    cellLoc="center",
+    colLoc="center",
+    loc="center"
+)
+
+tabela.auto_set_font_size(False)
+tabela.set_fontsize(9)
+tabela.scale(1, 1.5)
+
+for (row, col), cell in tabela.get_celld().items():
+    cell.set_linewidth(0.4)
+
+    if row == 0:
+        cell.set_facecolor(AZUL_PROFUNDO)
+        cell.set_text_props(color="white", weight="bold")
+    else:
+        cell.set_facecolor("white")
+        cell.set_text_props(color="black")
+
+ax.set_title("PERMANOVA . Composição da ictiofauna entre pontos", fontsize=11, pad=10)
+
+fig.savefig(os.path.join(pasta_saida, "11_tabela_PERMANOVA_grafica.png"), bbox_inches="tight")
+fig.savefig(os.path.join(pasta_saida, "11_tabela_PERMANOVA_grafica.pdf"), bbox_inches="tight")
+plt.close(fig)
+
+# ============================================================
+# 11. ANÁLISES BIOMÉTRICAS: LC E PESO
+# ============================================================
+
+if coluna_comprimento is None:
+    print("\nNenhuma coluna de comprimento foi encontrada. As análises biométricas não foram realizadas.")
+else:
+    dados[coluna_comprimento] = pd.to_numeric(dados[coluna_comprimento], errors="coerce")
+
+if coluna_peso is None:
+    print("\nNenhuma coluna de peso foi encontrada. As análises de peso não foram realizadas.")
+else:
+    dados[coluna_peso] = pd.to_numeric(dados[coluna_peso], errors="coerce")
+
+if coluna_comprimento is not None:
+    # Para evitar pseudorreplicação por espécie repetida na matriz longa,
+    # cria-se uma base biométrica sem duplicatas evidentes.
+    colunas_bio = ["ponto", "campanha", "especie", coluna_comprimento]
+
+    if coluna_peso is not None:
+        colunas_bio.append(coluna_peso)
+
+    bio = dados[colunas_bio].copy()
+
+    # Remove linhas sem LC
+    bio = bio.dropna(subset=[coluna_comprimento])
+
+    # Remove valores impossíveis
+    bio = bio[bio[coluna_comprimento] > 0].copy()
+
+    if coluna_peso is not None:
+        bio = bio[(bio[coluna_peso].isna()) | (bio[coluna_peso] > 0)].copy()
+
+    # Remove duplicatas exatas
+    bio = bio.drop_duplicates()
+
+    resumo_bio = bio.groupby("ponto").agg(
+        n_lc=(coluna_comprimento, lambda x: x.notna().sum()),
+        media_lc=(coluna_comprimento, "mean"),
+        dp_lc=(coluna_comprimento, "std")
+    )
+
+    if coluna_peso is not None:
+        resumo_peso = bio.groupby("ponto").agg(
+            n_peso=(coluna_peso, lambda x: x.notna().sum()),
+            media_peso=(coluna_peso, "mean"),
+            dp_peso=(coluna_peso, "std")
+        )
+        resumo_bio = resumo_bio.join(resumo_peso)
+
+    resumo_bio = resumo_bio.reset_index()
+    resumo_bio.to_excel(os.path.join(pasta_saida, "12_resumo_biometria_por_ponto.xlsx"), index=False)
+
+    # Kruskal-Wallis para LC
+    grupos_lc = [
+        sub[coluna_comprimento].dropna().values
+        for _, sub in bio.groupby("ponto")
+        if sub[coluna_comprimento].dropna().shape[0] > 0
+    ]
+
+    if len(grupos_lc) >= 2:
+        kw_lc = kruskal(*grupos_lc)
+    else:
+        kw_lc = None
+
+    # Kruskal-Wallis para peso
+    if coluna_peso is not None:
+        bio_peso = bio.dropna(subset=[coluna_peso]).copy()
+
+        grupos_peso = [
+            sub[coluna_peso].dropna().values
+            for _, sub in bio_peso.groupby("ponto")
+            if sub[coluna_peso].dropna().shape[0] > 0
+        ]
+
+        if len(grupos_peso) >= 2:
+            kw_peso = kruskal(*grupos_peso)
+        else:
+            kw_peso = None
+    else:
+        bio_peso = None
+        kw_peso = None
+
+    resultados_kw = []
+
+    if kw_lc is not None:
+        resultados_kw.append({
+            "variavel": coluna_comprimento,
+            "H": kw_lc.statistic,
+            "gl": len(grupos_lc) - 1,
+            "p": kw_lc.pvalue
+        })
+
+    if kw_peso is not None:
+        resultados_kw.append({
+            "variavel": coluna_peso,
+            "H": kw_peso.statistic,
+            "gl": len(grupos_peso) - 1,
+            "p": kw_peso.pvalue
+        })
+
+    resultados_kw_df = pd.DataFrame(resultados_kw)
+    resultados_kw_df.to_excel(os.path.join(pasta_saida, "13_kruskal_wallis_LC_peso.xlsx"), index=False)
+
+    # Pós.teste de Dunn
+    try:
+        import scikit_posthocs as sp
+
+        dunn_lc = sp.posthoc_dunn(
+            bio,
+            val_col=coluna_comprimento,
+            group_col="ponto",
+            p_adjust="bonferroni"
+        )
+
+        dunn_lc.to_excel(os.path.join(pasta_saida, "14_dunn_LC_bonferroni.xlsx"))
+
+        if coluna_peso is not None:
+            dunn_peso = sp.posthoc_dunn(
+                bio_peso,
+                val_col=coluna_peso,
+                group_col="ponto",
+                p_adjust="bonferroni"
+            )
+
+            dunn_peso.to_excel(os.path.join(pasta_saida, "15_dunn_peso_bonferroni.xlsx"))
+
+    except Exception as e:
+        print("\nNão foi possível executar o teste de Dunn.")
+        print("Instale com: pip install scikit-posthocs")
+        print(e)
+
+    # ========================================================
+    # 12. RELAÇÃO COMPRIMENTO.PESO
+    # ========================================================
+
+    if coluna_peso is not None:
+        bio_lw = bio.dropna(subset=[coluna_comprimento, coluna_peso]).copy()
+        bio_lw = bio_lw[(bio_lw[coluna_comprimento] > 0) & (bio_lw[coluna_peso] > 0)]
+
+        if bio_lw.shape[0] >= 5:
+            x = bio_lw[coluna_comprimento].values.astype(float)
+            y = bio_lw[coluna_peso].values.astype(float)
+
+            # Ajuste W = a * LC^b
+            try:
+                popt, pcov = curve_fit(
+                    modelo_peso_comprimento,
+                    x,
+                    y,
+                    p0=[0.00001, 3],
+                    maxfev=20000
+                )
+
+                a, b = popt
+
+                y_pred = modelo_peso_comprimento(x, a, b)
+
+                ss_res = np.sum((y - y_pred) ** 2)
+                ss_tot = np.sum((y - np.mean(y)) ** 2)
+                r2_lw = 1 - (ss_res / ss_tot)
+
+                x_seq = np.linspace(x.min(), x.max(), 300)
+                y_seq = modelo_peso_comprimento(x_seq, a, b)
+
+                fig, ax = plt.subplots(figsize=(6.5, 4.8))
+
+                ax.scatter(
+                    x,
+                    y,
+                    s=42,
+                    color=AZUL_PROFUNDO,
+                    edgecolor="black",
+                    linewidth=0.4,
+                    alpha=0.85
+                )
+
+                ax.plot(
+                    x_seq,
+                    y_seq,
+                    color="red",
+                    linewidth=1.6
+                )
+
+                texto_eq = f"Peso = {a:.5f} × LC^{b:.2f}\nR² = {r2_lw:.2f}"
+                ax.text(
+                    0.04,
+                    0.96,
+                    texto_eq,
+                    transform=ax.transAxes,
+                    va="top",
+                    ha="left",
+                    fontsize=8,
+                    bbox=dict(boxstyle="round", facecolor="white", edgecolor="0.8", alpha=0.9)
+                )
+
+                ax.set_title("Relação comprimento.peso")
+                ax.set_xlabel("Comprimento padrão, LC (mm)" if coluna_comprimento == "lc_mm" else "Comprimento (mm)")
+                ax.set_ylabel("Peso (g)")
+                ax.grid(True)
+
+                plt.tight_layout()
+                fig.savefig(os.path.join(pasta_saida, "16_relacao_comprimento_peso.png"), bbox_inches="tight")
+                fig.savefig(os.path.join(pasta_saida, "16_relacao_comprimento_peso.pdf"), bbox_inches="tight")
+                plt.close(fig)
+
+                relacao_lw_df = pd.DataFrame({
+                    "parametro": ["a", "b", "R2", "n"],
+                    "valor": [a, b, r2_lw, bio_lw.shape[0]]
+                })
+
+                relacao_lw_df.to_excel(
+                    os.path.join(pasta_saida, "17_parametros_relacao_comprimento_peso.xlsx"),
+                    index=False
+                )
+
+            except Exception as e:
+                print("\nNão foi possível ajustar a relação comprimento.peso.")
+                print(e)
+
+    # ========================================================
+    # 13. PCA BIOMÉTRICA COM LC E PESO
+    # ========================================================
+
+    if coluna_peso is not None:
+        bio_pca = bio.dropna(subset=[coluna_comprimento, coluna_peso]).copy()
+
+        if bio_pca.shape[0] >= 5:
+            X_bio = bio_pca[[coluna_comprimento, coluna_peso]].values
+            X_bio_scaled = StandardScaler().fit_transform(X_bio)
+
+            pca_bio = PCA(n_components=2)
+            scores_bio = pca_bio.fit_transform(X_bio_scaled)
+
+            pca_bio_df = pd.DataFrame({
+                "PCA1": scores_bio[:, 0],
+                "PCA2": scores_bio[:, 1],
+                "ponto": bio_pca["ponto"].values,
+                "campanha": bio_pca["campanha"].values,
+                "especie": bio_pca["especie"].values,
+                coluna_comprimento: bio_pca[coluna_comprimento].values,
+                coluna_peso: bio_pca[coluna_peso].values
+            })
+
+            cargas = pca_bio.components_.T
+            var_bio = pca_bio.explained_variance_ratio_ * 100
+
+            pca_bio_df.to_excel(os.path.join(pasta_saida, "18_coordenadas_PCA_LC_peso.xlsx"), index=False)
+
+            cargas_df = pd.DataFrame(
+                cargas,
+                index=[coluna_comprimento, coluna_peso],
+                columns=["PCA1", "PCA2"]
+            )
+
+            cargas_df.to_excel(os.path.join(pasta_saida, "19_cargas_PCA_LC_peso.xlsx"))
+
+            fig, ax = plt.subplots(figsize=(6.5, 4.8))
+
+            cores_bio = gerar_cores(pca_bio_df["ponto"])
+
+            for ponto in sorted(pca_bio_df["ponto"].astype(str).unique()):
+                sub = pca_bio_df[pca_bio_df["ponto"].astype(str) == ponto]
+                ax.scatter(
+                    sub["PCA1"],
+                    sub["PCA2"],
+                    s=42,
+                    color=cores_bio[ponto],
+                    edgecolor="black",
+                    linewidth=0.4,
+                    alpha=0.85,
+                    label=ponto
+                )
+
+            # Vetores das variáveis
+            escala_setas = 1.7
+
+            nomes_vars = {
+                coluna_comprimento: "LC" if coluna_comprimento == "lc_mm" else "Comprimento",
+                coluna_peso: "Peso"
+            }
+
+            for i, var in enumerate([coluna_comprimento, coluna_peso]):
+                ax.arrow(
+                    0,
+                    0,
+                    cargas[i, 0] * escala_setas,
+                    cargas[i, 1] * escala_setas,
+                    color="red",
+                    width=0.006,
+                    head_width=0.08,
+                    length_includes_head=True
+                )
+
+                ax.text(
+                    cargas[i, 0] * escala_setas * 1.08,
+                    cargas[i, 1] * escala_setas * 1.08,
+                    nomes_vars[var],
+                    color="red",
+                    fontsize=8,
+                    ha="center",
+                    va="center"
+                )
+
+            ax.axhline(0, color="0.75", linewidth=0.8, linestyle=":")
+            ax.axvline(0, color="0.75", linewidth=0.8, linestyle=":")
+            ax.set_title("PCA . LC e peso")
+            ax.set_xlabel(f"PCA1 ({var_bio[0]:.1f}%)")
+            ax.set_ylabel(f"PCA2 ({var_bio[1]:.1f}%)")
+            ax.grid(True)
+            ax.legend(title="Ponto", frameon=False, loc="best")
+
+            plt.tight_layout()
+            fig.savefig(os.path.join(pasta_saida, "20_PCA_LC_peso.png"), bbox_inches="tight")
+            fig.savefig(os.path.join(pasta_saida, "20_PCA_LC_peso.pdf"), bbox_inches="tight")
+            plt.close(fig)
+
+# ============================================================
+# 14. RELATÓRIO AUTOMÁTICO
+# ============================================================
+
+linhas_relatorio = []
+
+linhas_relatorio.append("RELATÓRIO SINTÉTICO . ICTIOFAUNA\n")
+linhas_relatorio.append("Análises realizadas: PCA com transformação de Hellinger, NMDS com Bray-Curtis, PERMANOVA, biometria por ponto, Kruskal-Wallis, Dunn, relação comprimento.peso e PCA biométrica.\n")
+
+linhas_relatorio.append("\n1. Matriz comunidade\n")
+linhas_relatorio.append(f"Número de amostras: {matriz_comunidade.shape[0]}\n")
+linhas_relatorio.append(f"Número de espécies: {matriz_comunidade.shape[1]}\n")
+
+linhas_relatorio.append("\n2. PCA com transformação de Hellinger\n")
+linhas_relatorio.append(f"PCA1: {var_pca_hell[0]:.2f}% da variação.\n")
+linhas_relatorio.append(f"PCA2: {var_pca_hell[1]:.2f}% da variação.\n")
+linhas_relatorio.append(f"Variação acumulada: {var_pca_hell.sum():.2f}%.\n")
+
+linhas_relatorio.append("\n3. NMDS com Bray-Curtis\n")
+linhas_relatorio.append(f"Stress da NMDS: {stress_nmds:.4f}.\n")
+
+if stress_nmds < 0.05:
+    interpretacao_stress = "excelente representação bidimensional"
+elif stress_nmds < 0.10:
+    interpretacao_stress = "boa representação bidimensional"
+elif stress_nmds < 0.20:
+    interpretacao_stress = "representação aceitável, mas deve ser interpretada com cautela"
+else:
+    interpretacao_stress = "representação fraca, sendo recomendável testar três dimensões ou revisar a estrutura dos dados"
+
+linhas_relatorio.append(f"Interpretação: {interpretacao_stress}.\n")
+
+linhas_relatorio.append("\n4. PERMANOVA\n")
+linhas_relatorio.append(f"Pseudo-F = {pseudo_f:.4f}; p = {p_permanova:.4f}; R² entre pontos = {r2_entre:.4f}.\n")
+
+if p_permanova < 0.05:
+    linhas_relatorio.append("Resultado: houve diferença estatisticamente significativa na composição da ictiofauna entre os pontos.\n")
+else:
+    linhas_relatorio.append("Resultado: não houve diferença estatisticamente significativa na composição da ictiofauna entre os pontos.\n")
+
+if coluna_comprimento is not None:
+    linhas_relatorio.append("\n5. Biometria por ponto\n")
+    linhas_relatorio.append(resumo_bio.to_string(index=False))
+    linhas_relatorio.append("\n")
+
+    if kw_lc is not None:
+        linhas_relatorio.append(f"\nKruskal-Wallis para {coluna_comprimento}: H = {kw_lc.statistic:.4f}; gl = {len(grupos_lc) - 1}; p = {kw_lc.pvalue:.4f}.\n")
+
+    if kw_peso is not None:
+        linhas_relatorio.append(f"Kruskal-Wallis para {coluna_peso}: H = {kw_peso.statistic:.4f}; gl = {len(grupos_peso) - 1}; p = {kw_peso.pvalue:.4f}.\n")
+
+with open(os.path.join(pasta_saida, "21_relatorio_sintetico_ictiofauna.txt"), "w", encoding="utf-8") as f:
+    f.write("\n".join(linhas_relatorio))
+
+print("\nAnálises finalizadas.")
+print(f"Arquivos salvos em: {pasta_saida}")

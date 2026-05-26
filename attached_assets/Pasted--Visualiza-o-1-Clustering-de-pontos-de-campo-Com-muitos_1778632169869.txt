@@ -1,0 +1,36 @@
+🗺️ Visualização
+1. Clustering de pontos de campo
+Com muitos marcadores no mesmo local, agrupar em bolhas numeradas (ex: "47") que se expandem ao dar zoom. Hoje todos ficam empilhados e ilegível.
+
+2. Heatmap de biodiversidade
+Camada de calor mostrando densidade de registros por área — quanto mais espécies coletadas num ponto, mais quente a cor. Revela hotspots de biodiversidade em segundos.
+
+3. Raio de influência visual por empreendimento
+Desenhar automaticamente a ADA/AID/AII em círculos concêntricos ao redor do empreendimento, com cores e transparências diferentes por zona de impacto.
+
+🔍 Análise Espacial
+4. Sobreposição automática com UCs e APPs
+Clicar num empreendimento → o mapa destaca quais Unidades de Conservação e APPs estão dentro de um raio configurável, com a distância calculada em linha reta.
+
+5. Detecção de conflito territorial
+Indicador visual automático: empreendimentos cujos polígonos se sobrepõem a áreas protegidas ficam com borda vermelha piscando — alerta de risco jurídico imediato.
+
+6. Cálculo de área em tempo real
+Ferramenta de desenho livre: o usuário traça um polígono no mapa e o sistema calcula a área em hectares instantaneamente. Útil para estimativas rápidas em campo ou reunião com cliente.
+
+🎛️ Controles e Filtros
+7. Filtro temporal com slider
+Slider de datas para ver apenas os pontos de monitoramento coletados num período específico — mostra a evolução da campanha visualmente.
+
+8. Painel flutuante de estatísticas da área visível
+Mini-painel no canto mostrando em tempo real: quantos empreendimentos estão na tela, quantos pontos de campo, quantas espécies ameaçadas visíveis. Atualiza conforme o usuário navega.
+
+9. Modo de comparação lado a lado
+Dividir a tela em dois mapas sincronizados com diferentes camadas — esquerda: mapa atual / direita: satélite — ou comparar dois períodos de monitoramento.
+
+📤 Exportação
+10. Exportar mapa como imagem/PDF de laudo
+Botão que captura a tela atual do mapa e gera um PDF com: título, coordenadas do centro, escala, legenda automática, logo da empresa e data — pronto para anexar num relatório.
+
+11. Exportar pontos visíveis como KML/CSV
+Baixar todos os marcadores visíveis na tela atual como arquivo KML (abre no Google Earth) ou CSV com coordenadas WGS84.

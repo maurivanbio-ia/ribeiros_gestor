@@ -1,0 +1,22 @@
+Reestruture o layout de exportação cartográfica para que o mapa exportado siga um padrão técnico-profissional semelhante a uma prancha cartográfica de consultoria ambiental.
+
+O layout deve ser em orientação paisagem, com fundo branco, moldura externa fina e organização em três áreas principais:
+
+1. Mapa principal:
+Posicionar o mapa principal no setor superior esquerdo, ocupando aproximadamente 70 a 75% da largura da página e 70% da altura útil. O mapa deve usar imagem de satélite como base, apresentar moldura preta fina, coordenadas UTM nas bordas superior, inferior, esquerda e direita, grade cartográfica discreta, escala compatível com o enquadramento e rótulos geográficos apenas quando necessários. Os polígonos ambientais devem aparecer sobre a imagem com transparência controlada e contornos bem definidos.
+
+2. Coluna lateral direita:
+Criar uma coluna vertical à direita do mapa principal com três caixas empilhadas:
+a) mapa de localização regional, mostrando Brasil/Nordeste/UF e destacando a área de estudo com retângulo vermelho;
+b) mapa de localização local ou municipal, mostrando municípios vizinhos e destacando a área do empreendimento com retângulo vermelho;
+c) bloco institucional contendo logotipos da empresa/cliente, responsável técnico, elaboração e demais créditos institucionais.
+
+3. Rodapé cartográfico:
+Criar uma faixa inferior dividida em três blocos:
+a) legenda à esquerda, com símbolos, preenchimentos, hachuras e linhas organizados em duas colunas;
+b) bloco central contendo seta do norte, escala gráfica em metros ou quilômetros, projeção cartográfica, datum e zona UTM;
+c) bloco direito contendo título do mapa em destaque, nome do projeto, fontes dos dados, ano das bases e créditos cartográficos.
+
+A legenda deve ter hierarquia visual limpa, com título em negrito, espaçamento regular, símbolos alinhados e textos padronizados. O título do mapa deve ser forte, centralizado dentro do bloco direito, em fonte sem serifa, com quebra de linha adequada.
+
+A composição deve evitar elementos soltos, excesso de transparência, fontes pequenas demais, cores saturadas e desalinhamentos. Todos os blocos devem ter bordas finas pretas, alinhamento preciso, espaçamento interno uniforme e aparência institucional.
