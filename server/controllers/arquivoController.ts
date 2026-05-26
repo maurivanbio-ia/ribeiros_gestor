@@ -21,6 +21,13 @@ function storedPathToKey(caminho: string): string {
   return `${privateDirName}/${relativePath}`;
 }
 
+function isSafePath(filePath: string): boolean {
+  const resolvedPath = path.resolve(filePath);
+  const workspaceRoot = path.resolve(process.cwd());
+  return resolvedPath.startsWith(workspaceRoot);
+}
+
+
 
 
 const ALLOWED_MIMETYPES = [
@@ -192,6 +199,9 @@ export async function downloadArquivo(req: Request, res: Response) {
     }
 
     const fs = await import("fs");
+    if (!isSafePath(arquivo.caminho)) {
+      return res.status(403).json({ message: "Acesso não autorizado ao caminho de arquivo especificado." });
+    }
     if (!fs.default.existsSync(arquivo.caminho)) {
       return res.status(404).json({
         message: "Arquivo físico não encontrado. O arquivo foi salvo antes da migração para armazenamento permanente. Por favor, faça o upload novamente.",
@@ -233,6 +243,9 @@ export async function deleteArquivo(req: Request, res: Response) {
     } else {
       try {
         const fs = await import("fs");
+        if (!isSafePath(arquivo.caminho)) {
+          return res.status(403).json({ message: "Acesso não autorizado para remoção do caminho de arquivo especificado." });
+        }
         if (fs.default.existsSync(arquivo.caminho)) {
           fs.default.unlinkSync(arquivo.caminho);
         }

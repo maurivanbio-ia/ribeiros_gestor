@@ -233,3 +233,39 @@
   to   { transform: translateY(0)    scale(1);    opacity: 1; }
 }
 .eco-overlay-in { animation: ecoOverlayIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* ── Premium UI Utilities ── */
+
+/* Transições suaves de tema */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Card premium com hover dinâmico */
+.premium-card {
+  @apply rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:scale-[1.015] hover:shadow-md hover:border-primary/20;
+}
+
+/* Gradientes harmônicos e modernos */
+.premium-gradient-primary {
+  background: linear-gradient(135deg, hsl(205, 85%, 31%) 0%, hsl(205, 85%, 21%) 100%);
+}
+
+.premium-gradient-accent {
+  background: linear-gradient(135deg, hsl(151, 53%, 25%) 0%, hsl(151, 53%, 18%) 100%);
+}
+
+.premium-gradient-dark {
+  background: linear-gradient(135deg, hsl(210, 40%, 12%) 0%, hsl(210, 40%, 6%) 100%);
+}
+
+.premium-gradient-card {
+  background: linear-gradient(135deg, var(--card) 0%, hsl(210, 40%, 96%) 100%);
+}
+
+.dark .premium-gradient-card {
+  background: linear-gradient(135deg, var(--card) 0%, hsl(210, 40%, 8%) 100%);
+}
+

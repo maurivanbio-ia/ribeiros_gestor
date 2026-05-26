@@ -298,28 +298,28 @@ export default function DashboardCoordenador() {
   const saudacao = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
 
   return (
-    <div className="min-h-screen bg-[#f5f6fa] dark:bg-gray-950">
+    <div className="min-h-screen bg-background eco-fade-up">
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-5">
 
         {/* ── Hero Header ─────────────────────────────── */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#ea580c] via-[#c2410c] to-[#0099a8] text-white p-6 shadow-lg">
+        <div className="relative overflow-hidden rounded-2xl premium-gradient-accent text-white p-6 shadow-lg">
           <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-20 translate-x-20" />
           <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/5 translate-y-16 -translate-x-12" />
           <div className="relative">
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
-                <p className="text-white/70 text-sm font-medium">{saudacao}, {userName}</p>
-                <h1 className="text-2xl font-black mt-0.5 tracking-tight">Meu Painel de Controle</h1>
-                <p className="text-white/60 text-sm mt-1">{user?.cargo || 'Coordenador'} · SGAI</p>
+                <p className="text-white/75 text-xs font-semibold uppercase tracking-wider">{saudacao}, {userName}</p>
+                <h1 className="text-3xl font-black mt-0.5 tracking-tight">Meu Painel de Controle</h1>
+                <p className="text-white/60 text-xs mt-1">{user?.cargo || 'Coordenador'} · SGAI</p>
               </div>
               <div className="flex gap-2 flex-wrap">
                 <PlatformReportPDF buttonVariant="secondary" buttonSize="sm" />
               </div>
             </div>
             {overdueItems.length > 0 && (
-              <div className="mt-4 flex items-center gap-2 bg-red-500/20 border border-red-400/30 rounded-xl px-4 py-2 w-fit">
-                <AlertCircle className="h-4 w-4 text-red-300" />
-                <span className="text-sm font-semibold text-red-200">{overdueItems.length} item{overdueItems.length > 1 ? 'ns' : ''} vencido{overdueItems.length > 1 ? 's' : ''} requer{overdueItems.length === 1 ? '' : 'em'} atenção imediata</span>
+              <div className="mt-4 flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-2 w-fit">
+                <AlertCircle className="h-4 w-4 text-white animate-pulse" />
+                <span className="text-sm font-semibold text-white">{overdueItems.length} item{overdueItems.length > 1 ? 'ns' : ''} vencido{overdueItems.length > 1 ? 's' : ''} requer{overdueItems.length === 1 ? '' : 'em'} atenção imediata</span>
               </div>
             )}
           </div>
@@ -328,36 +328,36 @@ export default function DashboardCoordenador() {
         {/* ── KPI Row ─────────────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <KpiHero label="Projetos" value={myProjects.length + myEmprs.length} icon={FolderKanban}
-            sub="sob responsabilidade" gradient="bg-gradient-to-br from-[#ea580c] to-[#9a3a0a]"
+            sub="sob responsabilidade" gradient="premium-gradient-primary"
             onClick={() => navigate('/empreendimentos')} />
           <KpiHero label="Vencidos" value={overdueItems.length} icon={AlertCircle}
             sub={overdueItems.length > 0 ? "ação imediata!" : "tudo ok"}
-            gradient={overdueItems.length > 0 ? "bg-gradient-to-br from-orange-700 to-orange-900" : "bg-gradient-to-br from-[#0099a8] to-[#0e7490]"}
+            gradient={overdueItems.length > 0 ? "bg-gradient-to-br from-red-700 to-red-900" : "premium-gradient-accent"}
             onClick={() => { setFilterUrgency('overdue'); document.getElementById('agenda-section')?.scrollIntoView({ behavior: 'smooth' }); }} />
           <KpiHero label="Esta semana" value={urgentItems.length} icon={Clock}
-            sub="vencimentos próximos" gradient="bg-gradient-to-br from-[#0a6a7a] to-[#064e5a]"
+            sub="vencimentos próximos" gradient="bg-gradient-to-br from-amber-600 to-amber-800"
             onClick={() => { setFilterUrgency('urgent'); document.getElementById('agenda-section')?.scrollIntoView({ behavior: 'smooth' }); }} />
           <KpiHero label="Campanhas" value={campanhas.length} icon={Target}
             sub={`${campAtivas.length} ativa${campAtivas.length !== 1 ? 's' : ''}`}
-            gradient="bg-gradient-to-br from-[#06b6d4] to-[#0099a8]" />
+            gradient="bg-gradient-to-br from-indigo-600 to-indigo-800" />
         </div>
 
         {/* ── Campanhas + Charts row ───────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Campaign timeline */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900 lg:col-span-2">
+          <Card className="premium-card lg:col-span-2 border-0 shadow-sm bg-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
                   <div className="p-1.5 bg-teal-100 dark:bg-teal-900/40 rounded-lg">
-                    <Target className="h-4 w-4 text-teal-600" />
+                    <Target className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                   </div>
                   Campanhas de Campo
-                  {campAtivas.length > 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">{campAtivas.length} ativa{campAtivas.length !== 1 ? 's' : ''}</span>}
+                  {campAtivas.length > 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">{campAtivas.length} ativa{campAtivas.length !== 1 ? 's' : ''}</span>}
                 </CardTitle>
                 {campTimeline.length > 4 && (
-                  <button className="text-xs text-primary hover:underline" onClick={() => setShowAllCamp(!showAllCamp)}>
+                  <button className="text-xs text-primary hover:underline" onClick={() => { setShowAllCamp(!showAllCamp); }}>
                     {showAllCamp ? 'Menos' : `+${campTimeline.length - 4} mais`}
                   </button>
                 )}

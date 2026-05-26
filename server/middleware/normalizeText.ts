@@ -52,6 +52,9 @@ function normalizeObject(obj: any): any {
 
   const result: Record<string, any> = {};
   for (const [key, value] of Object.entries(obj)) {
+    if (key === "__proto__" || key === "constructor" || key === "prototype") {
+      continue;
+    }
     if (shouldSkip(key)) {
       result[key] = value;
     } else if (typeof value === "string") {
