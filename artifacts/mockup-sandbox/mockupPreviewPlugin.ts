@@ -116,6 +116,8 @@ export function mockupPreviewPlugin(): Plugin {
         writeFileSync(generatedModuleAbsPath, currentSource);
         changed = true;
       }
+    } catch (err) {
+      throw err;
     } finally {
       refreshInFlight = false;
     }

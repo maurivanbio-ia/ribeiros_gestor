@@ -448,6 +448,8 @@ async function ocrGemini(pdfBuffer: Buffer, filename: string): Promise<string | 
       }
     }
     return null;
+  } catch (err) {
+    throw err;
   } finally {
     try { fs.unlinkSync(tmpPath); } catch (_) {}
   }

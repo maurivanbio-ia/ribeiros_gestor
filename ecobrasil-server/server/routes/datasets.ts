@@ -46,9 +46,9 @@ router.post("/", async (req, res) => {
     const db = await dbPromise;
 
     await db.run(
-      \`INSERT INTO datasets (
+      `INSERT INTO datasets (
         empreendimentoId, nome, descricao, tipo, tamanho, usuario, url, dataUpload
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)\`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         data.empreendimentoId,
         data.nome,
