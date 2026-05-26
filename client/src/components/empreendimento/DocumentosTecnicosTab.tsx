@@ -43,7 +43,7 @@ function MinutasSection({ empreendimentoId }: Props) {
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data: any) => editing ? apiRequest("PUT", `/api/minutas/${editing.id}`, data) : apiRequest("POST", "/api/minutas", { ...data, empreendimentoId }),
+    mutationFn: (data: typeof form) => editing ? apiRequest("PUT", `/api/minutas/${editing.id}`, data) : apiRequest("POST", "/api/minutas", { ...data, empreendimentoId }),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["/api/minutas", empreendimentoId] }); setOpen(false); setEditing(null); toast({ title: "Minuta salva" }); },
   });
 
@@ -59,7 +59,7 @@ function MinutasSection({ empreendimentoId }: Props) {
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <p className="text-sm text-muted-foreground">{items.length} minuta(s) registrada(s)</p>
-        <Button onClick={openNew} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Nova Minuta</Button>
+        <Button onClick={() => { openNew(); }} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Nova Minuta</Button>
       </div>
       {items.length === 0 ? (
         <div className="text-center py-8 text-muted-foreground"><FileText className="h-8 w-8 mx-auto mb-2 opacity-30" /><p className="text-sm">Nenhuma minuta registrada</p></div>
@@ -73,8 +73,8 @@ function MinutasSection({ empreendimentoId }: Props) {
                 {item.descricao && <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{item.descricao}</p>}
               </div>
               <div className="flex gap-1">
-                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(item)}><Pencil className="h-3 w-3" /></Button>
-                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) deleteMutation.mutate(item.id); }}><Trash2 className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => { openEdit(item); }}><Pencil className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) { deleteMutation.mutate(item.id); } }}><Trash2 className="h-3 w-3" /></Button>
               </div>
             </div>
           ))}
@@ -132,7 +132,7 @@ function PareceresSection({ empreendimentoId }: Props) {
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data: any) => editing ? apiRequest("PUT", `/api/pareceres-tecnicos/${editing.id}`, data) : apiRequest("POST", "/api/pareceres-tecnicos", { ...data, empreendimentoId }),
+    mutationFn: (data: typeof form) => editing ? apiRequest("PUT", `/api/pareceres-tecnicos/${editing.id}`, data) : apiRequest("POST", "/api/pareceres-tecnicos", { ...data, empreendimentoId }),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["/api/pareceres-tecnicos", empreendimentoId] }); setOpen(false); setEditing(null); toast({ title: "Parecer salvo" }); },
   });
 
@@ -148,7 +148,7 @@ function PareceresSection({ empreendimentoId }: Props) {
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <p className="text-sm text-muted-foreground">{items.length} parecer(es) registrado(s)</p>
-        <Button onClick={openNew} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Novo Parecer</Button>
+        <Button onClick={() => { openNew(); }} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Novo Parecer</Button>
       </div>
       {items.length === 0 ? (
         <div className="text-center py-8 text-muted-foreground"><ClipboardList className="h-8 w-8 mx-auto mb-2 opacity-30" /><p className="text-sm">Nenhum parecer registrado</p></div>
@@ -162,8 +162,8 @@ function PareceresSection({ empreendimentoId }: Props) {
                 {item.conclusao && <p className="text-xs text-muted-foreground mt-1 line-clamp-2 border-l-2 border-primary/30 pl-2">{item.conclusao}</p>}
               </div>
               <div className="flex gap-1">
-                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(item)}><Pencil className="h-3 w-3" /></Button>
-                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) deleteMutation.mutate(item.id); }}><Trash2 className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => { openEdit(item); }}><Pencil className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) { deleteMutation.mutate(item.id); } }}><Trash2 className="h-3 w-3" /></Button>
               </div>
             </div>
           ))}
@@ -218,7 +218,7 @@ function PlanosSection({ empreendimentoId }: Props) {
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data: any) => editing ? apiRequest("PUT", `/api/planos-trabalho/${editing.id}`, data) : apiRequest("POST", "/api/planos-trabalho", { ...data, empreendimentoId }),
+    mutationFn: (data: typeof form) => editing ? apiRequest("PUT", `/api/planos-trabalho/${editing.id}`, data) : apiRequest("POST", "/api/planos-trabalho", { ...data, empreendimentoId }),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["/api/planos-trabalho", empreendimentoId] }); setOpen(false); setEditing(null); toast({ title: "Plano salvo" }); },
   });
 
@@ -236,7 +236,7 @@ function PlanosSection({ empreendimentoId }: Props) {
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <p className="text-sm text-muted-foreground">{items.length} plano(s) registrado(s)</p>
-        <Button onClick={openNew} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Novo Plano</Button>
+        <Button onClick={() => { openNew(); }} size="sm" variant="outline" className="gap-1"><Plus className="h-3 w-3" />Novo Plano</Button>
       </div>
       {items.length === 0 ? (
         <div className="text-center py-8 text-muted-foreground"><BookOpen className="h-8 w-8 mx-auto mb-2 opacity-30" /><p className="text-sm">Nenhum plano de trabalho registrado</p></div>
@@ -254,8 +254,8 @@ function PlanosSection({ empreendimentoId }: Props) {
                 {item.objetivo && <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{item.objetivo}</p>}
               </div>
               <div className="flex gap-1">
-                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(item)}><Pencil className="h-3 w-3" /></Button>
-                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) deleteMutation.mutate(item.id); }}><Trash2 className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => { openEdit(item); }}><Pencil className="h-3 w-3" /></Button>
+                <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => { if (confirm("Remover?")) { deleteMutation.mutate(item.id); } }}><Trash2 className="h-3 w-3" /></Button>
               </div>
             </div>
           ))}

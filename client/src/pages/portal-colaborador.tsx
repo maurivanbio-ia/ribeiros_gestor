@@ -1,5 +1,5 @@
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, ComponentType } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -158,7 +158,7 @@ const PRIORIDADE_CONFIG: Record<string, { label: string; color: string }> = {
   urgente: { label: "Urgente", color: "bg-red-500" },
 };
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; icon: any }> = {
+const STATUS_CONFIG: Record<string, { label: string; color: string; icon: ComponentType<{ className?: string }> }> = {
   pendente: { label: "Pendente", color: "bg-yellow-500", icon: Clock },
   em_andamento: { label: "Em Andamento", color: "bg-blue-500", icon: Play },
   concluida: { label: "Concluída", color: "bg-green-500", icon: CheckCircle2 },
@@ -297,8 +297,8 @@ export default function PortalColaboradorPage() {
       setObservacao("");
       setHorasRealizadas("");
     },
-    onError: (e: any) => {
-      toast({ title: "Erro", description: e?.message ?? "Falha ao atualizar tarefa", variant: "destructive" });
+    onError: (e: Error) => {
+      toast({ title: "Erro", description: e.message ?? "Falha ao atualizar tarefa", variant: "destructive" });
     },
   });
 
@@ -311,8 +311,8 @@ export default function PortalColaboradorPage() {
       setIsReembolsoDialogOpen(false);
       reembolsoForm.reset();
     },
-    onError: (e: any) => {
-      toast({ title: "Erro", description: e?.message ?? "Falha ao criar pedido de reembolso", variant: "destructive" });
+    onError: (e: Error) => {
+      toast({ title: "Erro", description: e.message ?? "Falha ao criar pedido de reembolso", variant: "destructive" });
     },
   });
 
@@ -325,8 +325,8 @@ export default function PortalColaboradorPage() {
       setIsViewReembolsoOpen(false);
       setSelectedReembolso(null);
     },
-    onError: (e: any) => {
-      toast({ title: "Erro", description: e?.message ?? "Falha ao excluir pedido", variant: "destructive" });
+    onError: (e: Error) => {
+      toast({ title: "Erro", description: e.message ?? "Falha ao excluir pedido", variant: "destructive" });
     },
   });
 
@@ -346,8 +346,8 @@ export default function PortalColaboradorPage() {
       setIsTarefaDialogOpen(false);
       tarefaForm.reset();
     },
-    onError: (e: any) => {
-      toast({ title: "Erro", description: e?.message ?? "Falha ao criar tarefa", variant: "destructive" });
+    onError: (e: Error) => {
+      toast({ title: "Erro", description: e.message ?? "Falha ao criar tarefa", variant: "destructive" });
     },
   });
 
@@ -364,8 +364,8 @@ export default function PortalColaboradorPage() {
       setIsDetailDialogOpen(false);
       setSelectedTarefa(null);
     },
-    onError: (e: any) => {
-      toast({ title: "Erro", description: e?.message ?? "Falha ao excluir tarefa", variant: "destructive" });
+    onError: (e: Error) => {
+      toast({ title: "Erro", description: e.message ?? "Falha ao excluir tarefa", variant: "destructive" });
     },
   });
 
@@ -584,13 +584,13 @@ export default function PortalColaboradorPage() {
         </CardContent>
         {showQuickActions && tarefa.status !== 'concluida' && tarefa.status !== 'cancelada' && (
           <CardFooter className="pt-2 border-t">
-            <div className="flex gap-2 w-full" onClick={(e) => e.stopPropagation()}>
+            <div className="flex gap-2 w-full" onClick={(e) => { e.stopPropagation(); }}>
               {tarefa.status === 'pendente' && (
                 <Button 
                   size="sm" 
                   variant="outline" 
                   className="flex-1"
-                  onClick={() => quickUpdateStatus(tarefa, 'em_andamento')}
+                  onClick={() => { quickUpdateStatus(tarefa, 'em_andamento'); }}
                   disabled={updateTarefaMutation.isPending}
                   data-testid={`button-iniciar-${tarefa.id}`}
                 >
@@ -603,7 +603,7 @@ export default function PortalColaboradorPage() {
                   size="sm" 
                   variant="default" 
                   className="flex-1"
-                  onClick={() => quickUpdateStatus(tarefa, 'concluida')}
+                  onClick={() => { quickUpdateStatus(tarefa, 'concluida'); }}
                   disabled={updateTarefaMutation.isPending}
                   data-testid={`button-concluir-${tarefa.id}`}
                 >
@@ -845,46 +845,49 @@ export default function PortalColaboradorPage() {
             </Card>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {minhasDemandas.map((demanda) => (
-                <Card key={demanda.id} className="hover:shadow-lg transition-shadow" data-testid={`card-demanda-${demanda.id}`}>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-lg">{demanda.titulo}</CardTitle>
-                      <Badge className={PRIORIDADE_CONFIG[demanda.prioridade]?.color || 'bg-gray-500'}>
-                        {PRIORIDADE_CONFIG[demanda.prioridade]?.label || demanda.prioridade}
-                      </Badge>
-                    </div>
-                    <CardDescription>{demanda.setor}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      <div className="flex items-center text-sm">
-                        <Badge variant="outline" className={
-                          demanda.status === 'concluido' ? 'bg-green-50 text-green-700' :
-                          demanda.status === 'em_andamento' ? 'bg-blue-50 text-blue-700' :
-                          demanda.status === 'em_revisao' ? 'bg-purple-50 text-purple-700' :
-                          'bg-yellow-50 text-yellow-700'
-                        }>
-                          {demanda.status === 'a_fazer' ? 'A Fazer' :
-                           demanda.status === 'em_andamento' ? 'Em Andamento' :
-                           demanda.status === 'em_revisao' ? 'Em Revisão' :
-                           demanda.status === 'concluido' ? 'Concluído' :
-                           demanda.status}
+              {minhasDemandas.map((demanda) => {
+                const config = PRIORIDADE_CONFIG[demanda.prioridade];
+                return (
+                  <Card key={demanda.id} className="hover:shadow-lg transition-shadow" data-testid={`card-demanda-${demanda.id}`}>
+                    <CardHeader className="pb-2">
+                      <div className="flex justify-between items-start">
+                        <CardTitle className="text-lg">{demanda.titulo}</CardTitle>
+                        <Badge className={config ? config.color : 'bg-gray-500'}>
+                          {config ? config.label : demanda.prioridade}
                         </Badge>
                       </div>
-                      {demanda.dataEntrega && (
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          Entrega: {formatDateBR(demanda.dataEntrega)}
+                      <CardDescription>{demanda.setor}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        <div className="flex items-center text-sm">
+                          <Badge variant="outline" className={
+                            demanda.status === 'concluido' ? 'bg-green-50 text-green-700' :
+                            demanda.status === 'em_andamento' ? 'bg-blue-50 text-blue-700' :
+                            demanda.status === 'em_revisao' ? 'bg-purple-50 text-purple-700' :
+                            'bg-yellow-50 text-yellow-700'
+                          }>
+                            {demanda.status === 'a_fazer' ? 'A Fazer' :
+                             demanda.status === 'em_andamento' ? 'Em Andamento' :
+                             demanda.status === 'em_revisao' ? 'Em Revisão' :
+                             demanda.status === 'concluido' ? 'Concluído' :
+                             demanda.status}
+                          </Badge>
                         </div>
-                      )}
-                      {demanda.descricao && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">{demanda.descricao}</p>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                        {demanda.dataEntrega && (
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            Entrega: {formatDateBR(demanda.dataEntrega)}
+                          </div>
+                        )}
+                        {demanda.descricao && (
+                          <p className="text-sm text-muted-foreground line-clamp-2">{demanda.descricao}</p>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </TabsContent>
@@ -926,7 +929,7 @@ export default function PortalColaboradorPage() {
             </Card>
             <Card className="flex items-center justify-center">
               <Button 
-                onClick={() => setIsReembolsoDialogOpen(true)} 
+                onClick={() => { setIsReembolsoDialogOpen(true); }} 
                 className="w-full h-full"
                 data-testid="button-novo-reembolso"
               >
@@ -962,7 +965,7 @@ export default function PortalColaboradorPage() {
                 <Receipt className="h-12 w-12 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-semibold">Nenhum pedido de reembolso</h3>
                 <p className="text-muted-foreground mb-4">Você ainda não fez nenhum pedido de reembolso.</p>
-                <Button onClick={() => setIsReembolsoDialogOpen(true)} data-testid="button-criar-primeiro-reembolso">
+                <Button onClick={() => { setIsReembolsoDialogOpen(true); }} data-testid="button-criar-primeiro-reembolso">
                   <Plus className="h-4 w-4 mr-2" />
                   Criar Primeiro Pedido
                 </Button>
@@ -1054,7 +1057,7 @@ export default function PortalColaboradorPage() {
               <Button 
                 variant="outline"
                 size="sm"
-                onClick={() => selectedTarefa && handleEditTarefa(selectedTarefa)}
+                onClick={() => { if (selectedTarefa) { handleEditTarefa(selectedTarefa); } }}
                 disabled={updateTarefaMutation.isPending}
                 data-testid="button-editar-tarefa"
               >
@@ -1064,7 +1067,7 @@ export default function PortalColaboradorPage() {
               <Button 
                 variant="destructive"
                 size="sm"
-                onClick={() => setShowDeleteConfirm(true)}
+                onClick={() => { setShowDeleteConfirm(true); }}
                 disabled={deleteTarefaMutation.isPending}
                 data-testid="button-excluir-tarefa"
               >
@@ -1077,7 +1080,7 @@ export default function PortalColaboradorPage() {
                 {selectedTarefa?.status === 'pendente' && (
                   <Button 
                     variant="outline"
-                    onClick={() => handleUpdateStatus('em_andamento')}
+                    onClick={() => { handleUpdateStatus('em_andamento'); }}
                     disabled={updateTarefaMutation.isPending}
                     data-testid="button-iniciar"
                   >
@@ -1088,7 +1091,7 @@ export default function PortalColaboradorPage() {
                 {selectedTarefa?.status === 'em_andamento' && (
                   <Button 
                     variant="default"
-                    onClick={() => handleUpdateStatus('concluida')}
+                    onClick={() => { handleUpdateStatus('concluida'); }}
                     disabled={updateTarefaMutation.isPending}
                     data-testid="button-concluir"
                   >

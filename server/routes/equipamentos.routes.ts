@@ -5,6 +5,8 @@
 import type { Express } from 'express';
 import { insertEquipamentoSchema } from '@shared/schema';
 import type { MiddlewareFn } from '../middleware/types';
+import { websocketService } from '../services/websocketService';
+import { z } from 'zod';
 
 interface EquipamentosRoutesContext {
   storage: any;

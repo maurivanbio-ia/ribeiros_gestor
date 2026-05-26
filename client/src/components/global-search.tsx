@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { Empreendimento, LicencaAmbiental, Condicionante } from "@shared/schema";
 
 interface SearchResult {
   id: number;
@@ -50,7 +51,7 @@ export function GlobalSearch() {
   if (query.length >= 2) {
     // Empreendimentos
     if (empreendimentos && Array.isArray(empreendimentos)) {
-      empreendimentos.forEach((emp: any) => {
+      empreendimentos.forEach((emp: Empreendimento) => {
         if ((emp.nome && emp.nome.toLowerCase().includes(query.toLowerCase())) ||
             (emp.cliente && emp.cliente.toLowerCase().includes(query.toLowerCase()))) {
           searchResults.push({
@@ -65,7 +66,7 @@ export function GlobalSearch() {
 
     // Licenças
     if (licencas && Array.isArray(licencas)) {
-      licencas.forEach((lic: any) => {
+      licencas.forEach((lic: LicencaAmbiental) => {
         if ((lic.numero && lic.numero.toLowerCase().includes(query.toLowerCase())) ||
             (lic.tipo && lic.tipo.toLowerCase().includes(query.toLowerCase())) ||
             (lic.orgaoEmissor && lic.orgaoEmissor.toLowerCase().includes(query.toLowerCase()))) {
@@ -82,7 +83,7 @@ export function GlobalSearch() {
 
     // Condicionantes
     if (condicionantes && Array.isArray(condicionantes)) {
-      condicionantes.forEach((cond: any) => {
+      condicionantes.forEach((cond: Condicionante) => {
         if (cond.descricao && cond.descricao.toLowerCase().includes(query.toLowerCase())) {
           searchResults.push({
             id: cond.id,
@@ -197,7 +198,7 @@ export function GlobalSearch() {
                   <div
                     key={`${result.type}-${result.id}-${index}`}
                     className="flex items-center space-x-3 p-3 rounded-lg border cursor-pointer hover:bg-accent"
-                    onClick={() => handleResultClick(result)}
+                    onClick={() => { handleResultClick(result); }}
                     data-testid={`search-result-${result.type}-${result.id}`}
                   >
                     {getIcon(result.type)}
