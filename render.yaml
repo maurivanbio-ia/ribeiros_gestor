@@ -7,11 +7,11 @@ services:
     startCommand: npm run start
     envVars:
       - key: NODE_VERSION
-        value: 20.11.0
+        value: "20.11.0"
       - key: NODE_ENV
-        value: production
+        value: "production"
       - key: PORT
-        value: 10000
+        value: "10000"
       - key: DATABASE_URL
         sync: false
       - key: SESSION_SECRET
