@@ -4,7 +4,7 @@
  */
 import type { Express, Request, Response } from "express";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { db } from "../db";
 import { users, rhRegistros } from "@shared/schema";
@@ -244,15 +244,16 @@ export function registerAuthRoutes(app: Express, { storage, requireAuth }: AuthR
         return res.status(400).json({ message: "email e password (mín. 6 chars) são obrigatórios" });
       }
       const passwordHash = await bcrypt.hash(String(password), 10);
-      const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, String(email))).limit(1);
+      const emailStr = String(email);
+      const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, emailStr)).limit(1);
       if (existing.length > 0) {
-        await db.update(users).set({ passwordHash, role: "admin" } as any).where(eq(users.email, String(email)));
-        console.log(`[Bootstrap] Senha/role atualizado para: ${email}`);
-        return res.json({ ok: true, action: "updated", email, role: "admin" });
+        await db.execute(sql`UPDATE users SET password_hash = ${passwordHash}, role = 'admin' WHERE email = ${emailStr}`);
+        console.log(`[Bootstrap] Senha/role atualizado para: ${emailStr}`);
+        return res.json({ ok: true, action: "updated", email: emailStr, role: "admin" });
       } else {
-        await db.insert(users).values({ email: String(email), passwordHash, role: "admin", unidade: "salvador", cargo: "diretor" } as any);
-        console.log(`[Bootstrap] Usuário criado: ${email}`);
-        return res.json({ ok: true, action: "created", email, role: "admin" });
+        await db.execute(sql`INSERT INTO users (email, password_hash, role, cargo, unidade) VALUES (${emailStr}, ${passwordHash}, 'admin', 'diretor', 'salvador')`);
+        console.log(`[Bootstrap] Usuário criado: ${emailStr}`);
+        return res.json({ ok: true, action: "created", email: emailStr, role: "admin" });
       }
     } catch (err: any) {
       console.error("[Bootstrap] Erro:", err.message);
