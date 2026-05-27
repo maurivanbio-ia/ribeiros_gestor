@@ -97,17 +97,17 @@ export default function Login() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
-      {/* Fundo florestal cinematográfico */}
+      {/* Fundo cinematográfico com animação suave de zoom */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 animate-[bgZoom_12s_cubic-bezier(0.1,1,0.1,1)_forwards]"
         style={{
           backgroundImage: `url(${loginBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "contrast(1.2) brightness(0.8) saturate(1.2)",
+          filter: "contrast(1.15) brightness(0.7) saturate(1.1)",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/40" />
       </div>
 
       {/* Luz ambiental dinâmica */}
@@ -131,36 +131,41 @@ export default function Login() {
             0% { opacity: 0; transform: translateY(36px); }
             100% { opacity: 1; transform: translateY(0); }
           }
+          @keyframes bgZoom {
+            0% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+          }
         `}
       </style>
 
-      {/* Card 100% transparente */}
+      {/* Card premium glassmorphic */}
       <Card
-        className="relative z-10 w-[92%] max-w-md rounded-3xl border border-white/10
-                   bg-transparent backdrop-blur-[20px] backdrop-saturate-[200%]
-                   shadow-[0_10px_40px_rgba(0,0,0,0.4)]
-                   animate-[ecoFadeUp_800ms_ease-out]"
+        className="relative z-10 w-[92%] max-w-md rounded-[2rem] border border-white/15
+                   bg-black/30 backdrop-blur-[24px] backdrop-saturate-[180%]
+                   shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(30,97,70,0.15)]
+                   transition-all duration-500 hover:border-white/20
+                   animate-[ecoFadeUp_900ms_cubic-bezier(0.16,1,0.3,1)]"
       >
-        {/* Contorno sutil luminoso */}
-        <div className="absolute inset-0 rounded-3xl border border-white/10 backdrop-blur-2xl" />
+        {/* Glow interno reflexivo */}
+        <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-white/0 via-white/[0.02] to-white/[0.06] pointer-events-none" />
 
         <CardContent className="p-8 md:p-10 relative z-10">
-          {/* Título */}
+          {/* Logo corporativo glassmorphic */}
           <div className="text-center mb-8">
-            <div className="inline-block bg-white rounded-2xl px-8 py-4 shadow-lg mb-1">
-              <img src="/logo.png" alt="AmbientIA" className="h-28 w-auto object-contain mx-auto" />
+            <div className="inline-block bg-white/85 backdrop-blur-md rounded-2xl px-7 py-3.5 shadow-[0_8px_32px_rgba(0,0,0,0.2)] border border-white/40 mb-1 hover:bg-white/95 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 ease-out cursor-pointer">
+              <img src="/logo.png" alt="AmbientIA" className="h-20 w-auto object-contain mx-auto" />
             </div>
-            <p className="text-xs text-white/80 font-medium mt-2">
+            <p className="text-[11px] tracking-wide text-white/70 font-medium mt-3.5 max-w-[280px] mx-auto leading-relaxed">
               Plataforma Inteligente de Gestão para Consultorias Ambientais
             </p>
           </div>
 
           {/* Formulário */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
+            <div className="space-y-2">
               <Label
                 htmlFor="email"
-                className="mb-2 block text-[0.9rem] font-semibold text-white"
+                className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
               >
                 E-mail corporativo
               </Label>
@@ -170,16 +175,18 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com.br"
-                className="bg-black/40 border-white/20 text-white placeholder:text-neutral-300
-                           focus-visible:ring-2 focus-visible:ring-[#1E6146]/70 focus-visible:border-[#1E6146]/60"
+                className="bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
+                           rounded-xl py-6 px-4
+                           focus-visible:ring-2 focus-visible:ring-[#1E6146]/50 focus-visible:border-[#1E6146]
+                           transition-all duration-200 shadow-inner"
                 required
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label
                 htmlFor="password"
-                className="mb-2 block text-[0.9rem] font-semibold text-white"
+                className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
               >
                 Senha
               </Label>
@@ -190,15 +197,17 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pr-11 bg-black/40 border-white/20 text-white placeholder:text-neutral-300
-                             focus-visible:ring-2 focus-visible:ring-[#00599C]/70 focus-visible:border-[#00599C]/60"
+                  className="pr-11 bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
+                             rounded-xl py-6 px-4
+                             focus-visible:ring-2 focus-visible:ring-[#00599C]/50 focus-visible:border-[#00599C]
+                             transition-all duration-200 shadow-inner"
                   required
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-2.5 text-white/80 hover:text-white transition"
+                  className="absolute right-3 top-3.5 text-white/50 hover:text-white transition"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -207,42 +216,56 @@ export default function Login() {
 
             {/* Opções */}
             <div className="flex items-center justify-between text-white">
-              <label className="flex items-center gap-2 text-sm cursor-pointer select-none font-medium">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 accent-[#1E6146]"
-                />
-                <span>Lembrar login</span>
+              <label className="flex items-center gap-2.5 text-sm cursor-pointer select-none text-white/80 hover:text-white transition">
+                <div className="relative flex items-center justify-center">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="sr-only"
+                  />
+                  <div className={`w-5 h-5 rounded-md border transition-all duration-200 flex items-center justify-center
+                                  ${rememberMe 
+                                    ? 'bg-gradient-to-r from-[#1E6146] to-[#00599C] border-transparent shadow-[0_0_10px_rgba(30,97,70,0.4)]' 
+                                    : 'border-white/20 bg-black/45 hover:border-white/30'}`}
+                  >
+                    {rememberMe && (
+                      <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <span className="font-medium text-xs tracking-wide">Lembrar login</span>
               </label>
               <button
                 type="button"
                 onClick={() => setIsForgotOpen(true)}
-                className="text-sm underline underline-offset-2 hover:text-neutral-200 transition font-medium"
+                className="text-xs font-semibold underline underline-offset-4 text-white/70 hover:text-white transition"
               >
                 Esqueci minha senha
               </button>
             </div>
 
             {error && (
-              <div className="text-red-300 bg-red-900/20 border border-red-800/60 px-4 py-2 rounded-lg text-sm">
+              <div className="text-red-200 bg-red-950/40 border border-red-800/40 px-4 py-3 rounded-xl text-xs font-medium tracking-wide">
                 {error}
               </div>
             )}
 
-            {/* Botão principal */}
+            {/* Botão principal com hover premium */}
             <Button
               type="submit"
               disabled={login.isPending}
-              className="w-full py-6 text-base font-semibold text-white
-                         [background-image:linear-gradient(90deg,#1E6146,#00599C)]
-                         hover:brightness-110 transition-all duration-300
-                         shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.35)]"
+              className="w-full py-7 text-sm uppercase tracking-wider font-bold text-white rounded-xl
+                         bg-gradient-to-r from-[#1E6146] to-[#00599C]
+                         hover:brightness-110 hover:scale-[1.01] active:scale-[0.99]
+                         transition-all duration-300
+                         shadow-[0_4px_20px_rgba(0,89,156,0.3),0_0_0_1px_rgba(255,255,255,0.05)]"
             >
               {login.isPending ? (
                 <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Entrando...
                 </>
               ) : (
@@ -251,21 +274,20 @@ export default function Login() {
             </Button>
           </form>
 
-
           <div className="mt-8">
-            {/* Separador decorativo */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            {/* Separador decorativo sutil */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>
 
             {/* Assinatura do desenvolvedor */}
             <div className="flex flex-col items-center gap-2">
-              <p className="text-[10px] tracking-[0.25em] uppercase text-white/30 font-medium">
+              <p className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-semibold">
                 Desenvolvido por
               </p>
 
-              <div className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-                <span className="text-[13px] font-semibold tracking-wide text-white/80">
+              <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-white/15 hover:scale-[1.03] rounded-full px-4 py-2 backdrop-blur-sm transition-all duration-300 cursor-default shadow-sm group">
+                <span className="text-[12px] font-bold tracking-wider text-white/60 group-hover:text-white/90 transition-colors duration-300">
                   Maurivan Vaz Ribeiro
                 </span>
               </div>
