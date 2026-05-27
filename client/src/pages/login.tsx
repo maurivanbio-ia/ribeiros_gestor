@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { useLogin } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import loginBackground from "@/assets/restinga_drone_bg.png";
 import Logo from "@/components/layout/logo";
@@ -26,7 +26,7 @@ export default function Login() {
   const [showForm, setShowForm] = useState(false);
 
   const [, setLocation] = useLocation();
-  const { login } = useAuth();
+  const login = useLogin();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
