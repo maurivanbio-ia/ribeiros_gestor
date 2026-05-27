@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { useLogin } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft, ArrowRight, BarChart3, Layers, Construction } from "lucide-react";
 import loginBackground from "@assets/restinga_drone_bg.png";
 import logoImg from "@assets/ambientia_logo.png";
 import Logo from "@/components/layout/logo";
@@ -36,7 +37,7 @@ export default function Login() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [showForm, setShowForm] = useState(false);
-  const [activeTab, setActiveTab] = useState<"inicio" | "sobre" | "contato">("inicio");
+  const [activeTab, setActiveTab] = useState<"inicio" | "sobre" | "contato" | "ambientia-tech">("inicio");
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
@@ -151,15 +152,29 @@ export default function Login() {
             {/* Logo e Nome */}
             {/* Logo e Nome */}
             <div className="cursor-pointer" onClick={() => { setActiveTab("inicio"); setShowForm(false); }}>
-              <Logo size="sm" />
+              <Logo size="sm" variant="360" />
             </div>
 
             {/* Links da Apresentação */}
-            <nav className="flex items-center gap-8 text-[11px] font-bold text-white/50 tracking-[0.2em] uppercase font-condensed">
+            <nav className="flex items-center gap-6 text-[11px] font-bold text-white/50 tracking-[0.2em] uppercase font-condensed">
               <button type="button" onClick={() => { setActiveTab("inicio"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "inicio" ? "text-primary font-bold" : ""}`}>Início</button>
               <button type="button" onClick={() => { setActiveTab("sobre"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "sobre" ? "text-primary font-bold" : ""}`}>Sobre</button>
               <button type="button" onClick={() => { setActiveTab("contato"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "contato" ? "text-primary font-bold" : ""}`}>Contato</button>
               <button type="button" onClick={() => setLocation("/funcionalidades")} className="hover:text-white transition uppercase">Funcionalidades</button>
+              {/* Aba AmbientIA Tech — destacada */}
+              <button
+                type="button"
+                onClick={() => { setActiveTab("ambientia-tech"); setShowForm(false); }}
+                className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300
+                  ${
+                    activeTab === "ambientia-tech"
+                      ? "bg-gradient-to-r from-cyan-500/30 to-emerald-500/20 border border-cyan-400/40 text-cyan-300"
+                      : "hover:text-cyan-300 border border-transparent hover:border-cyan-400/20 hover:bg-cyan-500/10"
+                  }`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                AmbientIA Tech
+              </button>
             </nav>
 
             {/* Hamburger Icon */}
@@ -173,7 +188,7 @@ export default function Login() {
           {/* Destaque Central / Conteúdo das Abas */}
           {activeTab === "inicio" && (
             <div className="flex flex-col items-center justify-center my-auto text-center select-none z-20 animate-[ecoFadeUp_1s_cubic-bezier(0.16,1,0.3,1)]">
-              <Logo size="xl" />
+              <Logo size="xl" variant="360" />
             </div>
           )}
 
@@ -230,6 +245,130 @@ export default function Login() {
               <button 
                 type="button"
                 onClick={() => setActiveTab("inicio")} 
+                className="w-fit text-xs text-primary font-semibold border border-primary/20 bg-primary/10 rounded-full px-4 py-2 hover:bg-primary/20 transition-all"
+              >
+                ← Voltar para Início
+              </button>
+            </div>
+          )}
+
+          {activeTab === "ambientia-tech" && (
+            <div className="flex flex-col my-auto max-w-3xl w-full space-y-6 z-20 animate-[ecoFadeUp_0.4s_ease-out]">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-400/20 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.25em] uppercase text-cyan-300 mb-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  Ecossistema de Tecnologia
+                </div>
+                <h2 className="text-4xl font-bold font-display text-white">AmbientIA <span className="text-cyan-400">Tech</span></h2>
+                <p className="text-white/50 text-sm leading-relaxed font-light max-w-lg">
+                  Um ecossistema integrado de plataformas para gestão ambiental inteligente, análise de dados e conformidade legal.
+                </p>
+              </div>
+
+              {/* Cards de Produtos */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Card AmbientIA 360 */}
+                <button
+                  type="button"
+                  onClick={() => setShowForm(true)}
+                  className="group relative text-left rounded-[1.5rem] border border-cyan-500/30
+                             bg-gradient-to-br from-cyan-500/15 to-emerald-600/8
+                             backdrop-blur-xl p-7
+                             shadow-[0_0_40px_rgba(45,212,191,0.12)]
+                             hover:scale-[1.03] hover:brightness-110 hover:shadow-[0_0_60px_rgba(45,212,191,0.25)]
+                             transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                >
+                  <div className="absolute inset-0 rounded-[1.5rem] bg-black/25 backdrop-blur-sm" />
+                  {/* Badge */}
+                  <div className="relative z-10 flex items-start justify-between mb-6">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] border rounded-full px-3 py-1 bg-cyan-500/20 text-cyan-300 border-cyan-500/30">
+                      Principal
+                    </span>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:border-cyan-400/40 transition-colors">
+                      <Layers className="h-4.5 w-4.5 text-white/40 group-hover:text-cyan-400 transition-colors" />
+                    </div>
+                  </div>
+                  {/* Logo text */}
+                  <div className="relative z-10 mb-3">
+                    <span className="text-white font-condensed font-bold text-3xl leading-none">
+                      Ambient<span className="text-cyan-400">IA</span> 360
+                      <span className="text-cyan-400 font-sans align-super text-[0.55em] leading-none ml-0.5">°</span>
+                      <sup className="font-normal text-white/80 text-[0.35em] -top-2 relative">TM</sup>
+                    </span>
+                  </div>
+                  <p className="relative z-10 text-[10px] font-bold uppercase tracking-[0.15em] text-cyan-400/70 mb-3">
+                    Gestão Ambiental Inteligente
+                  </p>
+                  <p className="relative z-10 text-white/55 text-xs leading-relaxed font-light mb-5">
+                    Plataforma completa para gestão de licenciamento ambiental, condicionantes, monitoramento e conformidade legal com inteligência artificial.
+                  </p>
+                  <ul className="relative z-10 space-y-1.5 mb-5">
+                    {["Licenciamento & Condicionantes", "GIS 3D Interativo", "Assistente IA", "Relatórios Automáticos"].map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-[11px] text-white/45">
+                        <span className="w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="relative z-10 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/35 group-hover:text-cyan-400 transition-colors">
+                    <span>Acessar plataforma</span>
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+                </button>
+
+                {/* Card AmbientIA Stats */}
+                <button
+                  type="button"
+                  onClick={() => setLocation("/stats/login")}
+                  className="group relative text-left rounded-[1.5rem] border border-white/15
+                             bg-gradient-to-br from-slate-500/15 to-cyan-900/8
+                             backdrop-blur-xl p-7
+                             shadow-[0_0_40px_rgba(255,255,255,0.04)]
+                             hover:scale-[1.03] hover:brightness-105 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]
+                             transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/20"
+                >
+                  <div className="absolute inset-0 rounded-[1.5rem] bg-black/25 backdrop-blur-sm" />
+                  {/* Badge */}
+                  <div className="relative z-10 flex items-start justify-between mb-6">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] border rounded-full px-3 py-1 bg-white/8 text-white/50 border-white/15">
+                      Em breve
+                    </span>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:border-white/25 transition-colors">
+                      <BarChart3 className="h-4.5 w-4.5 text-white/30 group-hover:text-white/60 transition-colors" />
+                    </div>
+                  </div>
+                  {/* Logo text */}
+                  <div className="relative z-10 mb-3">
+                    <span className="text-white font-condensed font-bold text-3xl leading-none">
+                      Ambient<span className="text-cyan-400">IA</span> Stats
+                      <sup className="font-normal text-white/70 text-[0.35em] -top-2 relative">TM</sup>
+                    </span>
+                  </div>
+                  <p className="relative z-10 text-[10px] font-bold uppercase tracking-[0.15em] text-white/35 mb-3">
+                    Análise de Dados Ambientais
+                  </p>
+                  <p className="relative z-10 text-white/40 text-xs leading-relaxed font-light mb-5">
+                    Ferramenta especializada em análise estatística e visualização de dados ambientais para laudos e tomada de decisão.
+                  </p>
+                  <ul className="relative z-10 space-y-1.5 mb-5">
+                    {["Análise Estatística Avançada", "Visualização de Dados", "Exportação para Laudos", "Integração com AmbientIA 360°"].map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-[11px] text-white/30">
+                        <span className="w-1 h-1 rounded-full bg-white/25 flex-shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="relative z-10 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/25 group-hover:text-white/50 transition-colors">
+                    <Construction className="h-3.5 w-3.5" />
+                    <span>Em desenvolvimento</span>
+                  </div>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("inicio")}
                 className="w-fit text-xs text-primary font-semibold border border-primary/20 bg-primary/10 rounded-full px-4 py-2 hover:bg-primary/20 transition-all"
               >
                 ← Voltar para Início
@@ -305,7 +444,7 @@ export default function Login() {
               {/* Header do Form */}
               <div className="space-y-4">
                 <div className="flex justify-center mb-6">
-                  <Logo size="md" />
+                  <Logo size="md" variant="360" />
                 </div>
 
                 <div className="text-center space-y-1">

@@ -72,6 +72,8 @@ const ProcessosMonitorados     = lazy(() => import("./pages/processos-monitorado
 const Newsletter               = lazy(() => import("./pages/newsletter"));
 const OneDriveBackups          = lazy(() => import("./pages/onedrive-backups"));
 const AtivarAdmin              = lazy(() => import("./pages/ativar-admin"));
+const SolucoesTecnologicas     = lazy(() => import("./pages/solucoes-tecnologicas"));
+const StatsLogin               = lazy(() => import("./pages/stats/login"));
 const BlogPublic               = lazy(() => import("./pages/blog-public"));
 const BlogArtigo               = lazy(() => import("./pages/blog-artigo"));
 const BlogAdmin                = lazy(() => import("./pages/blog-admin"));
@@ -143,12 +145,14 @@ function Router() {
   }
 
   // Permite acesso à página de login e de funcionalidades sem autenticação
-  if (!isAuthenticated && (location === "/login" || location === "/funcionalidades")) {
+  if (!isAuthenticated && (location === "/login" || location === "/funcionalidades" || location === "/solucoes-tecnologicas" || location === "/stats/login")) {
     return (
       <Suspense fallback={<PageLoader />}>
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/funcionalidades" component={Funcionalidades} />
+          <Route path="/solucoes-tecnologicas" component={SolucoesTecnologicas} />
+          <Route path="/stats/login" component={StatsLogin} />
         </Switch>
       </Suspense>
     );
@@ -260,6 +264,8 @@ function Router() {
                         <Route path="/admin/usuarios" component={AdminUsuarios} />
                         <Route path="/onedrive-backups" component={OneDriveBackups} />
                         <Route path="/ativar-admin" component={AtivarAdmin} />
+                        <Route path="/solucoes-tecnologicas" component={SolucoesTecnologicas} />
+                        <Route path="/stats/login" component={StatsLogin} />
                         <Route component={NotFound} />
                       </Switch>
                     </Suspense>
