@@ -152,7 +152,7 @@ export default function Login() {
             {/* Logo e Nome */}
             {/* Logo e Nome */}
             <div className="cursor-pointer" onClick={() => { setActiveTab("inicio"); setShowForm(false); }}>
-              <Logo size="sm" variant="360" />
+              <Logo size="sm" />
             </div>
 
             {/* Links da Apresentação */}
@@ -188,7 +188,7 @@ export default function Login() {
           {/* Destaque Central / Conteúdo das Abas */}
           {activeTab === "inicio" && (
             <div className="flex flex-col items-center justify-center my-auto text-center select-none z-20 animate-[ecoFadeUp_1s_cubic-bezier(0.16,1,0.3,1)]">
-              <Logo size="xl" variant="360" />
+              <Logo size="xl" />
             </div>
           )}
 

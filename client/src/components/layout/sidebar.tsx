@@ -225,7 +225,7 @@ export default function Sidebar() {
           aria-label="Ir para o início"
           className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <Logo size="sm" variant="360" collapsed={collapsed} showSubtitle={false} />
+          <Logo size="sm" collapsed={collapsed} showSubtitle={false} />
         </Link>
       </div>
 
@@ -408,7 +408,7 @@ export default function Sidebar() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b border-border">
         <div className="flex items-center justify-between p-4">
           <Link href="/" className="flex items-center">
-            <Logo size="sm" variant="360" showSubtitle={false} />
+            <Logo size="sm" showSubtitle={false} />
           </Link>
           <div className="flex items-center gap-2">
             <NotificationsCenter />
