@@ -178,7 +178,7 @@ export default function Login() {
               <span className="text-primary font-bold">IA</span>
             </h1>
             <p className="text-[12px] xl:text-[13px] tracking-[0.25em] uppercase text-primary font-semibold font-condensed">
-              GESTÃO AMBIENTAL INTELIGENTE
+              GESTÃO INTELIGENTE PARA CONSULTORIAS AMBIENTAIS
             </p>
           </div>
 
