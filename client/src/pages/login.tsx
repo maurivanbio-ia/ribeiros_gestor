@@ -160,7 +160,6 @@ export default function Login() {
               <button type="button" onClick={() => { setActiveTab("inicio"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "inicio" ? "text-primary font-bold" : ""}`}>Início</button>
               <button type="button" onClick={() => { setActiveTab("sobre"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "sobre" ? "text-primary font-bold" : ""}`}>Sobre</button>
               <button type="button" onClick={() => { setActiveTab("contato"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "contato" ? "text-primary font-bold" : ""}`}>Contato</button>
-              <button type="button" onClick={() => setLocation("/funcionalidades")} className="hover:text-white transition uppercase">Funcionalidades</button>
               {/* Aba AmbientIA Tech — destacada */}
               <button
                 type="button"

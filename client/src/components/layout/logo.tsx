@@ -1,4 +1,4 @@
-ssa abimport { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
