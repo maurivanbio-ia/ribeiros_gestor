@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/dialog";
 
 import { Loader2, Eye, EyeOff } from "lucide-react";
-import loginBackground from "@assets/bahia-de-todos-os-santos-grou-turismio_1776732662219.jpg";
+import loginBackground from "@assets/restinga_drone_bg.png";
+import logoImg from "@assets/ambientia_logo.png";
 
 /**
  * AmbientIA — Tela de Login Split-Screen Responsiva Premium (Rimberio Theme)
@@ -146,22 +147,18 @@ export default function Login() {
           <div className="flex items-center justify-between w-full z-20">
             {/* Logo e Nome */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center shadow-[0_0_10px_rgba(45,212,191,0.2)]">
-                <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
-                </svg>
-              </div>
+              <img src={logoImg} alt="AmbientIA" className="w-8 h-8 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
               <span className="font-extrabold text-sm tracking-[0.2em] text-white uppercase font-display select-none">
-                AmbientIA
+                AMBIENT<span className="text-primary font-bold">IA</span>
               </span>
             </div>
 
             {/* Links da Apresentação */}
             <nav className="flex items-center gap-8 text-[11px] font-bold text-white/50 tracking-[0.2em] uppercase font-condensed">
-              <span className="hover:text-white transition cursor-pointer">Home</span>
-              <span className="hover:text-white transition cursor-pointer">About</span>
-              <span className="hover:text-white transition cursor-pointer">Contact</span>
-              <span className="hover:text-white transition cursor-pointer">Service</span>
+              <span className="hover:text-white transition cursor-pointer">Início</span>
+              <span className="hover:text-white transition cursor-pointer">Sobre</span>
+              <span className="hover:text-white transition cursor-pointer">Contato</span>
+              <span className="hover:text-white transition cursor-pointer">Serviços</span>
             </nav>
 
             {/* Hamburger Icon */}
@@ -176,15 +173,11 @@ export default function Login() {
           <div className="flex flex-col items-center justify-center my-auto text-center space-y-6 select-none z-20">
             <h1 className="text-7xl xl:text-[6.5rem] font-black tracking-tight text-white flex items-center justify-center gap-5 font-display">
               <span>AMBIENT</span>
-              <div className="w-16 h-16 xl:w-20 xl:h-20 rounded-full border-4 border-primary flex items-center justify-center shadow-[0_0_25px_rgba(45,212,191,0.4)] animate-pulse bg-primary/5">
-                <svg className="w-9 h-9 xl:w-11 xl:h-11 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
-                </svg>
-              </div>
-              <span>IA</span>
+              <img src={logoImg} alt="Logo" className="w-16 h-16 xl:w-24 xl:h-24 rounded-full border-2 border-primary/30 shadow-[0_0_25px_rgba(45,212,191,0.4)] animate-pulse bg-primary/5" />
+              <span className="text-primary font-bold">IA</span>
             </h1>
-            <p className="text-[10px] xl:text-[11px] tracking-[0.45em] uppercase text-white/55 font-semibold font-condensed">
-              G E S T Ã O   A M B I E N T A L   I N T E L I G E N T E
+            <p className="text-[12px] xl:text-[13px] tracking-[0.25em] uppercase text-primary font-semibold font-condensed">
+              GESTÃO AMBIENTAL INTELIGENTE
             </p>
           </div>
 
@@ -240,12 +233,8 @@ export default function Login() {
               {/* Header do Form: Exibe a logo apenas no Mobile/Tablet */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3 lg:hidden justify-center mb-6">
-                  <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center shadow-[0_0_10px_rgba(45,212,191,0.2)]">
-                    <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
-                    </svg>
-                  </div>
-                  <span className="font-extrabold text-lg text-white tracking-widest uppercase font-display">AmbientIA</span>
+                  <img src={logoImg} alt="Logo" className="w-8 h-8 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
+                  <span className="font-extrabold text-lg text-white tracking-widest uppercase font-display">AMBIENT<span className="text-primary font-bold">IA</span></span>
                 </div>
 
                 <div className="text-center lg:text-left space-y-1">
