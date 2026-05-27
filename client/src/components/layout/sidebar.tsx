@@ -250,16 +250,16 @@ export default function Sidebar() {
                 <button
                   onClick={() => toggleCategory(categoryKey)}
                   className={cn(
-                    "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-150 border border-transparent",
+                    "w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-200 border-none",
                     hasActiveItem 
-                      ? "bg-primary/5 text-primary border-primary/10 shadow-sm" 
-                      : "text-white/40 hover:bg-white/[0.02] hover:text-white/80",
+                      ? "bg-primary/10 text-primary font-bold shadow-sm" 
+                      : "text-white/50 hover:bg-white/[0.04] hover:text-white/90",
                     collapsed && "justify-center px-2"
                   )}
                 >
                   <CategoryIcon className={cn(
-                    "h-4 w-4 flex-shrink-0",
-                    hasActiveItem ? "text-primary" : "text-white/40"
+                    "h-4 w-4 flex-shrink-0 transition-colors",
+                    hasActiveItem ? "text-primary" : "text-white/40 group-hover:text-white/70"
                   )} />
                   {!collapsed && (
                     <>
@@ -267,7 +267,7 @@ export default function Sidebar() {
                         {category.label}
                       </span>
                       <ChevronDown className={cn(
-                        "h-3.5 w-3.5 transition-transform opacity-60",
+                        "h-3.5 w-3.5 transition-transform duration-300 opacity-60",
                         isExpanded && "rotate-180"
                       )} />
                     </>
@@ -275,7 +275,7 @@ export default function Sidebar() {
                 </button>
                 
                 {(isExpanded || collapsed) && (
-                  <div className={cn("mt-0.5 space-y-0.5", !collapsed && "ml-3.5 border-l border-white/10 pl-2.5")}>
+                  <div className={cn("mt-1 space-y-1", !collapsed && "ml-4 border-l-2 border-white/5 pl-3")}>
                     {category.items.filter(item => !item.adminOnly || isAdmin).map((item) => {
                       const Icon = item.icon;
                       if (item.href === "/ia") {
@@ -283,15 +283,15 @@ export default function Sidebar() {
                           <button
                             key={item.href}
                             data-testid={item.testid}
-                            className="w-full text-left"
+                            className="w-full text-left mt-1 mb-1"
                             onClick={() => { setMobileOpen(false); document.dispatchEvent(new CustomEvent("open-ai-chat")); }}
                           >
                             <div className={cn(
-                              "flex items-center gap-2 px-2 py-1.5 rounded-lg transition-colors cursor-pointer text-xs",
-                              "text-white/50 hover:bg-white/[0.03] hover:text-white",
-                              collapsed && "justify-center px-1"
+                              "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer text-xs border-none",
+                              "bg-gradient-to-r from-primary/10 to-transparent hover:from-primary/20 text-white/90 font-medium",
+                              collapsed && "justify-center px-1 bg-primary/10"
                             )}>
-                              <Icon className="h-3.5 w-3.5 flex-shrink-0 text-primary/70 animate-pulse" />
+                              <Icon className="h-3.5 w-3.5 flex-shrink-0 text-primary animate-pulse" />
                               {!collapsed && <span>{item.label}</span>}
                             </div>
                           </button>
@@ -306,10 +306,10 @@ export default function Sidebar() {
                         >
                           <div
                             className={cn(
-                              "flex items-center justify-between px-2.5 py-2 rounded-xl transition-all duration-200 cursor-pointer border border-transparent text-xs group",
+                              "flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer border-none text-xs group",
                               isActive(item.href)
-                                ? "bg-gradient-to-r from-primary/15 to-primary/5 text-primary font-bold border-l-2 border-l-primary shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_4px_12px_rgba(45,212,191,0.05)]"
-                                : "text-white/60 hover:bg-white/[0.03] hover:text-white",
+                                ? "bg-primary/15 text-primary font-bold shadow-sm"
+                                : "text-white/50 hover:bg-white/[0.04] hover:text-white/90",
                               collapsed && "justify-center px-1"
                             )}
                           >
@@ -318,7 +318,7 @@ export default function Sidebar() {
                               {!collapsed && <span className="group-hover:translate-x-0.5 transition-transform duration-150">{item.label}</span>}
                             </div>
                             {isActive(item.href) && !collapsed && (
-                              <ChevronRight className="h-3.5 w-3.5 text-primary animate-pulse" />
+                              <ChevronRight className="h-3.5 w-3.5 text-primary" />
                             )}
                           </div>
                         </Link>
