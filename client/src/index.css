@@ -240,7 +240,11 @@
 }
 
 .premium-card {
-  @apply rounded-3xl border border-white/10 bg-card text-card-foreground shadow-xl transition-all duration-300 hover:scale-[1.01] hover:border-primary/30 hover:shadow-[0_10px_30px_rgba(45,212,191,0.06)];
+  @apply rounded-3xl border border-white/10 bg-card text-card-foreground shadow-xl transition-all duration-300 hover:scale-[1.01];
+}
+.premium-card:hover {
+  border-color: hsl(171, 67%, 50% / 0.3);
+  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.06);
 }
 
 /* Gradientes harmônicos e modernos baseados no Rimberio */
