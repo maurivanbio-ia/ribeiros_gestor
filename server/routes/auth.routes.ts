@@ -5,6 +5,7 @@
 import type { Express, Request, Response } from "express";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
+import bcrypt from "bcrypt";
 import { db } from "../db";
 import { users, rhRegistros } from "@shared/schema";
 import type { MiddlewareFn } from "../middleware/types";
@@ -219,6 +220,43 @@ export function registerAuthRoutes(app: Express, { storage, requireAuth }: AuthR
     } catch (error) {
       console.error("Promote admin error:", error);
       res.status(500).json({ success: false, message: "Erro ao atualizar role" });
+    }
+  });
+
+  /**
+   * ⚠️  ENDPOINT DE EMERGÊNCIA — remover após uso!
+   * POST /api/bootstrap/reset-admin
+   * Body JSON: { "secret": "...", "email": "...", "password": "..." }
+   * Só funciona se BOOTSTRAP_SECRET estiver definida nas env vars do Render.
+   */
+  app.post("/api/bootstrap/reset-admin", async (req: Request, res: Response) => {
+    try {
+      const bootstrapSecret = process.env.BOOTSTRAP_SECRET;
+      if (!bootstrapSecret) {
+        return res.status(503).json({ message: "Bootstrap não habilitado (BOOTSTRAP_SECRET não definida)" });
+      }
+      const { secret, email, password } = req.body || {};
+      if (!secret || secret !== bootstrapSecret) {
+        console.warn("[Bootstrap] Tentativa com secret inválido - IP:", req.ip);
+        return res.status(401).json({ message: "Secret inválido" });
+      }
+      if (!email || !password || String(password).length < 6) {
+        return res.status(400).json({ message: "email e password (mín. 6 chars) são obrigatórios" });
+      }
+      const passwordHash = await bcrypt.hash(String(password), 10);
+      const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, String(email))).limit(1);
+      if (existing.length > 0) {
+        await db.update(users).set({ passwordHash, role: "admin" } as any).where(eq(users.email, String(email)));
+        console.log(`[Bootstrap] Senha/role atualizado para: ${email}`);
+        return res.json({ ok: true, action: "updated", email, role: "admin" });
+      } else {
+        await db.insert(users).values({ email: String(email), passwordHash, role: "admin", unidade: "salvador", cargo: "diretor" } as any);
+        console.log(`[Bootstrap] Usuário criado: ${email}`);
+        return res.json({ ok: true, action: "created", email, role: "admin" });
+      }
+    } catch (err: any) {
+      console.error("[Bootstrap] Erro:", err.message);
+      return res.status(500).json({ message: "Erro interno", detail: err.message });
     }
   });
 }
