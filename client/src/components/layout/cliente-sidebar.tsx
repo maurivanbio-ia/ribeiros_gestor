@@ -72,7 +72,7 @@ export default function ClienteSidebar() {
           href="/cliente"
           className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <Logo size="sm" collapsed={collapsed} showSubtitle={false} />
+          <Logo variant="360" size="sm" collapsed={collapsed} showSubtitle={false} />
         </Link>
       </div>
 
@@ -169,7 +169,7 @@ export default function ClienteSidebar() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b border-border">
         <div className="flex items-center justify-between p-4">
           <Link href="/cliente" className="flex items-center">
-            <Logo size="sm" showSubtitle={false} />
+            <Logo variant="360" size="sm" showSubtitle={false} />
           </Link>
           <Button
             variant="ghost"

@@ -195,13 +195,7 @@ export default function Sidebar() {
         { href: "/seguranca-trabalho", label: "SST", icon: ShieldCheck, testid: "nav-seguranca-trabalho" },
       ]
     },
-    {
-      label: "Soluções",
-      icon: Layers,
-      items: [
-        { href: "/solucoes-tecnologicas", label: "Soluções Tecnológicas", icon: Layers, testid: "nav-solucoes-tecnologicas" },
-      ]
-    },
+
     {
       label: "Sistema",
       icon: Settings,
@@ -225,7 +219,7 @@ export default function Sidebar() {
           aria-label="Ir para o início"
           className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <Logo size="sm" collapsed={collapsed} showSubtitle={false} />
+          <Logo variant="360" size="sm" collapsed={collapsed} showSubtitle={false} />
         </Link>
       </div>
 
@@ -258,8 +252,8 @@ export default function Sidebar() {
                   className={cn(
                     "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-150 border border-transparent",
                     hasActiveItem 
-                      ? "bg-primary/10 text-primary border-primary/20 shadow-sm" 
-                      : "text-white/60 hover:bg-white/[0.03] hover:text-white",
+                      ? "bg-primary/5 text-primary border-primary/10 shadow-sm" 
+                      : "text-white/40 hover:bg-white/[0.02] hover:text-white/80",
                     collapsed && "justify-center px-2"
                   )}
                 >
@@ -314,14 +308,14 @@ export default function Sidebar() {
                             className={cn(
                               "flex items-center justify-between px-2.5 py-2 rounded-xl transition-all duration-200 cursor-pointer border border-transparent text-xs group",
                               isActive(item.href)
-                                ? "bg-primary/10 text-primary font-bold border-primary/20 shadow-[0_0_15px_rgba(45,212,191,0.08)]"
+                                ? "bg-gradient-to-r from-primary/15 to-primary/5 text-primary font-bold border-l-2 border-l-primary shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_4px_12px_rgba(45,212,191,0.05)]"
                                 : "text-white/60 hover:bg-white/[0.03] hover:text-white",
                               collapsed && "justify-center px-1"
                             )}
                           >
                             <div className="flex items-center gap-2.5">
                               <Icon className={cn("h-4 w-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110", isActive(item.href) ? "text-primary" : "text-white/40")} />
-                              {!collapsed && <span>{item.label}</span>}
+                              {!collapsed && <span className="group-hover:translate-x-0.5 transition-transform duration-150">{item.label}</span>}
                             </div>
                             {isActive(item.href) && !collapsed && (
                               <ChevronRight className="h-3.5 w-3.5 text-primary animate-pulse" />
@@ -343,7 +337,7 @@ export default function Sidebar() {
             onClick={() => document.dispatchEvent(new CustomEvent("open-ai-chat"))}
             className={cn(
               "w-full flex items-center gap-2 rounded-xl px-2 py-2.5 text-xs uppercase tracking-wider font-bold transition-all",
-              "bg-gradient-to-r from-accent to-primary text-white hover:brightness-110 shadow-lg",
+              "bg-gradient-to-r from-[#1e6146] to-[#2dd4bf] text-white hover:brightness-110 shadow-[0_0_20px_rgba(45,212,191,0.25)] border border-primary/20 hover:shadow-[0_0_25px_rgba(45,212,191,0.4)] hover:scale-[1.02] active:scale-95 transition-all duration-300",
               collapsed && "justify-center px-1"
             )}
             data-testid="nav-ia-button"
@@ -352,7 +346,7 @@ export default function Sidebar() {
             {!collapsed && (
               <span className="flex items-center gap-1 font-condensed">
                 Assistente IA
-                <Sparkles className="h-3 w-3 text-yellow-300" />
+                <Sparkles className="h-3 w-3 text-yellow-300 animate-bounce" />
               </span>
             )}
           </button>
@@ -408,7 +402,7 @@ export default function Sidebar() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b border-border">
         <div className="flex items-center justify-between p-4">
           <Link href="/" className="flex items-center">
-            <Logo size="sm" showSubtitle={false} />
+            <Logo variant="360" size="sm" showSubtitle={false} />
           </Link>
           <div className="flex items-center gap-2">
             <NotificationsCenter />

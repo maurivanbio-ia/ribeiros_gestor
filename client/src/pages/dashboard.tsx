@@ -188,12 +188,12 @@ function CampaignCard({ campanha, empreendimentos, onClick }: { campanha: Campan
 
   return (
     <div
-      className="flex gap-3 p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group cursor-pointer"
+      className="flex gap-3 p-3 rounded-xl border border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer"
       onClick={onClick}
     >
       <div className="flex flex-col items-center gap-1 w-1 mt-1">
         <div className="h-2.5 w-2.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: st.color, background: isFuture && !manualKey ? "transparent" : st.color }} />
-        <div className="flex-1 w-0.5 bg-gray-100 dark:bg-gray-800 min-h-[20px]" />
+        <div className="flex-1 w-0.5 bg-white/5 min-h-[20px]" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
@@ -240,7 +240,7 @@ function ProjectRow({ projeto, onClick }: { projeto: Projeto; onClick?: () => vo
   const st = statusMap[projeto.status] ?? { label: projeto.status, color: P.teal };
   return (
     <div
-      className="flex items-center gap-3 py-2 border-b border-gray-50 dark:border-gray-800 last:border-0 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/40 rounded-lg px-1 transition-colors"
+      className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0 cursor-pointer hover:bg-white/[0.02] rounded-lg px-1 transition-colors"
       onClick={onClick}
     >
       <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: st.color }} />
@@ -421,19 +421,19 @@ export default function Dashboard() {
             <CardHeader className="pb-2 pt-4 px-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
-                  <div className="p-1.5 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
-                    <Target className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <div className="p-1.5 bg-blue-500/10 border border-blue-500/15 rounded-lg">
+                    <Target className="h-4 w-4 text-blue-400" />
                   </div>
                   Campanhas de Campo
                 </CardTitle>
                 <div className="flex gap-1.5">
                   {campanhasAtivas.length > 0 && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
                       {campanhasAtivas.length} ativa{campanhasAtivas.length !== 1 ? "s" : ""}
                     </span>
                   )}
                   {campanhasFuturas.length > 0 && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/15">
                       {campanhasFuturas.length} próxima{campanhasFuturas.length !== 1 ? "s" : ""}
                     </span>
                   )}
@@ -443,7 +443,7 @@ export default function Dashboard() {
             <CardContent className="px-4 pb-4">
               {timelineCampanhas.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center gap-2">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center">
                     <Target className="h-6 w-6 text-blue-400" />
                   </div>
                   <p className="text-sm text-muted-foreground">Nenhuma campanha cadastrada</p>
@@ -464,8 +464,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
-                  <CheckCircle className="h-4 w-4 text-emerald-600" />
+                <div className="p-1.5 bg-emerald-500/10 border border-emerald-500/15 rounded-lg">
+                  <CheckCircle className="h-4 w-4 text-emerald-400" />
                 </div>
                 Licenças Ambientais
               </CardTitle>
@@ -536,9 +536,9 @@ export default function Dashboard() {
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Condicionantes</p>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: "Pendentes", val: cond.pendentes, color: P.yellow, bg: "bg-amber-50 dark:bg-amber-950/20" },
-                    { label: "Cumpridas", val: cond.cumpridas, color: P.green, bg: "bg-emerald-50 dark:bg-emerald-950/20" },
-                    { label: "Vencidas", val: cond.vencidas, color: P.red, bg: "bg-red-50 dark:bg-red-950/20" },
+                    { label: "Pendentes", val: cond.pendentes, color: P.yellow, bg: "bg-amber-500/5 border border-amber-500/10" },
+                    { label: "Cumpridas", val: cond.cumpridas, color: P.green, bg: "bg-emerald-500/5 border border-emerald-500/10" },
+                    { label: "Vencidas", val: cond.vencidas, color: P.red, bg: "bg-red-500/5 border border-red-500/10" },
                   ].map(item => (
                     <div key={item.label} className={`${item.bg} rounded-xl p-2.5 text-center`}>
                       <p className="text-xl font-black" style={{ color: item.color }}>{item.val}</p>
@@ -587,9 +587,9 @@ export default function Dashboard() {
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Entregas do Mês</p>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: "Entregues", val: ent.entregues, color: P.green, bg: "bg-emerald-50 dark:bg-emerald-950/20" },
-                    { label: "Pendentes", val: ent.pendentes, color: P.yellow, bg: "bg-amber-50 dark:bg-amber-950/20" },
-                    { label: "Atrasadas", val: ent.atrasadas, color: P.red, bg: "bg-red-50 dark:bg-red-950/20" },
+                    { label: "Entregues", val: ent.entregues, color: P.green, bg: "bg-emerald-500/5 border border-emerald-500/10" },
+                    { label: "Pendentes", val: ent.pendentes, color: P.yellow, bg: "bg-amber-500/5 border border-amber-500/10" },
+                    { label: "Atrasadas", val: ent.atrasadas, color: P.red, bg: "bg-red-500/5 border border-red-500/10" },
                   ].map(item => (
                     <div key={item.label} className={`${item.bg} rounded-xl p-2.5 text-center`}>
                       <p className="text-xl font-black" style={{ color: item.color }}>{item.val}</p>
@@ -610,8 +610,8 @@ export default function Dashboard() {
             <CardHeader className="pb-2 pt-4 px-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
-                  <div className="p-1.5 bg-purple-100 dark:bg-purple-900/40 rounded-lg">
-                    <Layers className="h-4 w-4 text-purple-600" />
+                  <div className="p-1.5 bg-purple-500/10 border border-purple-500/15 rounded-lg">
+                    <Layers className="h-4 w-4 text-purple-400" />
                   </div>
                   Projetos
                 </CardTitle>
@@ -633,8 +633,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-cyan-100 dark:bg-cyan-900/40 rounded-lg">
-                  <Truck className="h-4 w-4 text-cyan-600" />
+                <div className="p-1.5 bg-cyan-500/10 border border-cyan-500/15 rounded-lg">
+                  <Truck className="h-4 w-4 text-cyan-400" />
                 </div>
                 Frota & Equipamentos
               </CardTitle>
@@ -660,7 +660,7 @@ export default function Dashboard() {
                   { label: "Frota total", val: frota.total, icon: Truck, color: P.cyan },
                   { label: "Equip. total", val: equip.total, icon: Wrench, color: P.indigo },
                 ].map(item => (
-                  <div key={item.label} className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-xl px-3 py-2">
+                  <div key={item.label} className="flex items-center gap-2 bg-white/[0.02] border border-white/5 rounded-xl px-3 py-2">
                     <item.icon className="h-3.5 w-3.5" style={{ color: item.color }} />
                     <div>
                       <p className="text-[10px] text-muted-foreground">{item.label}</p>
@@ -676,8 +676,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-rose-100 dark:bg-rose-900/40 rounded-lg">
-                  <Users className="h-4 w-4 text-rose-600" />
+                <div className="p-1.5 bg-rose-500/10 border border-rose-500/15 rounded-lg">
+                  <Users className="h-4 w-4 text-rose-400" />
                 </div>
                 Recursos Humanos
               </CardTitle>
@@ -696,7 +696,7 @@ export default function Dashboard() {
                     <span className="text-muted-foreground">{item.label}</span>
                     <span className="font-semibold">{item.value} <span className="text-muted-foreground font-normal">({item.pct}%)</span></span>
                   </div>
-                  <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                     <div className="h-full rounded-full transition-all duration-700" style={{ width: `${item.pct}%`, background: item.color }} />
                   </div>
                 </div>
@@ -722,8 +722,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-orange-100 dark:bg-orange-900/40 rounded-lg">
-                  <CalendarDays className="h-4 w-4 text-orange-600" />
+                <div className="p-1.5 bg-orange-500/10 border border-orange-500/15 rounded-lg">
+                  <CalendarDays className="h-4 w-4 text-orange-400" />
                 </div>
                 Próximos Prazos
               </CardTitle>
@@ -759,8 +759,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
-                  <Wallet className="h-4 w-4 text-emerald-600" />
+                <div className="p-1.5 bg-emerald-500/10 border border-emerald-500/15 rounded-lg">
+                  <Wallet className="h-4 w-4 text-emerald-400" />
                 </div>
                 Resumo Financeiro
               </CardTitle>
@@ -781,10 +781,10 @@ export default function Dashboard() {
               ) : (
                 <div className="space-y-2">
                   {[
-                    { label: "Receitas", value: financialStats.totalReceitas, icon: TrendingUp, color: P.green, bg: "bg-emerald-50 dark:bg-emerald-950/20" },
-                    { label: "Despesas", value: financialStats.totalDespesas, icon: TrendingDown, color: P.red, bg: "bg-red-50 dark:bg-red-950/20" },
-                    { label: "Saldo Atual", value: financialStats.saldoAtual, icon: Banknote, color: financialStats.saldoAtual >= 0 ? P.green : P.red, bg: financialStats.saldoAtual >= 0 ? "bg-emerald-50 dark:bg-emerald-950/20" : "bg-red-50 dark:bg-red-950/20" },
-                    { label: "A Receber/Pagar", value: financialStats.totalPendente, icon: Clock, color: P.yellow, bg: "bg-amber-50 dark:bg-amber-950/20" },
+                    { label: "Receitas", value: financialStats.totalReceitas, icon: TrendingUp, color: P.green, bg: "bg-emerald-500/5 border border-emerald-500/10" },
+                    { label: "Despesas", value: financialStats.totalDespesas, icon: TrendingDown, color: P.red, bg: "bg-red-500/5 border border-red-500/10" },
+                    { label: "Saldo Atual", value: financialStats.saldoAtual, icon: Banknote, color: financialStats.saldoAtual >= 0 ? P.green : P.red, bg: financialStats.saldoAtual >= 0 ? "bg-emerald-500/5 border border-emerald-500/10" : "bg-red-500/5 border border-red-500/10" },
+                    { label: "A Receber/Pagar", value: financialStats.totalPendente, icon: Clock, color: P.yellow, bg: "bg-amber-500/5 border border-amber-500/10" },
                   ].map(item => (
                     <div key={item.label} className={`${item.bg} rounded-xl px-3 py-2.5 flex items-center justify-between`}>
                       <div className="flex items-center gap-2">
@@ -805,8 +805,8 @@ export default function Dashboard() {
           <Card className="premium-card lg:col-span-2">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
-                  <TrendingUp className="h-4 w-4 text-blue-600" />
+                <div className="p-1.5 bg-blue-500/10 border border-blue-500/15 rounded-lg">
+                  <TrendingUp className="h-4 w-4 text-blue-400" />
                 </div>
                 Evolução Financeira Mensal
               </CardTitle>

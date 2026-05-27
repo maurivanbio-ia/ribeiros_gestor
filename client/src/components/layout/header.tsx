@@ -78,7 +78,7 @@ export default function Header() {
             aria-label="Ir para o início"
             className="flex items-center cursor-pointer hover:opacity-80 transition-opacity -ml-2"
           >
-            <Logo size="sm" showSubtitle={false} />
+            <Logo variant="360" size="sm" showSubtitle={false} />
           </Link>
 
           {/* Busca desktop */}

@@ -13,7 +13,7 @@ export default function Logo({
   collapsed = false,
   className,
   showSubtitle = true,
-  variant = "default",
+  variant = "360",
 }: LogoProps) {
   // If collapsed (e.g. sidebar collapsed), return a compact version
   if (collapsed) {
