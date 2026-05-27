@@ -243,9 +243,12 @@
   transition-duration: 200ms;
 }
 
-/* Card premium com hover dinâmico */
 .premium-card {
-  @apply rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:scale-[1.015] hover:shadow-md hover:border-primary/20;
+  @apply rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:scale-[1.015] hover:shadow-md;
+}
+
+.premium-card:hover {
+  border-color: hsl(var(--primary) / 0.2);
 }
 
 /* Gradientes harmônicos e modernos */
