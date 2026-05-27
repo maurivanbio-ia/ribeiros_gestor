@@ -19,7 +19,7 @@ const deepseek = process.env.DEEPSEEK_API_KEY ? new OpenAI({
 
 // ── OpenAI — último recurso (usa OPENAI_DIRECT_KEY primeiro) ─────────────────
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_DIRECT_KEY || process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_DIRECT_KEY || process.env.OPENAI_API_KEY || "dummy-key",
 });
 
 const GEMINI_CHAT_MODEL = 'gemini-2.0-flash';
