@@ -10,6 +10,7 @@ import { Loader2, Eye, EyeOff, ArrowLeft, UserCircle } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import registerBackground from "@assets/restinga_drone_bg.png";
 import logoImg from "@assets/ambientia_logo.png";
+import Logo from "@/components/layout/logo";
 
 export default function Register() {
   const [, setLocation] = useLocation();
@@ -88,11 +89,8 @@ export default function Register() {
         <Card className="w-full shadow-2xl backdrop-blur-lg bg-white/20 dark:bg-white/10 border border-white/30 dark:border-white/20">
           <CardContent className="pt-8 pb-8 px-8">
             <div className="text-center mb-8">
-              <img src={logoImg} alt="AmbientIA" className="h-14 w-14 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)] object-contain mx-auto" />
-              <p className="text-white/70 text-[10px] drop-shadow mt-1">
-                Plataforma Inteligente de Gestão para Consultorias Ambientais
-              </p>
-              <p className="text-white/80 text-sm drop-shadow mt-2">
+              <Logo size="md" className="items-center text-center" />
+              <p className="text-white/80 text-sm drop-shadow mt-4 font-sans font-medium">
                 Criar Nova Conta
               </p>
               <div className="w-20 h-1 bg-gradient-to-r from-[#00599C] to-[#B2CDE1] mx-auto mt-4 rounded-full shadow-sm"></div>

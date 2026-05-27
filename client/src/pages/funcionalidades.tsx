@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { ArrowLeft, Map, Layers, CheckSquare, Shield, DollarSign, Bot, Microscope, FolderOpen } from "lucide-react";
 import loginBackground from "@assets/restinga_drone_bg.png";
+import Logo from "@/components/layout/logo";
 
 export default function Funcionalidades() {
   const [, setLocation] = useLocation();
@@ -75,14 +76,7 @@ export default function Funcionalidades() {
 
       {/* Cabeçalho */}
       <header className="relative z-20 w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between border-b border-white/5">
-        <div className="flex flex-col gap-0.5 select-none">
-          <span className="font-light text-lg text-white font-sans tracking-wide leading-none">
-            Ambient<span className="text-primary font-bold">IA<sup className="text-[10px] font-normal align-super">TM</sup></span>
-          </span>
-          <span className="text-[8px] tracking-[0.1em] text-primary uppercase font-condensed font-semibold">
-            Gestão Ambiental Inteligente
-          </span>
-        </div>
+        <Logo size="sm" />
 
         <button
           onClick={() => setLocation("/login")}
