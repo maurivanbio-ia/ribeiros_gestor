@@ -391,7 +391,7 @@ export default function Login() {
                 </div>
               </div>
               <p className="text-[11px] text-white/40 leading-relaxed font-light">
-                A 1ª Consultoria Ambiental do Brasil com Inteligência Artificial para projetos e gestão ambiental.
+                A 1ª Consultoria Ambiental do Brasil exclusivamente dedicada a soluções ambientais com Inteligência Artificial.
               </p>
             </div>
 
