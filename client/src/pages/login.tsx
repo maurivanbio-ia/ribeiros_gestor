@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
-import loginBackground from "@/assets/login-background.png";
+import loginBackground from "@/assets/restinga_drone_bg.png";
 import Logo from "@/components/layout/logo";
 
 export default function Login() {
