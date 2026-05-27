@@ -175,9 +175,9 @@ export default function MapaEmpreendimentos() {
     const map = L.map(mapRef.current, { preferCanvas: true }).setView(defaultCenter, 5);
     mapInstanceRef.current = map;
 
-    // Primary: CartoDB Positron (free, no key, reliable in all environments)
+    // Primary: CartoDB Dark Matter (suited for immersive dark green theme)
     const primaryTile = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
       {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -548,8 +548,8 @@ export default function MapaEmpreendimentos() {
     <div className="p-8 space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2" data-testid="text-page-title">
-            <MapPin className="h-8 w-8 text-green-600" />
+          <h1 className="text-3xl font-bold text-foreground flex items-center gap-2" data-testid="text-page-title">
+            <MapPin className="h-8 w-8 text-primary" />
             Mapa de Empreendimentos
           </h1>
           <p className="text-muted-foreground">
@@ -641,7 +641,7 @@ export default function MapaEmpreendimentos() {
         {Object.entries(statusLabels).map(([status, label]) => (
           <Card 
             key={status} 
-            className={`cursor-pointer transition-all ${statusFilter === status ? 'ring-2 ring-primary' : ''}`}
+            className={`premium-card cursor-pointer ${statusFilter === status ? 'ring-2 ring-primary border-primary/50' : ''}`}
             onClick={() => setStatusFilter(statusFilter === status ? "todos" : status)}
             data-testid={`filter-${status}`}
           >
@@ -660,7 +660,7 @@ export default function MapaEmpreendimentos() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <Card className="lg:col-span-1">
+        <Card className="lg:col-span-1 premium-card">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Layers className="h-5 w-5" />
@@ -749,7 +749,7 @@ export default function MapaEmpreendimentos() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-3">
+        <Card className="lg:col-span-3 premium-card">
           <CardHeader className="pb-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <CardTitle className="flex items-center gap-2">
@@ -807,21 +807,21 @@ export default function MapaEmpreendimentos() {
       </div>
 
       {empreendimentos.length > 0 && empreendimentosComCoordenadas.length === 0 && (
-        <Card className="border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20">
+        <Card className="border-yellow-500/20 bg-yellow-500/5">
           <CardContent className="p-6">
-            <p className="text-yellow-800 dark:text-yellow-200">
+            <p className="text-yellow-600 dark:text-yellow-400">
               Nenhum empreendimento possui coordenadas cadastradas. Edite os empreendimentos para adicionar latitude e longitude.
             </p>
           </CardContent>
         </Card>
       )}
 
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
+      <Card className="premium-card bg-primary/5 border-primary/10">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm text-blue-800 dark:text-blue-200">
-              <p className="font-medium mb-1">Dicas de uso das Camadas Geoespaciais:</p>
+            <Info className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-foreground">
+              <p className="font-medium mb-1 text-primary">Dicas de uso das Camadas Geoespaciais:</p>
               <ul className="list-disc list-inside space-y-1 text-xs">
                 <li>Carregue arquivos KMZ, KML ou GeoJSON para visualizar áreas no mapa</li>
                 <li>Use as categorias para organizar camadas (UCs, Terras Indígenas, Uso do Solo, etc.)</li>

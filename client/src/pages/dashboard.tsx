@@ -66,9 +66,15 @@ interface Projeto {
 
 /* ─── Palette ECO ─────────────────────────────────────────── */
 const P = {
-  green: "#0099a8", yellow: "#f97316", red: "#c2410c",
-  blue: "#0e7490", purple: "#155e75", cyan: "#06b6d4",
-  orange: "#ea580c", teal: "#0099a8", indigo: "#164e63",
+  green: "#2DD4BF",  // Neon Teal / Mint
+  yellow: "#F59E0B", // Amber
+  red: "#EF4444",    // Red
+  blue: "#06B6D4",   // Cyan
+  purple: "#8B5CF6", // Purple
+  cyan: "#00E5FF",   // Bright Cyan
+  orange: "#F97316",
+  teal: "#2DD4BF",
+  indigo: "#3B82F6",
 };
 
 /* ─── Campaign status config (ECO palette) ───────────────── */
@@ -131,7 +137,7 @@ function MiniDonut({ data, label }: {
   const total = data.reduce((s, d) => s + d.value, 0);
   const hasData = data.some(d => d.value > 0);
   return (
-    <Card className="border-0 shadow-sm bg-white dark:bg-gray-900 rounded-2xl h-full">
+    <Card className="premium-card h-full">
       <CardContent className="p-4">
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">{label}</p>
         {!hasData ? (
@@ -411,7 +417,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Campaign Timeline */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900 lg:col-span-1">
+          <Card className="premium-card lg:col-span-1">
             <CardHeader className="pb-2 pt-4 px-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
@@ -455,7 +461,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Licenses */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
@@ -515,7 +521,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Condicionantes + Demandas */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-amber-100 dark:bg-amber-900/40 rounded-lg">
@@ -600,7 +606,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
           {/* Projetos */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
@@ -624,7 +630,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Frota & Equipamentos */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-cyan-100 dark:bg-cyan-900/40 rounded-lg">
@@ -667,7 +673,7 @@ export default function Dashboard() {
           </Card>
 
           {/* RH */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-rose-100 dark:bg-rose-900/40 rounded-lg">
@@ -713,7 +719,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Prazos */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-orange-100 dark:bg-orange-900/40 rounded-lg">
@@ -750,7 +756,7 @@ export default function Dashboard() {
         {/* ── Financeiro ───────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* KPIs financeiros */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
@@ -796,7 +802,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Evolução mensal */}
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900 lg:col-span-2">
+          <Card className="premium-card lg:col-span-2">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
@@ -856,7 +862,7 @@ export default function Dashboard() {
         {financialStats && ((financialStats.porProjeto?.length ?? 0) > 0 || (financialStats.porCampanha?.length ?? 0) > 0) && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {(financialStats.porProjeto?.length ?? 0) > 0 && (
-              <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+              <Card className="premium-card">
                 <CardHeader className="pb-2 pt-4 px-4">
                   <CardTitle className="text-sm font-bold flex items-center gap-2">
                     <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
@@ -882,7 +888,7 @@ export default function Dashboard() {
               </Card>
             )}
             {(financialStats.porCampanha?.length ?? 0) > 0 && (
-              <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+              <Card className="premium-card">
                 <CardHeader className="pb-2 pt-4 px-4">
                   <CardTitle className="text-sm font-bold flex items-center gap-2">
                     <div className="p-1.5 bg-purple-100 dark:bg-purple-900/40 rounded-lg">
@@ -912,7 +918,7 @@ export default function Dashboard() {
 
         {/* ── Alerts section ───────────────────────────── */}
         {autVencidas.length > 0 && (
-          <Card id="secao-autorizacoes-vencidas" className="border-0 shadow-sm rounded-2xl overflow-hidden">
+          <Card id="secao-autorizacoes-vencidas" className="premium-card overflow-hidden">
             <div className="bg-gradient-to-r from-orange-700 to-orange-900 px-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-2 text-white">
                 <AlertTriangle className="h-4 w-4" />
@@ -923,22 +929,22 @@ export default function Dashboard() {
                 Ver todas <ChevronRight className="h-3.5 w-3.5" />
               </button>
             </div>
-            <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
+            <div className="divide-y divide-white/5 bg-card/45">
               {autVencidas.slice(0, 6).map((aut: any) => {
                 const emp = empreendimentos?.find(e => e.id === aut.empreendimentoId);
                 const hoje = new Date().toISOString().split('T')[0];
                 const dias = aut.dataValidade ? Math.floor((new Date(hoje).getTime() - new Date(aut.dataValidade).getTime()) / 86400000) : null;
                 return (
-                  <div key={aut.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-orange-50/40 dark:hover:bg-orange-950/10 cursor-pointer transition-colors"
+                  <div key={aut.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.02] cursor-pointer transition-colors"
                     onClick={() => aut.fonte === 'gestao_dados' ? navigate('/gestao-dados') : emp && navigate(`/empreendimentos/${emp.id}`)}>
-                    <span className="flex-shrink-0 text-[10px] font-bold bg-orange-100 text-orange-700 rounded px-1.5 py-0.5 uppercase">{(aut.tipo || 'doc').slice(0, 8)}</span>
+                    <span className="flex-shrink-0 text-[10px] font-bold bg-orange-500/20 text-orange-400 rounded px-1.5 py-0.5 uppercase">{(aut.tipo || 'doc').slice(0, 8)}</span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{aut.titulo || aut.numero || `#${aut.id}`}</p>
                       <p className="text-xs text-muted-foreground truncate">{emp?.nome || '—'}{aut.orgaoEmissor ? ` · ${aut.orgaoEmissor}` : ''}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      {aut.dataValidade && <p className="text-xs font-medium text-orange-600">{aut.dataValidade.split('-').reverse().join('/')}</p>}
-                      {dias !== null && dias > 0 && <p className="text-[10px] font-bold text-red-500">{dias}d vencida</p>}
+                      {aut.dataValidade && <p className="text-xs font-medium text-orange-400">{aut.dataValidade.split('-').reverse().join('/')}</p>}
+                      {dias !== null && dias > 0 && <p className="text-[10px] font-bold text-red-400">{dias}d vencida</p>}
                     </div>
                   </div>
                 );
@@ -964,7 +970,7 @@ export default function Dashboard() {
                   { key: 'ecobrasil', label: `🌿 Consultora` },
                 ].map(opt => (
                   <button key={opt.key} onClick={() => setFiltroResp(opt.key as any)}
-                    className={`text-xs px-3 py-1.5 rounded-full font-medium border transition-all ${filtroResp === opt.key ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-transparent' : 'bg-white dark:bg-gray-900 text-muted-foreground border-gray-200'}`}>
+                    className={`text-xs px-3 py-1.5 rounded-full font-medium border transition-all ${filtroResp === opt.key ? 'bg-primary text-primary-foreground border-transparent shadow-[0_0_10px_rgba(45,212,191,0.2)]' : 'bg-card text-muted-foreground border-white/10 hover:text-foreground hover:bg-white/5'}`}>
                     {opt.label}
                   </button>
                 ))}

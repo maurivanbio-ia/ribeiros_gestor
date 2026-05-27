@@ -2435,21 +2435,21 @@ export default function Mapa3D() {
   };
 
   // ── Estilo ────────────────────────────────────────────────────────────────────
-  const isDark   = mapStyle === "dark" || mapStyle === "satellite";
-  const textBase = isDark ? "text-slate-200" : "text-slate-800";
-  const panelBg  = isDark ? "bg-slate-900/95 border-slate-700/50" : "bg-white/95 border-slate-200";
-  const subText  = isDark ? "text-slate-400" : "text-slate-500";
+  const isDark   = true; // Force premium dark layout
+  const textBase = "text-foreground";
+  const panelBg  = "bg-card/95 border-white/10 text-card-foreground backdrop-blur-md";
+  const subText  = "text-muted-foreground";
   const tabBtnCls = (active: boolean) =>
-    `flex-1 text-xs py-1.5 rounded-md font-medium transition-colors ${active
-      ? (isDark ? "bg-slate-700 text-cyan-400" : "bg-slate-200 text-slate-900")
-      : subText + " hover:opacity-80"}`;
+    `flex-1 text-xs py-1.5 rounded-md font-medium transition-all ${active
+      ? "bg-primary text-primary-foreground font-semibold"
+      : "text-muted-foreground hover:bg-white/5 hover:text-foreground"}`;
 
   const selectedLics = selectedEmp ? (licByEmp.get(selectedEmp.id) || []) : [];
   const selectedComp = selectedEmp ? computeCompliance(selectedLics) : null;
   const selectedTc   = selectedEmp ? getTipoConfig(selectedEmp.tipo) : null;
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: "100vh", background: isDark ? "#0f172a" : "#f1f5f9" }}>
+    <div className="relative w-full overflow-hidden" style={{ height: "100vh", background: "hsl(165, 45%, 4%)" }}>
 
       {/* ── Barra de título ── */}
       <div className={`absolute top-0 left-0 right-0 z-[1000] flex items-center justify-between px-4 backdrop-blur-sm border-b ${panelBg}`}
@@ -2497,9 +2497,9 @@ export default function Mapa3D() {
               <span className={subText}>{k.label}</span>
             </div>
           ))}
-          <div className="w-px h-4 bg-slate-400/30" />
+          <div className="w-px h-4 bg-white/10" />
           <Select value={mapStyle} onValueChange={(v: any) => setMapStyle(v)}>
-            <SelectTrigger className="h-7 text-xs w-28 bg-slate-800/80 border-slate-600 text-slate-200">
+            <SelectTrigger className="h-7 text-xs w-28 bg-card/85 border-white/10 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

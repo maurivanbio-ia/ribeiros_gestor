@@ -321,15 +321,20 @@ export default function Sidebar() {
                         >
                           <div
                             className={cn(
-                              "flex items-center gap-2 px-2 py-1.5 rounded-lg transition-colors cursor-pointer border border-transparent text-xs",
+                              "flex items-center justify-between px-2.5 py-2 rounded-xl transition-all duration-200 cursor-pointer border border-transparent text-xs group",
                               isActive(item.href)
-                                ? "bg-primary/15 text-primary font-semibold border-primary/10 shadow-[0_0_12px_rgba(45,212,191,0.06)]"
+                                ? "bg-primary/10 text-primary font-bold border-primary/20 shadow-[0_0_15px_rgba(45,212,191,0.08)]"
                                 : "text-white/60 hover:bg-white/[0.03] hover:text-white",
                               collapsed && "justify-center px-1"
                             )}
                           >
-                            <Icon className="h-3.5 w-3.5 flex-shrink-0" />
-                            {!collapsed && <span>{item.label}</span>}
+                            <div className="flex items-center gap-2.5">
+                              <Icon className={cn("h-4 w-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110", isActive(item.href) ? "text-primary" : "text-white/40")} />
+                              {!collapsed && <span>{item.label}</span>}
+                            </div>
+                            {isActive(item.href) && !collapsed && (
+                              <ChevronRight className="h-3.5 w-3.5 text-primary animate-pulse" />
+                            )}
                           </div>
                         </Link>
                       );

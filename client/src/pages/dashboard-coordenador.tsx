@@ -154,7 +154,7 @@ function AgendaRow({ item, onClick }: { item: AgendaItem; onClick: () => void })
   const Icon = SRC_ICON[item.source];
   const diasTxt = item.dias < 0 ? `${Math.abs(item.dias)}d atraso` : item.dias === 0 ? 'Hoje' : `${item.dias}d`;
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-xl border border-l-4 ${cfg.border} border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 hover:shadow-sm transition-all cursor-pointer`} onClick={onClick}>
+    <div className={`flex items-center gap-3 p-3 rounded-xl border border-l-4 ${cfg.border} border-white/10 bg-card/60 hover:bg-white/5 hover:shadow-sm transition-all cursor-pointer`} onClick={onClick}>
       <div className="p-1.5 rounded-lg flex-shrink-0" style={{ background: SRC_COLOR[item.source] + '15' }}>
         <Icon className="h-3.5 w-3.5" style={{ color: SRC_COLOR[item.source] }} />
       </div>
@@ -379,7 +379,7 @@ export default function DashboardCoordenador() {
 
           {/* Urgency + Source mini charts */}
           <div className="space-y-4">
-            <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+            <Card className="premium-card">
               <CardHeader className="pb-1 pt-4 px-4">
                 <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
                   <BarChart3 className="h-3.5 w-3.5" /> Por Urgência
@@ -403,7 +403,7 @@ export default function DashboardCoordenador() {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+            <Card className="premium-card">
               <CardHeader className="pb-1 pt-4 px-4">
                 <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
                   <Activity className="h-3.5 w-3.5" /> Por Tipo
@@ -434,7 +434,7 @@ export default function DashboardCoordenador() {
 
         {/* ── Project Health ───────────────────────────── */}
         {projectHealth.length > 0 && (
-          <Card className="border-0 shadow-sm rounded-2xl bg-white dark:bg-gray-900">
+          <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <div className="p-1.5 bg-violet-100 dark:bg-violet-900/40 rounded-lg">
@@ -484,12 +484,12 @@ export default function DashboardCoordenador() {
           <div className="flex flex-wrap gap-2 items-center">
             <div className="relative flex-1 min-w-44">
               <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
-              <Input placeholder="Buscar item..." className="pl-8 h-8 text-xs rounded-xl bg-white dark:bg-gray-900 border-gray-200" value={search} onChange={e => setSearch(e.target.value)} />
+              <Input placeholder="Buscar item..." className="pl-8 h-8 text-xs rounded-xl bg-card border-white/10 text-foreground" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex gap-1 flex-wrap">
               {(['all', 'campanha', 'cronograma', 'demanda', 'entregavel'] as const).map(s => (
                 <button key={s} onClick={() => setFilterSource(s)}
-                  className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${filterSource === s ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-900 text-muted-foreground border border-gray-200 hover:border-gray-400'}`}>
+                  className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${filterSource === s ? 'bg-primary text-primary-foreground font-semibold' : 'bg-card text-muted-foreground border border-white/10 hover:text-foreground hover:bg-white/5'}`}>
                   {s === 'all' ? 'Tudo' : s === 'campanha' ? 'Campanhas' : s === 'cronograma' ? 'Cronograma' : s === 'demanda' ? 'Demandas' : 'Entregáveis'}
                 </button>
               ))}
@@ -497,7 +497,7 @@ export default function DashboardCoordenador() {
             <div className="flex gap-1 flex-wrap">
               {(['all', 'overdue', 'urgent', 'soon', 'upcoming'] as const).map(u => (
                 <button key={u} onClick={() => setFilterUrgency(u)}
-                  className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${filterUrgency === u ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-900 text-muted-foreground border border-gray-200 hover:border-gray-400'}`}>
+                  className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${filterUrgency === u ? 'bg-primary text-primary-foreground font-semibold' : 'bg-card text-muted-foreground border border-white/10 hover:text-foreground hover:bg-white/5'}`}>
                   {u === 'all' ? 'Todas urgências' : u === 'overdue' ? '🔴 Vencidos' : u === 'urgent' ? '🟠 Semana' : u === 'soon' ? '🟡 30 dias' : '🔵 90 dias'}
                 </button>
               ))}
@@ -508,7 +508,7 @@ export default function DashboardCoordenador() {
           {myProjects.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               <button onClick={() => setSelectedProj('todos')}
-                className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${selectedProj === 'todos' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-900 text-muted-foreground border border-gray-200'}`}>
+                className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors ${selectedProj === 'todos' ? 'bg-primary text-primary-foreground font-semibold' : 'bg-card text-muted-foreground border border-white/10'}`}>
                 Todos os projetos
               </button>
               {myProjects.map(p => {
@@ -519,7 +519,7 @@ export default function DashboardCoordenador() {
                 const lbl = (empr?.nome || p.nome).slice(0, 20);
                 return (
                   <button key={p.id} onClick={() => setSelectedProj(String(p.empreendimentoId))}
-                    className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors flex items-center gap-1 ${selectedProj === String(p.empreendimentoId) ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-900 text-muted-foreground border border-gray-200'}`}>
+                    className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-colors flex items-center gap-1 ${selectedProj === String(p.empreendimentoId) ? 'bg-primary text-primary-foreground font-semibold' : 'bg-card text-muted-foreground border border-white/10'}`}>
                     {dot} {lbl}{lbl.length < (empr?.nome || p.nome).length ? '…' : ''}
                     {count > 0 && <span className="bg-red-500 text-white text-[9px] font-bold rounded-full px-1.5">{count}</span>}
                   </button>
@@ -530,8 +530,8 @@ export default function DashboardCoordenador() {
 
           {/* Agenda items */}
           {filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center gap-3 bg-white dark:bg-gray-900 rounded-2xl border-0 shadow-sm">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center py-12 text-center gap-3 bg-card/65 rounded-2xl border border-white/5 shadow-sm">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
                 <CheckCircle2 className="h-7 w-7 text-emerald-400" />
               </div>
               <div>
