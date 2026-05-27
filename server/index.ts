@@ -124,6 +124,30 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 (async () => {
+  // Garantir que a estrutura do banco de dados está atualizada em produção
+  try {
+    const { db } = await import("./db");
+    const { sql } = await import("drizzle-orm");
+    console.log("[DB Migration] Verificando estrutura do banco de dados...");
+    
+    // Verifica se a coluna whatsapp existe na tabela users
+    const checkWhatsapp = await db.execute(sql`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' AND column_name = 'whatsapp';
+    `);
+    
+    if (!checkWhatsapp.rows || checkWhatsapp.rows.length === 0) {
+      console.log("[DB Migration] Coluna 'whatsapp' não encontrada na tabela 'users'. Adicionando...");
+      await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS whatsapp text;`);
+      console.log("[DB Migration] Coluna 'whatsapp' adicionada com sucesso.");
+    } else {
+      console.log("[DB Migration] Coluna 'whatsapp' já existe na tabela 'users'.");
+    }
+  } catch (err: any) {
+    console.error("[DB Migration] Falha ao atualizar estrutura do banco:", err.message || err);
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
