@@ -524,8 +524,8 @@ export default function Dashboard() {
           <Card className="premium-card">
             <CardHeader className="pb-2 pt-4 px-4">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
-                <div className="p-1.5 bg-amber-100 dark:bg-amber-900/40 rounded-lg">
-                  <FileText className="h-4 w-4 text-amber-600" />
+                <div className="p-1.5 bg-amber-500/10 border border-amber-500/15 rounded-lg">
+                  <FileText className="h-4 w-4 text-amber-400" />
                 </div>
                 Condicionantes & Demandas
               </CardTitle>
