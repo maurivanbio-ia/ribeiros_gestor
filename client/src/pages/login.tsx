@@ -197,13 +197,13 @@ export default function Login() {
               <h2 className="text-4xl font-bold font-display text-primary">Sobre a AmbientIA</h2>
               <div className="space-y-4 text-white/80 text-sm leading-relaxed font-light">
                 <p>
-                  A <strong>AmbientIA</strong> é uma plataforma pioneira projetada para simplificar e automatizar a gestão de conformidade, licenciamento e monitoramento de consultorias e empresas.
+                  A <strong>AmbientIA</strong> é a 1ª empresa de Consultoria Ambiental do Brasil dedicada a integrar Inteligência Artificial especificamente para soluções ambientais.
                 </p>
                 <p>
-                  Nosso sistema consolida o gerenciamento de licenças, condicionantes, relatórios técnicos, dados geográficos (GIS 2D/3D), equipes de campo, auditorias de segurança (SST) e controle financeiro em um único ambiente integrado.
+                  Desenvolvemos projetos diversos de consultoria e oferecemos nossa plataforma corporativa exclusiva, que consolida o gerenciamento de licenças, condicionantes, relatórios técnicos, dados geográficos (GIS 2D/3D), equipes de campo, auditorias de segurança (SST) e controle financeiro em um único ambiente integrado.
                 </p>
                 <p>
-                  Unindo inteligência artificial a uma navegação fluida, mitigamos riscos de multas e aceleramos a conformidade legal para manter seus projetos em dia.
+                  Unindo expertise ambiental, inteligência artificial e tecnologia de ponta, entregamos as melhores soluções para manter seus projetos em total conformidade e impulsionar a sustentabilidade.
                 </p>
               </div>
               <button 
@@ -392,7 +392,7 @@ export default function Login() {
                 </div>
               </div>
               <p className="text-[11px] text-white/40 leading-relaxed font-light">
-                Plataforma corporativa de conformidade ambiental, auditorias e gestão automatizada de licenciamento.
+                A 1ª Consultoria Ambiental do Brasil com Inteligência Artificial para projetos e gestão ambiental.
               </p>
             </div>
 
