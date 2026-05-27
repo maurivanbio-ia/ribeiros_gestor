@@ -197,13 +197,13 @@ export default function Login() {
               <h2 className="text-4xl font-bold font-display text-primary">Sobre a AmbientIA</h2>
               <div className="space-y-4 text-white/80 text-sm leading-relaxed font-light">
                 <p>
-                  A <strong>AmbientIA</strong> é a 1ª empresa de Consultoria Ambiental do Brasil dedicada a integrar Inteligência Artificial especificamente para soluções ambientais.
+                  A <strong>AmbientIA Inteligência Ambiental</strong> é uma empresa de tecnologia e inteligência de dados aplicada ao setor ambiental, dedicada ao desenvolvimento de soluções digitais para apoiar organizações que atuam com gestão, licenciamento, monitoramento e conformidade ambiental. Combinando conhecimento técnico, inovação e inteligência artificial, a AmbientIA transforma dados e processos ambientais em soluções mais eficientes, integradas e orientadas à tomada de decisão. Seu propósito é fortalecer a atuação de consultorias, empreendedores e instituições, oferecendo suporte tecnológico para ampliar a qualidade, a rastreabilidade e a eficiência da gestão ambiental.
                 </p>
                 <p>
-                  Desenvolvemos projetos diversos de consultoria e oferecemos nossa plataforma corporativa exclusiva, que consolida o gerenciamento de licenças, condicionantes, relatórios técnicos, dados geográficos (GIS 2D/3D), equipes de campo, auditorias de segurança (SST) e controle financeiro em um único ambiente integrado.
+                  A empresa nasce para responder aos novos desafios do setor ambiental, em que a complexidade regulatória, o volume crescente de informações e a necessidade de decisões rápidas exigem maior organização, inteligência e integração dos processos. Por meio de uma abordagem técnica, estratégica e orientada por dados, a AmbientIA contribui para a modernização da gestão ambiental, apoiando organizações na transformação de informações dispersas em conhecimento estruturado, confiável e aplicável.
                 </p>
                 <p>
-                  Unindo expertise ambiental, inteligência artificial e tecnologia de ponta, entregamos as melhores soluções para manter seus projetos em total conformidade e impulsionar a sustentabilidade.
+                  Mais do que uma fornecedora de tecnologia, a AmbientIA posiciona-se como uma parceira estratégica para a evolução digital do setor ambiental, conectando inovação, sustentabilidade e desempenho institucional.
                 </p>
               </div>
               <button 
