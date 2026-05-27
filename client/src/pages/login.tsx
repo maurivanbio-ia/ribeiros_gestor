@@ -18,8 +18,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 import loginBackground from "@assets/bahia-de-todos-os-santos-grou-turismio_1776732662219.jpg";
 
 /**
- * EcoGestor — Tela de Login (Card 100% Transparente)
- * Tema: Escuro, elegante e ambiental. Fundo cinematográfico realista.
+ * AmbientIA — Tela de Login Split-Screen Responsiva Premium
  */
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -96,24 +95,24 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
-      {/* Fundo cinematográfico com animação suave de zoom */}
+    <div className="relative min-h-screen w-full flex bg-[#060D0B] text-white font-sans overflow-hidden">
+      {/* Imagem de Fundo (Sempre presente, cobrindo a tela inteira) */}
       <div
-        className="absolute inset-0 z-0 animate-[bgZoom_12s_cubic-bezier(0.1,1,0.1,1)_forwards]"
+        className="absolute inset-0 z-0 animate-[bgZoom_15s_cubic-bezier(0.1,1,0.1,1)_forwards]"
         style={{
           backgroundImage: `url(${loginBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "contrast(1.15) brightness(0.7) saturate(1.1)",
+          filter: "contrast(1.15) brightness(0.65) saturate(1.1)",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#060D0B] via-[#060D0B]/85 to-transparent" />
       </div>
 
       {/* Luz ambiental dinâmica */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[20%] blur-[80px] opacity-60"
+        className="pointer-events-none absolute -inset-[20%] blur-[80px] opacity-60 z-10"
         style={{
           background:
             "radial-gradient(40% 60% at 20% 30%, rgba(0,89,156,0.25), transparent 60%), radial-gradient(40% 60% at 80% 70%, rgba(30,97,70,0.25), transparent 60%)",
@@ -138,163 +137,219 @@ export default function Login() {
         `}
       </style>
 
-      {/* Card premium glassmorphic */}
-      <Card
-        className="relative z-10 w-[92%] max-w-md rounded-[2rem] border border-white/15
-                   bg-black/30 backdrop-blur-[24px] backdrop-saturate-[180%]
-                   shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(30,97,70,0.15)]
-                   transition-all duration-500 hover:border-white/20
-                   animate-[ecoFadeUp_900ms_cubic-bezier(0.16,1,0.3,1)]"
-      >
-        {/* Glow interno reflexivo */}
-        <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-white/0 via-white/[0.02] to-white/[0.06] pointer-events-none" />
-
-        <CardContent className="p-8 md:p-10 relative z-10">
-          {/* Logo corporativo glassmorphic */}
-          <div className="text-center mb-8">
-            <div className="inline-block bg-white/85 backdrop-blur-md rounded-2xl px-7 py-3.5 shadow-[0_8px_32px_rgba(0,0,0,0.2)] border border-white/40 mb-1 hover:bg-white/95 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 ease-out cursor-pointer">
-              <img src="/logo.png" alt="AmbientIA" className="h-20 w-auto object-contain mx-auto" />
+      {/* Estrutura Split-Screen Responsiva */}
+      <div className="relative z-20 min-h-screen w-full flex flex-col lg:flex-row">
+        
+        {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto em Mobile) */}
+        <div className="hidden lg:flex lg:w-[50%] xl:w-[55%] flex-col justify-between p-16">
+          {/* Logo no topo esquerdo */}
+          <div className="flex items-center gap-3">
+            <div className="bg-white/95 rounded-xl p-2 flex items-center justify-center shadow-md">
+              <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto object-contain" />
             </div>
-            <p className="text-[11px] tracking-wide text-white/70 font-medium mt-3.5 max-w-[280px] mx-auto leading-relaxed">
-              Plataforma Inteligente de Gestão para Consultorias Ambientais
-            </p>
+            <span className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+              AmbientIA
+            </span>
           </div>
 
-          {/* Formulário */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="email"
-                className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
-              >
-                E-mail corporativo
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com.br"
-                className="bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
-                           rounded-xl py-6 px-4
-                           focus-visible:ring-2 focus-visible:ring-[#1E6146]/50 focus-visible:border-[#1E6146]
-                           transition-all duration-200 shadow-inner"
-                required
-              />
-            </div>
+          {/* Chamada Comercial e Features */}
+          <div className="max-w-md space-y-6 my-auto">
+            <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#2ab074] bg-[#1E6146]/30 border border-[#1E6146]/40 px-3.5 py-1.5 rounded-full inline-block">
+              Gestão de Licenciamento & SGA
+            </span>
+            <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight leading-tight text-white">
+              Inteligência e controle para o seu licenciamento.
+            </h1>
+            <p className="text-white/60 text-sm leading-relaxed">
+              Monitore condicionantes em tempo real, gerencie frotas e prazos, analise documentos com IA e garanta conformidade legal absoluta.
+            </p>
 
-            <div className="space-y-2">
-              <Label
-                htmlFor="password"
-                className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
-              >
-                Senha
-              </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="pr-11 bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
-                             rounded-xl py-6 px-4
-                             focus-visible:ring-2 focus-visible:ring-[#00599C]/50 focus-visible:border-[#00599C]
-                             transition-all duration-200 shadow-inner"
-                  required
-                />
-                <button
-                  type="button"
-                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-3.5 text-white/50 hover:text-white transition"
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
+            {/* Badges de Destaques */}
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-3.5 backdrop-blur-sm">
+                <span className="text-xs font-bold text-white/90 block mb-1">🔍 Auditoria Inteligente</span>
+                <span className="text-[11px] text-white/50 block">Análise automatizada de conformidade legal.</span>
+              </div>
+              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-3.5 backdrop-blur-sm">
+                <span className="text-xs font-bold text-white/90 block mb-1">📅 Alertas Automáticos</span>
+                <span className="text-[11px] text-white/50 block">Notificações inteligentes sobre vencimento de prazos.</span>
               </div>
             </div>
+          </div>
 
-            {/* Opções */}
-            <div className="flex items-center justify-between text-white">
-              <label className="flex items-center gap-2.5 text-sm cursor-pointer select-none text-white/80 hover:text-white transition">
-                <div className="relative flex items-center justify-center">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="sr-only"
-                  />
-                  <div className={`w-5 h-5 rounded-md border transition-all duration-200 flex items-center justify-center
-                                  ${rememberMe 
-                                    ? 'bg-gradient-to-r from-[#1E6146] to-[#00599C] border-transparent shadow-[0_0_10px_rgba(30,97,70,0.4)]' 
-                                    : 'border-white/20 bg-black/45 hover:border-white/30'}`}
+          {/* Footer Esquerdo */}
+          <div className="text-[11px] text-white/30">
+            © 2026 AmbientIA. Todos os direitos reservados.
+          </div>
+        </div>
+
+        {/* PAINEL DIREITO: Área do Formulário */}
+        <div className="w-full lg:w-[50%] xl:w-[45%] flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10">
+          
+          <Card
+            className="w-full max-w-md rounded-[2rem] border border-white/15
+                       bg-black/40 backdrop-blur-[20px] backdrop-saturate-[180%]
+                       shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:border-none lg:bg-transparent lg:shadow-none lg:backdrop-blur-none
+                       p-8 sm:p-10 animate-[ecoFadeUp_900ms_cubic-bezier(0.16,1,0.3,1)]"
+          >
+            <CardContent className="p-0 space-y-8 relative z-10">
+              
+              {/* Header do Form: Exibe a logo apenas no Mobile/Tablet */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 lg:hidden justify-center mb-6">
+                  <div className="bg-white rounded-xl p-2 shadow-md">
+                    <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto" />
+                  </div>
+                  <span className="font-bold text-xl text-white tracking-wide">AmbientIA</span>
+                </div>
+
+                <div className="text-center lg:text-left space-y-1">
+                  <h2 className="text-2xl font-bold tracking-tight text-white">
+                    Acesse o Sistema
+                  </h2>
+                  <p className="text-xs text-white/50">
+                    Insira suas credenciais para gerenciar seus empreendimentos.
+                  </p>
+                </div>
+              </div>
+
+              {/* Formulário */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="email"
+                    className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
                   >
-                    {rememberMe && (
-                      <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
+                    E-mail corporativo
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="seu@email.com.br"
+                    className="bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
+                               rounded-xl py-6 px-4
+                               focus-visible:ring-2 focus-visible:ring-[#1E6146]/50 focus-visible:border-[#1E6146]
+                               transition-all duration-200 shadow-inner"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="password"
+                    className="text-xs uppercase tracking-wider font-semibold text-white/60 mb-1 block"
+                  >
+                    Senha
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="pr-11 bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
+                                 rounded-xl py-6 px-4
+                                 focus-visible:ring-2 focus-visible:ring-[#00599C]/50 focus-visible:border-[#00599C]
+                                 transition-all duration-200 shadow-inner"
+                      required
+                    />
+                    <button
+                      type="button"
+                      aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                      onClick={() => setShowPassword((v) => !v)}
+                      className="absolute right-3 top-3.5 text-white/50 hover:text-white transition"
+                    >
+                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
                   </div>
                 </div>
-                <span className="font-medium text-xs tracking-wide">Lembrar login</span>
-              </label>
-              <button
-                type="button"
-                onClick={() => setIsForgotOpen(true)}
-                className="text-xs font-semibold underline underline-offset-4 text-white/70 hover:text-white transition"
-              >
-                Esqueci minha senha
-              </button>
-            </div>
 
-            {error && (
-              <div className="text-red-200 bg-red-950/40 border border-red-800/40 px-4 py-3 rounded-xl text-xs font-medium tracking-wide">
-                {error}
+                {/* Opções */}
+                <div className="flex items-center justify-between text-white">
+                  <label className="flex items-center gap-2.5 text-sm cursor-pointer select-none text-white/80 hover:text-white transition">
+                    <div className="relative flex items-center justify-center">
+                      <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        className="sr-only"
+                      />
+                      <div className={`w-5 h-5 rounded-md border transition-all duration-200 flex items-center justify-center
+                                      ${rememberMe 
+                                        ? 'bg-gradient-to-r from-[#1E6146] to-[#00599C] border-transparent shadow-[0_0_10px_rgba(30,97,70,0.4)]' 
+                                        : 'border-white/20 bg-black/45 hover:border-white/30'}`}
+                      >
+                        {rememberMe && (
+                          <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    <span className="font-medium text-xs tracking-wide">Lembrar login</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setIsForgotOpen(true)}
+                    className="text-xs font-semibold underline underline-offset-4 text-white/70 hover:text-white transition"
+                  >
+                    Esqueci minha senha
+                  </button>
+                </div>
+
+                {error && (
+                  <div className="text-red-200 bg-red-950/40 border border-red-800/40 px-4 py-3 rounded-xl text-xs font-medium tracking-wide">
+                    {error}
+                  </div>
+                )}
+
+                {/* Botão principal com hover premium */}
+                <Button
+                  type="submit"
+                  disabled={login.isPending}
+                  className="w-full py-7 text-sm uppercase tracking-wider font-bold text-white rounded-xl
+                             bg-gradient-to-r from-[#1E6146] to-[#00599C]
+                             hover:brightness-110 hover:scale-[1.01] active:scale-[0.99]
+                             transition-all duration-300
+                             shadow-[0_4px_20px_rgba(0,89,156,0.3),0_0_0_1px_rgba(255,255,255,0.05)]"
+                >
+                  {login.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Entrando...
+                    </>
+                  ) : (
+                    "Entrar no Sistema"
+                  )}
+                </Button>
+              </form>
+
+              <div className="mt-8">
+                {/* Separador decorativo sutil */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                </div>
+
+                {/* Assinatura do desenvolvedor */}
+                <div className="flex flex-col items-center gap-2">
+                  <p className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-semibold">
+                    Desenvolvido por
+                  </p>
+
+                  <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-white/15 hover:scale-[1.03] rounded-full px-4 py-2 backdrop-blur-sm transition-all duration-300 cursor-default shadow-sm group">
+                    <span className="text-[12px] font-bold tracking-wider text-white/60 group-hover:text-white/90 transition-colors duration-300">
+                      Maurivan Vaz Ribeiro
+                    </span>
+                  </div>
+                </div>
               </div>
-            )}
-
-            {/* Botão principal com hover premium */}
-            <Button
-              type="submit"
-              disabled={login.isPending}
-              className="w-full py-7 text-sm uppercase tracking-wider font-bold text-white rounded-xl
-                         bg-gradient-to-r from-[#1E6146] to-[#00599C]
-                         hover:brightness-110 hover:scale-[1.01] active:scale-[0.99]
-                         transition-all duration-300
-                         shadow-[0_4px_20px_rgba(0,89,156,0.3),0_0_0_1px_rgba(255,255,255,0.05)]"
-            >
-              {login.isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Entrando...
-                </>
-              ) : (
-                "Entrar no Sistema"
-              )}
-            </Button>
-          </form>
-
-          <div className="mt-8">
-            {/* Separador decorativo sutil */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            </div>
-
-            {/* Assinatura do desenvolvedor */}
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-semibold">
-                Desenvolvido por
-              </p>
-
-              <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-white/15 hover:scale-[1.03] rounded-full px-4 py-2 backdrop-blur-sm transition-all duration-300 cursor-default shadow-sm group">
-                <span className="text-[12px] font-bold tracking-wider text-white/60 group-hover:text-white/90 transition-colors duration-300">
-                  Maurivan Vaz Ribeiro
-                </span>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       {/* Modal de recuperação */}
       <Dialog open={isForgotOpen} onOpenChange={setIsForgotOpen}>
