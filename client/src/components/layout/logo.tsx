@@ -31,7 +31,7 @@ export default function Logo({
          src="/logo.png" 
          alt="AmbientIA" 
          className={cn(
-           "transition-all duration-300", 
+           "transition-all duration-300 mix-blend-screen", 
            collapsed ? collapsedClasses : `object-contain ${sizeClasses[size]}`
          )} 
        />
