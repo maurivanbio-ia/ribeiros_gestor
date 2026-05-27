@@ -65,24 +65,42 @@ export default function ClienteSidebar() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      <div className={cn("p-4 border-b border-border", collapsed && "px-2")}>
+    <div className="flex flex-col h-full bg-[#06100E]/70 backdrop-blur-xl border-r border-white/5">
+      <div className={cn("p-4 border-b border-white/5", collapsed && "px-2")}>
         <Link
           href="/cliente"
           className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <img src="/logo.png" alt="AmbientIA" className={cn("object-contain", collapsed ? "h-6 w-auto" : "h-9 w-auto")} />
+          {!collapsed && (
+            <div className="flex items-center gap-2.5 py-1">
+              <div className="w-8 h-8 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 flex-shrink-0">
+                <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+                </svg>
+              </div>
+              <span className="font-extrabold text-sm tracking-[0.15em] text-white uppercase font-display select-none">
+                AmbientIA
+              </span>
+            </div>
+          )}
+          {collapsed && (
+            <div className="w-7 h-7 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 mx-auto">
+              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+              </svg>
+            </div>
+          )}
         </Link>
       </div>
 
-      <div className={cn("p-4 border-b border-border", collapsed && "px-2")}>
+      <div className={cn("p-4 border-b border-white/5", collapsed && "px-2")}>
         <div className={cn(
-          "flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-md",
+          "flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-accent to-primary/80 text-white shadow-sm font-condensed tracking-wide uppercase text-[9px]",
           collapsed && "justify-center px-2"
         )}>
-          <Building2 className="h-4 w-4 flex-shrink-0" />
+          <Building2 className="h-4 w-4 flex-shrink-0 text-white" />
           {!collapsed && (
-            <span className="text-sm font-bold truncate">
+            <span className="font-bold truncate">
               {user?.cliente?.nomeFantasia || user?.cliente?.razaoSocial || 'Cliente'}
             </span>
           )}
@@ -90,7 +108,7 @@ export default function ClienteSidebar() {
       </div>
 
       <nav className="flex-1 p-2 overflow-y-auto">
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {NAV.map((item) => {
             const Icon = item.icon;
             return (
@@ -102,15 +120,15 @@ export default function ClienteSidebar() {
               >
                 <div
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors cursor-pointer",
+                    "flex items-center gap-3 px-3 py-2 rounded-xl transition-colors cursor-pointer border border-transparent text-xs",
                     isActive(item.href)
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                      ? "bg-primary/15 text-primary font-semibold border-primary/10 shadow-[0_0_12px_rgba(45,212,191,0.06)]"
+                      : "text-white/60 hover:bg-white/[0.03] hover:text-white",
                     collapsed && "justify-center px-2"
                   )}
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
-                  {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
+                  {!collapsed && <span className="font-condensed font-bold tracking-wider uppercase text-[10px]">{item.label}</span>}
                 </div>
               </Link>
             );

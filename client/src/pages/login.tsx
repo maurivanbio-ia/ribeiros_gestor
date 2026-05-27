@@ -18,7 +18,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 import loginBackground from "@assets/bahia-de-todos-os-santos-grou-turismio_1776732662219.jpg";
 
 /**
- * AmbientIA — Tela de Login Split-Screen Responsiva Premium
+ * AmbientIA — Tela de Login Split-Screen Responsiva Premium (Rimberio Theme)
  */
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -115,7 +115,7 @@ export default function Login() {
         className="pointer-events-none absolute -inset-[20%] blur-[80px] opacity-60 z-10"
         style={{
           background:
-            "radial-gradient(40% 60% at 20% 30%, rgba(0,89,156,0.25), transparent 60%), radial-gradient(40% 60% at 80% 70%, rgba(30,97,70,0.25), transparent 60%)",
+            "radial-gradient(40% 60% at 20% 30%, rgba(45,212,191,0.15), transparent 60%), radial-gradient(40% 60% at 80% 70%, rgba(30,97,70,0.15), transparent 60%)",
           animation: "ecoLightSweep 45s ease-in-out infinite alternate",
         }}
       />
@@ -141,50 +141,93 @@ export default function Login() {
       <div className="relative z-20 min-h-screen w-full flex flex-col lg:flex-row">
         
         {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto em Mobile) */}
-        <div className="hidden lg:flex lg:w-[50%] xl:w-[55%] flex-col justify-between p-16">
-          {/* Logo no topo esquerdo */}
-          <div className="flex items-center gap-3">
-            <div className="bg-white/95 rounded-xl p-2 flex items-center justify-center shadow-md">
-              <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto object-contain" />
+        <div className="hidden lg:flex lg:w-[50%] xl:w-[58%] flex-col justify-between p-12 xl:p-16">
+          {/* Header da Apresentação */}
+          <div className="flex items-center justify-between w-full z-20">
+            {/* Logo e Nome */}
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center shadow-[0_0_10px_rgba(45,212,191,0.2)]">
+                <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+                </svg>
+              </div>
+              <span className="font-extrabold text-sm tracking-[0.2em] text-white uppercase font-display select-none">
+                AmbientIA
+              </span>
             </div>
-            <span className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
-              AmbientIA
-            </span>
+
+            {/* Links da Apresentação */}
+            <nav className="flex items-center gap-8 text-[11px] font-bold text-white/50 tracking-[0.2em] uppercase font-condensed">
+              <span className="hover:text-white transition cursor-pointer">Home</span>
+              <span className="hover:text-white transition cursor-pointer">About</span>
+              <span className="hover:text-white transition cursor-pointer">Contact</span>
+              <span className="hover:text-white transition cursor-pointer">Service</span>
+            </nav>
+
+            {/* Hamburger Icon */}
+            <button className="text-white/50 hover:text-white transition" aria-label="Menu">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
 
-          {/* Chamada Comercial e Features */}
-          <div className="max-w-md space-y-6 my-auto">
-            <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#2ab074] bg-[#1E6146]/30 border border-[#1E6146]/40 px-3.5 py-1.5 rounded-full inline-block">
-              Gestão de Licenciamento & SGA
-            </span>
-            <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight leading-tight text-white">
-              Inteligência e controle para o seu licenciamento.
+          {/* Destaque Central: AMBIENT [wave_icon] IA */}
+          <div className="flex flex-col items-center justify-center my-auto text-center space-y-6 select-none z-20">
+            <h1 className="text-7xl xl:text-[6.5rem] font-black tracking-tight text-white flex items-center justify-center gap-5 font-display">
+              <span>AMBIENT</span>
+              <div className="w-16 h-16 xl:w-20 xl:h-20 rounded-full border-4 border-primary flex items-center justify-center shadow-[0_0_25px_rgba(45,212,191,0.4)] animate-pulse bg-primary/5">
+                <svg className="w-9 h-9 xl:w-11 xl:h-11 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+                </svg>
+              </div>
+              <span>IA</span>
             </h1>
-            <p className="text-white/60 text-sm leading-relaxed">
-              Monitore condicionantes em tempo real, gerencie frotas e prazos, analise documentos com IA e garanta conformidade legal absoluta.
+            <p className="text-[10px] xl:text-[11px] tracking-[0.45em] uppercase text-white/55 font-semibold font-condensed">
+              G E S T Ã O   A M B I E N T A L   I N T E L I G E N T E
             </p>
-
-            {/* Badges de Destaques */}
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-3.5 backdrop-blur-sm">
-                <span className="text-xs font-bold text-white/90 block mb-1">🔍 Auditoria Inteligente</span>
-                <span className="text-[11px] text-white/50 block">Análise automatizada de conformidade legal.</span>
-              </div>
-              <div className="bg-white/[0.03] border border-white/5 rounded-xl p-3.5 backdrop-blur-sm">
-                <span className="text-xs font-bold text-white/90 block mb-1">📅 Alertas Automáticos</span>
-                <span className="text-[11px] text-white/50 block">Notificações inteligentes sobre vencimento de prazos.</span>
-              </div>
-            </div>
           </div>
 
-          {/* Footer Esquerdo */}
-          <div className="text-[11px] text-white/30">
-            © 2026 AmbientIA. Todos os direitos reservados.
+          {/* Rodapé do painel esquerdo: Descrição e Botão "ENTRAR" no estilo "NEXT >>" */}
+          <div className="flex items-end justify-between gap-8 mt-auto z-20">
+            <div className="flex items-start gap-4 max-w-sm">
+              <div className="flex -space-x-2">
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center border border-white/10 shadow-sm">
+                  <svg className="w-4 h-4 text-[#06100E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-white/10 shadow-sm">
+                  <svg className="w-4 h-4 text-[#06100E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-[11px] text-white/40 leading-relaxed font-light">
+                Plataforma corporativa de conformidade ambiental, auditorias e gestão automatizada de licenciamento.
+              </p>
+            </div>
+
+            {/* Botão de Slide Estilo NEXT >> que rola ou foca no form */}
+            <button 
+              onClick={() => {
+                const el = document.getElementById("email");
+                el?.focus();
+              }}
+              className="flex items-center gap-3 bg-white text-[#06100E] rounded-full pl-6 pr-2.5 py-2.5 hover:bg-primary hover:scale-105 transition-all duration-300 shadow-lg group"
+            >
+              <span className="text-[11px] font-bold uppercase tracking-wider font-condensed">Entrar</span>
+              <div className="w-7 h-7 rounded-full bg-primary group-hover:bg-[#06100E] flex items-center justify-center transition-colors">
+                <svg className="w-4 h-4 text-[#06100E] group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
           </div>
         </div>
 
         {/* PAINEL DIREITO: Área do Formulário */}
-        <div className="w-full lg:w-[50%] xl:w-[45%] flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10">
+        <div className="w-full lg:w-[50%] xl:w-[42%] flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10">
           
           <Card
             className="w-full max-w-md rounded-[2rem] border border-white/15
@@ -197,14 +240,16 @@ export default function Login() {
               {/* Header do Form: Exibe a logo apenas no Mobile/Tablet */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3 lg:hidden justify-center mb-6">
-                  <div className="bg-white rounded-xl p-2 shadow-md">
-                    <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto" />
+                  <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center shadow-[0_0_10px_rgba(45,212,191,0.2)]">
+                    <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+                    </svg>
                   </div>
-                  <span className="font-bold text-xl text-white tracking-wide">AmbientIA</span>
+                  <span className="font-extrabold text-lg text-white tracking-widest uppercase font-display">AmbientIA</span>
                 </div>
 
                 <div className="text-center lg:text-left space-y-1">
-                  <h2 className="text-2xl font-bold tracking-tight text-white">
+                  <h2 className="text-2xl font-bold tracking-tight text-white font-display">
                     Acesse o Sistema
                   </h2>
                   <p className="text-xs text-white/50">
@@ -230,7 +275,7 @@ export default function Login() {
                     placeholder="seu@email.com.br"
                     className="bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
                                rounded-xl py-6 px-4
-                               focus-visible:ring-2 focus-visible:ring-[#1E6146]/50 focus-visible:border-[#1E6146]
+                               focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary
                                transition-all duration-200 shadow-inner"
                     required
                   />
@@ -252,7 +297,7 @@ export default function Login() {
                       placeholder="••••••••"
                       className="pr-11 bg-black/40 border-white/10 hover:border-white/20 text-white placeholder:text-neutral-400/60
                                  rounded-xl py-6 px-4
-                                 focus-visible:ring-2 focus-visible:ring-[#00599C]/50 focus-visible:border-[#00599C]
+                                 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary
                                  transition-all duration-200 shadow-inner"
                       required
                     />
@@ -279,7 +324,7 @@ export default function Login() {
                       />
                       <div className={`w-5 h-5 rounded-md border transition-all duration-200 flex items-center justify-center
                                       ${rememberMe 
-                                        ? 'bg-gradient-to-r from-[#1E6146] to-[#00599C] border-transparent shadow-[0_0_10px_rgba(30,97,70,0.4)]' 
+                                        ? 'bg-gradient-to-r from-accent to-primary border-transparent shadow-[0_0_10px_rgba(45,212,191,0.35)]' 
                                         : 'border-white/20 bg-black/45 hover:border-white/30'}`}
                       >
                         {rememberMe && (
@@ -311,10 +356,10 @@ export default function Login() {
                   type="submit"
                   disabled={login.isPending}
                   className="w-full py-7 text-sm uppercase tracking-wider font-bold text-white rounded-xl
-                             bg-gradient-to-r from-[#1E6146] to-[#00599C]
+                             bg-gradient-to-r from-accent to-primary
                              hover:brightness-110 hover:scale-[1.01] active:scale-[0.99]
                              transition-all duration-300
-                             shadow-[0_4px_20px_rgba(0,89,156,0.3),0_0_0_1px_rgba(255,255,255,0.05)]"
+                             shadow-[0_4px_25px_rgba(45,212,191,0.25),0_0_0_1px_rgba(255,255,255,0.05)]"
                 >
                   {login.isPending ? (
                     <>
@@ -355,7 +400,7 @@ export default function Login() {
       <Dialog open={isForgotOpen} onOpenChange={setIsForgotOpen}>
         <DialogContent className="bg-[#0E1B17]/90 text-white border border-white/10 backdrop-blur-xl rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="font-semibold text-[#1E6146]">
+            <DialogTitle className="font-semibold text-primary">
               Recuperar senha
             </DialogTitle>
           </DialogHeader>
@@ -368,7 +413,7 @@ export default function Login() {
             onChange={(e) => setForgotEmail(e.target.value)}
             placeholder="seu@email.com.br"
             className="bg-white/5 border-white/10 text-neutral-50 placeholder:text-neutral-400
-                       focus-visible:ring-2 focus-visible:ring-[#1E6146]/50 focus-visible:border-[#1E6146]/40"
+                       focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary"
           />
           <Button
             onClick={handleSendResetLink}

@@ -21,7 +21,7 @@ export default function PageBackground({
         }}
       >
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70 backdrop-blur-[1px]"
+          className="absolute inset-0 bg-gradient-to-br from-[#06100E] via-[#06100E]/92 to-[#102B24]/50 backdrop-blur-[2px]"
           style={{ opacity: overlayOpacity }}
         />
       </div>

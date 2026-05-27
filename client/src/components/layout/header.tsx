@@ -87,7 +87,7 @@ export default function Header() {
 
           {/* Unidade do usuário (fixa) */}
           <div className="hidden md:flex items-center gap-2">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent to-primary/80 text-white shadow-md">
               <Building2 className="h-4 w-4" />
               <span className="text-sm font-bold">{getNomeUnidade()}</span>
             </div>
@@ -182,7 +182,7 @@ export default function Header() {
         {/* Unidade do usuário - Mobile (fixa) */}
         <div className="md:hidden py-2 border-t border-border">
           <div className="flex items-center justify-center gap-2">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-accent to-primary/80 text-white shadow-md">
               <Building2 className="h-4 w-4" />
               <span className="text-sm font-bold">{getNomeUnidade()}</span>
             </div>

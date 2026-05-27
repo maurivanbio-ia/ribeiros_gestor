@@ -209,41 +209,51 @@ export default function Sidebar() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      <div className={cn("p-2 border-b border-border", collapsed && "px-1")}>
+    <div className="flex flex-col h-full bg-[#06100E]/70 backdrop-blur-xl border-r border-white/5">
+      <div className={cn("p-4 border-b border-white/5", collapsed && "px-1")}>
         <Link
           href="/"
           aria-label="Ir para o início"
-          className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity py-1"
+          className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
           {!collapsed && (
-            <div className="flex flex-col items-center gap-0.5">
-              <img src="/logo.png" alt="AmbientIA" className="h-10 w-auto object-contain" />
-              <span className="text-[8px] text-muted-foreground text-center leading-tight px-1">Plataforma Inteligente de Gestão para Consultorias Ambientais</span>
+            <div className="flex items-center gap-2.5 py-1">
+              <div className="w-8 h-8 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 flex-shrink-0">
+                <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+                </svg>
+              </div>
+              <span className="font-extrabold text-sm tracking-[0.15em] text-white uppercase font-display select-none">
+                AmbientIA
+              </span>
             </div>
           )}
           {collapsed && (
-            <img src="/logo.png" alt="AmbientIA" className="h-7 w-auto object-contain" />
+            <div className="w-7 h-7 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 mx-auto">
+              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
+              </svg>
+            </div>
           )}
         </Link>
       </div>
 
-      <div className={cn("px-2 py-1.5 border-b border-border", collapsed && "px-1")}>
+      <div className={cn("px-3 py-2 border-b border-white/5", collapsed && "px-1")}>
         <div className={cn(
-          "flex items-center gap-1.5 px-2 py-1 rounded-md bg-gradient-to-r from-[#1E6146] to-[#00599C] text-white shadow-sm",
+          "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-accent to-primary/80 text-white shadow-sm font-condensed tracking-wide uppercase text-[9px]",
           collapsed && "justify-center px-1"
         )}>
-          <Building2 className="h-3.5 w-3.5 flex-shrink-0" />
-          {!collapsed && <span className="text-xs font-semibold truncate">{getNomeUnidade()}</span>}
+          <Building2 className="h-3.5 w-3.5 flex-shrink-0 text-white" />
+          {!collapsed && <span className="font-bold truncate">{getNomeUnidade()}</span>}
         </div>
       </div>
 
-      <div className={cn("px-2 py-1.5 border-b border-border", collapsed && "px-1")}>
+      <div className={cn("px-3 py-2 border-b border-white/5", collapsed && "px-1")}>
         {!collapsed && <GlobalSearch />}
       </div>
 
-      <nav className="flex-1 px-1 py-1 overflow-y-auto" role="navigation" aria-label="Navegação principal">
-        <div className="space-y-1">
+      <nav className="flex-1 px-2 py-2 overflow-y-auto" role="navigation" aria-label="Navegação principal">
+        <div className="space-y-1.5">
           {NAV_CATEGORIES.map((category) => {
             const CategoryIcon = category.icon;
             const categoryKey = category.label.toLowerCase().replace(/\s/g, '-');
@@ -251,24 +261,24 @@ export default function Sidebar() {
             const hasActiveItem = category.items.some(item => isActive(item.href));
             
             return (
-              <div key={categoryKey}>
+              <div key={categoryKey} className="space-y-0.5">
                 <button
                   onClick={() => toggleCategory(categoryKey)}
                   className={cn(
-                    "w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150",
+                    "w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-150 border border-transparent",
                     hasActiveItem 
-                      ? "bg-primary/15 text-primary border border-primary/20 shadow-sm" 
-                      : "text-foreground/70 hover:bg-muted hover:text-foreground border border-transparent",
+                      ? "bg-primary/10 text-primary border-primary/20 shadow-sm" 
+                      : "text-white/60 hover:bg-white/[0.03] hover:text-white",
                     collapsed && "justify-center px-2"
                   )}
                 >
                   <CategoryIcon className={cn(
                     "h-4 w-4 flex-shrink-0",
-                    hasActiveItem ? "text-primary" : "text-foreground/60"
+                    hasActiveItem ? "text-primary" : "text-white/40"
                   )} />
                   {!collapsed && (
                     <>
-                      <span className="text-[11px] font-bold uppercase tracking-widest flex-1 text-left">
+                      <span className="text-[10px] font-bold uppercase tracking-widest flex-1 text-left font-condensed">
                         {category.label}
                       </span>
                       <ChevronDown className={cn(
@@ -280,7 +290,7 @@ export default function Sidebar() {
                 </button>
                 
                 {(isExpanded || collapsed) && (
-                  <div className={cn("mt-0.5 space-y-0", !collapsed && "ml-3 border-l-2 border-primary/20 pl-2")}>
+                  <div className={cn("mt-0.5 space-y-0.5", !collapsed && "ml-3.5 border-l border-white/10 pl-2.5")}>
                     {category.items.filter(item => !item.adminOnly || isAdmin).map((item) => {
                       const Icon = item.icon;
                       if (item.href === "/ia") {
@@ -288,16 +298,16 @@ export default function Sidebar() {
                           <button
                             key={item.href}
                             data-testid={item.testid}
-                            className="w-full"
+                            className="w-full text-left"
                             onClick={() => { setMobileOpen(false); document.dispatchEvent(new CustomEvent("open-ai-chat")); }}
                           >
                             <div className={cn(
-                              "flex items-center gap-2 px-2 py-1 rounded-md transition-colors cursor-pointer",
-                              "text-muted-foreground hover:bg-muted hover:text-foreground",
+                              "flex items-center gap-2 px-2 py-1.5 rounded-lg transition-colors cursor-pointer text-xs",
+                              "text-white/50 hover:bg-white/[0.03] hover:text-white",
                               collapsed && "justify-center px-1"
                             )}>
-                              <Icon className="h-3.5 w-3.5 flex-shrink-0 text-violet-500" />
-                              {!collapsed && <span className="text-xs">{item.label}</span>}
+                              <Icon className="h-3.5 w-3.5 flex-shrink-0 text-primary/70 animate-pulse" />
+                              {!collapsed && <span>{item.label}</span>}
                             </div>
                           </button>
                         );
@@ -311,15 +321,15 @@ export default function Sidebar() {
                         >
                           <div
                             className={cn(
-                              "flex items-center gap-2 px-2 py-1 rounded-md transition-colors cursor-pointer",
+                              "flex items-center gap-2 px-2 py-1.5 rounded-lg transition-colors cursor-pointer border border-transparent text-xs",
                               isActive(item.href)
-                                ? "bg-primary text-primary-foreground"
-                                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                                ? "bg-primary/15 text-primary font-semibold border-primary/10 shadow-[0_0_12px_rgba(45,212,191,0.06)]"
+                                : "text-white/60 hover:bg-white/[0.03] hover:text-white",
                               collapsed && "justify-center px-1"
                             )}
                           >
                             <Icon className="h-3.5 w-3.5 flex-shrink-0" />
-                            {!collapsed && <span className="text-xs">{item.label}</span>}
+                            {!collapsed && <span>{item.label}</span>}
                           </div>
                         </Link>
                       );
@@ -332,19 +342,19 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      <div className={cn("px-2 py-2 border-t border-border space-y-1.5", collapsed && "px-1")}>
+      <div className={cn("px-3 py-3 border-t border-white/5 space-y-1.5", collapsed && "px-1")}>
           <button
             onClick={() => document.dispatchEvent(new CustomEvent("open-ai-chat"))}
             className={cn(
-              "w-full flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold transition-all",
-              "bg-gradient-to-r from-[#1E6146] to-[#00599C] text-white hover:from-[#145234] hover:to-[#003d6e] shadow-md hover:shadow-lg",
+              "w-full flex items-center gap-2 rounded-xl px-2 py-2.5 text-xs uppercase tracking-wider font-bold transition-all",
+              "bg-gradient-to-r from-accent to-primary text-white hover:brightness-110 shadow-lg",
               collapsed && "justify-center px-1"
             )}
             data-testid="nav-ia-button"
           >
             <Bot className="h-4 w-4 shrink-0" />
             {!collapsed && (
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1 font-condensed">
                 Assistente IA
                 <Sparkles className="h-3 w-3 text-yellow-300" />
               </span>
@@ -352,7 +362,7 @@ export default function Sidebar() {
           </button>
       </div>
 
-      <div className={cn("px-2 py-1.5 border-t border-border space-y-1", collapsed && "px-1")}>
+      <div className={cn("px-3 py-2 border-t border-white/5 space-y-1", collapsed && "px-1")}>
         <div className={cn("flex items-center gap-1", collapsed ? "flex-col" : "justify-between")}>
           <NotificationsCenter />
           <ThemeToggle />
