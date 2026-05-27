@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ribeiros-gestor
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: OPENAI_DIRECT_KEY
+        sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
