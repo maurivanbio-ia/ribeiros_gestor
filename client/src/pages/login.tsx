@@ -14,7 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import loginBackground from "@assets/restinga_drone_bg.png";
 import logoImg from "@assets/ambientia_logo.png";
 
@@ -34,6 +34,7 @@ export default function Login() {
   const login = useLogin();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
@@ -141,8 +142,8 @@ export default function Login() {
       {/* Estrutura Split-Screen Responsiva */}
       <div className="relative z-20 min-h-screen w-full flex flex-col lg:flex-row">
         
-        {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto em Mobile) */}
-        <div className="hidden lg:flex lg:w-[50%] xl:w-[58%] flex-col justify-between p-12 xl:p-16">
+        {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto em Mobile se o form estiver ativo) */}
+        <div className={`lg:flex lg:w-[50%] xl:w-[58%] flex-col justify-between p-8 sm:p-12 xl:p-16 min-h-screen lg:min-h-0 ${showForm ? "hidden lg:flex" : "flex w-full"}`}>
           {/* Header da Apresentação */}
           <div className="flex items-center justify-between w-full z-20">
             {/* Logo e Nome */}
@@ -202,10 +203,14 @@ export default function Login() {
             </div>
 
             {/* Botão de Slide Estilo NEXT >> que rola ou foca no form */}
+            {/* Botão de Slide Estilo NEXT >> que rola ou foca no form */}
             <button 
               onClick={() => {
-                const el = document.getElementById("email");
-                el?.focus();
+                setShowForm(true);
+                setTimeout(() => {
+                  const el = document.getElementById("email");
+                  el?.focus();
+                }, 100);
               }}
               className="flex items-center gap-3 bg-white text-[#06100E] rounded-full pl-6 pr-2.5 py-2.5 hover:bg-primary hover:scale-105 transition-all duration-300 shadow-lg group"
             >
@@ -220,7 +225,7 @@ export default function Login() {
         </div>
 
         {/* PAINEL DIREITO: Área do Formulário */}
-        <div className="w-full lg:w-[50%] xl:w-[42%] flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10">
+        <div className={`lg:w-[50%] xl:w-[42%] flex-col lg:flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10 min-h-screen lg:min-h-0 ${showForm ? "flex w-full" : "hidden lg:flex"}`}>
           
           <Card
             className="w-full max-w-md rounded-[2rem] border border-white/15
@@ -229,6 +234,18 @@ export default function Login() {
                        p-8 sm:p-10 animate-[ecoFadeUp_900ms_cubic-bezier(0.16,1,0.3,1)]"
           >
             <CardContent className="p-0 space-y-8 relative z-10">
+              
+              {/* Botão de Voltar para Mobile */}
+              {showForm && (
+                <button 
+                  type="button" 
+                  onClick={() => setShowForm(false)} 
+                  className="lg:hidden flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition mb-2"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Voltar</span>
+                </button>
+              )}
               
               {/* Header do Form: Exibe a logo apenas no Mobile/Tablet */}
               <div className="space-y-4">
