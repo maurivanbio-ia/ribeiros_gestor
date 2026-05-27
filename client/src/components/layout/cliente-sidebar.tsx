@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
+import Logo from "@/components/layout/logo";
 
 interface ClienteUser {
   id: number;
@@ -71,25 +72,7 @@ export default function ClienteSidebar() {
           href="/cliente"
           className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
         >
-          {!collapsed && (
-            <div className="flex items-center gap-2.5 py-1">
-              <div className="w-8 h-8 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 flex-shrink-0">
-                <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
-                </svg>
-              </div>
-              <span className="font-extrabold text-sm tracking-[0.15em] text-white uppercase font-display select-none">
-                AmbientIA
-              </span>
-            </div>
-          )}
-          {collapsed && (
-            <div className="w-7 h-7 rounded-full border border-primary flex items-center justify-center shadow-[0_0_8px_rgba(45,212,191,0.25)] bg-primary/5 mx-auto">
-              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 8c4 0 4 4 8 4s4-4 8-4M3 16c4 0 4 4 8 4s4-4 8-4" />
-              </svg>
-            </div>
-          )}
+          <Logo size="sm" collapsed={collapsed} showSubtitle={false} />
         </Link>
       </div>
 
@@ -186,7 +169,7 @@ export default function ClienteSidebar() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b border-border">
         <div className="flex items-center justify-between p-4">
           <Link href="/cliente" className="flex items-center">
-            <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto object-contain" />
+            <Logo size="sm" showSubtitle={false} />
           </Link>
           <Button
             variant="ghost"

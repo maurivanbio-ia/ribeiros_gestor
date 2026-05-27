@@ -17,6 +17,7 @@ import {
 import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import loginBackground from "@assets/restinga_drone_bg.png";
 import logoImg from "@assets/ambientia_logo.png";
+import Logo from "@/components/layout/logo";
 
 /**
  * AmbientIA — Tela de Login Split-Screen Responsiva Premium (Rimberio Theme)
@@ -35,6 +36,7 @@ export default function Login() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [showForm, setShowForm] = useState(false);
+  const [activeTab, setActiveTab] = useState<"inicio" | "sobre" | "contato">("inicio");
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
@@ -147,19 +149,17 @@ export default function Login() {
           {/* Header da Apresentação */}
           <div className="flex items-center justify-between w-full z-20">
             {/* Logo e Nome */}
-            <div className="flex items-center gap-3">
-              <img src={logoImg} alt="AmbientIA" className="w-8 h-8 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
-              <span className="font-extrabold text-sm tracking-[0.2em] text-white uppercase font-display select-none">
-                AMBIENT<span className="text-primary font-bold">IA</span>
-              </span>
+            {/* Logo e Nome */}
+            <div className="cursor-pointer" onClick={() => { setActiveTab("inicio"); setShowForm(false); }}>
+              <Logo size="sm" />
             </div>
 
             {/* Links da Apresentação */}
             <nav className="flex items-center gap-8 text-[11px] font-bold text-white/50 tracking-[0.2em] uppercase font-condensed">
-              <span className="hover:text-white transition cursor-pointer">Início</span>
-              <span className="hover:text-white transition cursor-pointer">Sobre</span>
-              <span className="hover:text-white transition cursor-pointer">Contato</span>
-              <span className="hover:text-white transition cursor-pointer">Serviços</span>
+              <button type="button" onClick={() => { setActiveTab("inicio"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "inicio" ? "text-primary font-bold" : ""}`}>Início</button>
+              <button type="button" onClick={() => { setActiveTab("sobre"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "sobre" ? "text-primary font-bold" : ""}`}>Sobre</button>
+              <button type="button" onClick={() => { setActiveTab("contato"); setShowForm(false); }} className={`hover:text-white transition uppercase ${activeTab === "contato" ? "text-primary font-bold" : ""}`}>Contato</button>
+              <button type="button" onClick={() => setLocation("/funcionalidades")} className="hover:text-white transition uppercase">Funcionalidades</button>
             </nav>
 
             {/* Hamburger Icon */}
@@ -170,17 +170,72 @@ export default function Login() {
             </button>
           </div>
 
-          {/* Destaque Central: AMBIENT [wave_icon] IA */}
-          <div className="flex flex-col items-center justify-center my-auto text-center space-y-6 select-none z-20">
-            <h1 className="text-7xl xl:text-[6.5rem] font-black tracking-tight text-white flex items-center justify-center gap-5 font-display">
-              <span>AMBIENT</span>
-              <img src={logoImg} alt="Logo" className="w-16 h-16 xl:w-24 xl:h-24 rounded-full border-2 border-primary/30 shadow-[0_0_25px_rgba(45,212,191,0.4)] animate-pulse bg-primary/5" />
-              <span className="text-primary font-bold">IA</span>
-            </h1>
-            <p className="text-[12px] xl:text-[13px] tracking-[0.25em] uppercase text-primary font-semibold font-condensed">
-              GESTÃO INTELIGENTE PARA CONSULTORIAS AMBIENTAIS
-            </p>
-          </div>
+          {/* Destaque Central / Conteúdo das Abas */}
+          {activeTab === "inicio" && (
+            <div className="flex flex-col items-center justify-center my-auto text-center select-none z-20 animate-[ecoFadeUp_1s_cubic-bezier(0.16,1,0.3,1)]">
+              <Logo size="xl" />
+            </div>
+          )}
+
+          {activeTab === "sobre" && (
+            <div className="flex flex-col my-auto max-w-xl space-y-6 z-20 animate-[ecoFadeUp_0.4s_ease-out]">
+              <h2 className="text-4xl font-bold font-display text-primary">Sobre a AmbientIA</h2>
+              <div className="space-y-4 text-white/80 text-sm leading-relaxed font-light">
+                <p>
+                  A <strong>AmbientIA</strong> é uma plataforma pioneira projetada para simplificar e automatizar a gestão de conformidade, licenciamento e monitoramento de consultorias e empresas.
+                </p>
+                <p>
+                  Nosso sistema consolida o gerenciamento de licenças, condicionantes, relatórios técnicos, dados geográficos (GIS 2D/3D), equipes de campo, auditorias de segurança (SST) e controle financeiro em um único ambiente integrado.
+                </p>
+                <p>
+                  Unindo inteligência artificial a uma navegação fluida, mitigamos riscos de multas e aceleramos a conformidade legal para manter seus projetos em dia.
+                </p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setActiveTab("inicio")} 
+                className="w-fit text-xs text-primary font-semibold border border-primary/20 bg-primary/10 rounded-full px-4 py-2 hover:bg-primary/20 transition-all"
+              >
+                ← Voltar para Início
+              </button>
+            </div>
+          )}
+
+          {activeTab === "contato" && (
+            <div className="flex flex-col my-auto max-w-xl space-y-6 z-20 animate-[ecoFadeUp_0.4s_ease-out]">
+              <h2 className="text-4xl font-bold font-display text-primary">Fale Conosco</h2>
+              <div className="space-y-4 text-white/80 text-sm font-light">
+                <p className="leading-relaxed">
+                  Para dúvidas comerciais, suporte técnico ou demonstrações do sistema, entre em contato através dos nossos canais de comunicação:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] uppercase text-primary font-bold mb-1">E-mail Comercial</p>
+                    <p className="text-xs text-white/90">comercial@ambientia.com.br</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] uppercase text-primary font-bold mb-1">Suporte Técnico</p>
+                    <p className="text-xs text-white/90">suporte@ambientia.com.br</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] uppercase text-primary font-bold mb-1">Telefone / WhatsApp</p>
+                    <p className="text-xs text-white/90">(71) 3003-8080</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] uppercase text-primary font-bold mb-1">Localização</p>
+                    <p className="text-xs text-white/90">Salvador, BA - Corporate Center</p>
+                  </div>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setActiveTab("inicio")} 
+                className="w-fit text-xs text-primary font-semibold border border-primary/20 bg-primary/10 rounded-full px-4 py-2 hover:bg-primary/20 transition-all"
+              >
+                ← Voltar para Início
+              </button>
+            </div>
+          )}
 
           {/* Rodapé do painel esquerdo: Descrição e Botão "ENTRAR" no estilo "NEXT >>" */}
           <div className="flex items-end justify-between gap-8 mt-auto z-20">
@@ -249,9 +304,8 @@ export default function Login() {
               
               {/* Header do Form */}
               <div className="space-y-4">
-                <div className="flex items-center gap-3 justify-center mb-6">
-                  <img src={logoImg} alt="Logo" className="w-10 h-10 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
-                  <span className="font-extrabold text-lg text-white tracking-widest uppercase font-display">AMBIENT<span className="text-primary font-bold">IA</span></span>
+                <div className="flex justify-center mb-6">
+                  <Logo size="md" />
                 </div>
 
                 <div className="text-center space-y-1">

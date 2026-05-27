@@ -11,6 +11,7 @@ import { useUnidade } from "@/contexts/UnidadeContext";
 import { Building2, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import Logo from "@/components/layout/logo";
 
 export default function Header() {
   const [location] = useLocation();
@@ -77,7 +78,7 @@ export default function Header() {
             aria-label="Ir para o início"
             className="flex items-center cursor-pointer hover:opacity-80 transition-opacity -ml-2"
           >
-            <img src="/logo.png" alt="AmbientIA" className="h-8 w-auto object-contain" />
+            <Logo size="sm" showSubtitle={false} />
           </Link>
 
           {/* Busca desktop */}

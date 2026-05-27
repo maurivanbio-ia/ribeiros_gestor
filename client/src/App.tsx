@@ -78,6 +78,7 @@ const BlogAdmin                = lazy(() => import("./pages/blog-admin"));
 const AdminUsuarios            = lazy(() => import("./pages/admin-usuarios"));
 const EmailAutomacao           = lazy(() => import("./pages/email-automacao"));
 const Landing                  = lazy(() => import("./pages/landing"));
+const Funcionalidades          = lazy(() => import("./pages/funcionalidades"));
 const ClienteLogin             = lazy(() => import("./pages/cliente/login"));
 const ClienteDashboard         = lazy(() => import("./pages/cliente/dashboard"));
 const ClienteEmpreendimentoDetail = lazy(() => import("./pages/cliente/empreendimento-detail"));
@@ -141,12 +142,13 @@ function Router() {
     return null;
   }
 
-  // Permite acesso à página de login sem autenticação
-  if (!isAuthenticated && location === "/login") {
+  // Permite acesso à página de login e de funcionalidades sem autenticação
+  if (!isAuthenticated && (location === "/login" || location === "/funcionalidades")) {
     return (
       <Suspense fallback={<PageLoader />}>
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/funcionalidades" component={Funcionalidades} />
         </Switch>
       </Suspense>
     );
@@ -208,6 +210,7 @@ function Router() {
                         <Route path="/dashboard-executivo" component={DashboardExecutivo} />
                         <Route path="/dashboard-coordenador" component={DashboardCoordenador} />
                         <Route path="/ia" component={EcoAssistente} />
+                        <Route path="/funcionalidades" component={Funcionalidades} />
                         <Route path="/mapa"><Redirect to="/mapa-3d" /></Route>
                         <Route path="/calendario" component={Calendario} />
                         <Route path="/cronograma" component={Cronograma} />
