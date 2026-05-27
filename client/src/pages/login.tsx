@@ -142,8 +142,8 @@ export default function Login() {
       {/* Estrutura Split-Screen Responsiva */}
       <div className="relative z-20 min-h-screen w-full flex flex-col lg:flex-row">
         
-        {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto em Mobile se o form estiver ativo) */}
-        <div className={`lg:flex lg:w-[50%] xl:w-[58%] flex-col justify-between p-8 sm:p-12 xl:p-16 min-h-screen lg:min-h-0 ${showForm ? "hidden lg:flex" : "flex w-full"}`}>
+        {/* PAINEL ESQUERDO: Apresentação da Marca (Oculto se o form estiver ativo) */}
+        <div className={`w-full flex-col justify-between p-8 sm:p-12 xl:p-16 min-h-screen ${showForm ? "hidden" : "flex"}`}>
           {/* Header da Apresentação */}
           <div className="flex items-center justify-between w-full z-20">
             {/* Logo e Nome */}
@@ -225,36 +225,36 @@ export default function Login() {
         </div>
 
         {/* PAINEL DIREITO: Área do Formulário */}
-        <div className={`lg:w-[50%] xl:w-[42%] flex-col lg:flex items-center justify-center p-6 sm:p-12 lg:bg-black/35 lg:backdrop-blur-xl lg:border-l lg:border-white/10 min-h-screen lg:min-h-0 ${showForm ? "flex w-full" : "hidden lg:flex"}`}>
+        <div className={`w-full flex-col items-center justify-center p-6 sm:p-12 min-h-screen ${showForm ? "flex" : "hidden"}`}>
           
           <Card
             className="w-full max-w-md rounded-[2rem] border border-white/15
                        bg-black/40 backdrop-blur-[20px] backdrop-saturate-[180%]
-                       shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:border-none lg:bg-transparent lg:shadow-none lg:backdrop-blur-none
+                       shadow-[0_20px_50px_rgba(0,0,0,0.5)]
                        p-8 sm:p-10 animate-[ecoFadeUp_900ms_cubic-bezier(0.16,1,0.3,1)]"
           >
             <CardContent className="p-0 space-y-8 relative z-10">
               
-              {/* Botão de Voltar para Mobile */}
+              {/* Botão de Voltar */}
               {showForm && (
                 <button 
                   type="button" 
                   onClick={() => setShowForm(false)} 
-                  className="lg:hidden flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition mb-2"
+                  className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition mb-2"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Voltar</span>
                 </button>
               )}
               
-              {/* Header do Form: Exibe a logo apenas no Mobile/Tablet */}
+              {/* Header do Form */}
               <div className="space-y-4">
-                <div className="flex items-center gap-3 lg:hidden justify-center mb-6">
-                  <img src={logoImg} alt="Logo" className="w-8 h-8 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
+                <div className="flex items-center gap-3 justify-center mb-6">
+                  <img src={logoImg} alt="Logo" className="w-10 h-10 rounded-full border border-primary/30 shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
                   <span className="font-extrabold text-lg text-white tracking-widest uppercase font-display">AMBIENT<span className="text-primary font-bold">IA</span></span>
                 </div>
 
-                <div className="text-center lg:text-left space-y-1">
+                <div className="text-center space-y-1">
                   <h2 className="text-2xl font-bold tracking-tight text-white font-display">
                     Acesse o Sistema
                   </h2>
