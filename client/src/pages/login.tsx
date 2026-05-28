@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Loader2, ArrowRight, FolderKanban, ClipboardCheck, BarChart3, Map, Database, FileText, Satellite, Brain, ScanEye, Wifi, LineChart, ShieldCheck, Layers, GraduationCap } from "lucide-react";
 import { useLogin } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import loginBackground from "@/assets/restinga_drone_bg.png";
@@ -89,20 +89,164 @@ export default function Login() {
         </div>
 
         {/* Conteúdo Central */}
-        <div className="flex-1 flex flex-col justify-center items-center w-full max-w-md mx-auto relative z-10">
+        <div className="flex-1 flex flex-col justify-center items-center w-full max-w-xl mx-auto relative z-10">
           {!showForm ? (
             <div className="w-full animate-[ecoFadeUp_0.8s_ease-out]">
               {activeTab === "inicio" && (
-                <div className="flex flex-col items-center text-center">
-                  <div className="mb-10 w-full flex justify-center">
+                <div className="flex flex-col items-center w-full">
+                  <div className="mb-8 w-full flex justify-center">
                      <Logo size="xl" />
                   </div>
                   
-                  <p className="text-white/60 text-[15px] font-light leading-relaxed tracking-wide mb-12">
-                    A primeira Consultoria Ambiental do Brasil a transformar o licenciamento e a gestão ambiental através de <strong className="text-primary font-medium">Inteligência Artificial</strong>.
-                  </p>
+                  {/* Serviços Grid */}
+                  <div className="w-full text-left mt-4 mb-10">
+                    <h3 className="text-sm uppercase tracking-widest font-bold text-primary mb-6 text-center">Nossos Serviços</h3>
+                    <div className="grid grid-cols-1 gap-3 w-full">
+                      
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <FolderKanban className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Gestão digital de projetos</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Plataforma para organizar empreendimentos, contratos, demandas, prazos, equipes, entregas e relatórios.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <ClipboardCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Gestão de condicionantes e licenças</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Sistema para controlar condicionantes ambientais, vencimentos, evidências, protocolos, status e responsáveis.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <BarChart3 className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Dashboards ambientais</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Painéis interativos para acompanhar fauna, flora, qualidade da água, PRAD, resíduos e desempenho.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Map className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">WebMaps e geoportais</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Mapas online para visualizar áreas de influência, APP, Reserva Legal, CAR e áreas sensíveis.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Database className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Banco de dados ambientais</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Organização, padronização e validação de dados de fauna, flora, água, solo e socioeconomia.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Automação de relatórios técnicos</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Geração automatizada de tabelas, gráficos, mapas, anexos fotográficos e relatórios.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Satellite className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Sensoriamento remoto</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Mapeamento de desmatamento, regeneração, áreas degradadas e mudanças por imagens de satélite.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Brain className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">IA para consultoria ambiental</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Modelos preditivos para risco ambiental, ocorrência de espécies e apoio à decisão.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <ScanEye className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Visão computacional</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Análise automática de imagens de drones e câmeras trap para detectar fauna e vegetação.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Wifi className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">IoT e sensores ambientais</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Integração de sensores de qualidade da água, clima e ruído com dashboards em tempo real.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <LineChart className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Bioestatística e modelagem</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Análises estatísticas para biodiversidade, monitoramento e composição de espécies.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <ShieldCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">ESG, compliance e auditoria</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Indicadores ambientais, matriz de riscos e relatórios de desempenho socioambiental.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <Layers className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Gêmeos digitais ambientais</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Simulação de cenários ambientais em bacias, reservatórios e áreas de influência.</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 flex gap-4 items-start hover:bg-white/[0.05] hover:border-primary/30 transition-all group">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary group-hover:scale-110 transition-transform">
+                          <GraduationCap className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white mb-1">Treinamentos corporativos</h4>
+                          <p className="text-xs text-white/50 leading-relaxed font-light">Cursos para equipes de consultoria em IA ambiental, dashboards, GIS e automação.</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                   
-                  <button onClick={() => setShowForm(true)} className="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full pl-8 pr-2 py-2 transition-all duration-300 group">
+                  <button onClick={() => setShowForm(true)} className="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full pl-8 pr-2 py-2 transition-all duration-300 group mt-4">
                     <span className="font-semibold tracking-[0.15em] text-xs uppercase">Acessar Sistema</span>
                     <div className="w-10 h-10 rounded-full bg-primary text-black flex items-center justify-center group-hover:bg-white transition-all">
                       <ArrowRight className="w-4 h-4" />
